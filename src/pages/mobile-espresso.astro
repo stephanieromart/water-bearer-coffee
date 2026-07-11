@@ -1,0 +1,137 @@
+---
+import { getEntry, render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PhotoPlaceholder from '../components/PhotoPlaceholder.astro';
+
+const entry = await getEntry('pages', 'mobile-espresso');
+if (!entry) throw new Error('Missing content/pages/mobile-espresso.md');
+const { Content } = await render(entry);
+
+const eventTypes = [
+  'Wedding / reception',
+  'Corporate / office',
+  'Farmers market / pop-up',
+  'Private party',
+  'Film / production',
+  'Other',
+];
+
+const fieldBase =
+  'w-full rounded-[var(--radius-sm)] border border-[var(--color-line)] bg-[var(--color-surface)] px-4 py-3 text-[var(--color-ink)] placeholder:text-[var(--color-ink-faint)] focus-visible:border-[var(--color-accent)]';
+const labelBase = 'mb-1.5 block font-sans text-[var(--step--1)] font-semibold text-[var(--color-ink)]';
+---
+
+<BaseLayout title="Mobile Espresso" description={entry.data.intro}>
+  <!-- Hero -->
+  <section class="u-container pt-[var(--space-3xl)]">
+    <div class="grid items-center gap-[var(--space-2xl)] lg:grid-cols-[1.1fr_1fr]">
+      <div>
+        <p class="u-eyebrow" data-reveal>Catering &amp; events</p>
+        <h1 class="mt-4 text-[var(--step-4)]" data-reveal data-reveal-delay="80">
+          {entry.data.title}
+        </h1>
+        <p class="u-measure mt-6 text-[var(--step-1)] text-[var(--color-ink-soft)]" data-reveal data-reveal-delay="160">
+          {entry.data.intro}
+        </p>
+        <div class="mt-8" data-reveal data-reveal-delay="240">
+          <a
+            href="#inquire"
+            class="inline-flex items-center justify-center gap-2 rounded-[var(--radius-sm)] bg-[var(--color-accent)] px-6 py-3.5 font-sans font-semibold text-[var(--color-on-accent)] no-underline transition-colors duration-200 hover:bg-[var(--color-accent-hover)]"
+          >
+            Request a quote
+          </a>
+        </div>
+      </div>
+      <div data-reveal data-reveal-delay="160">
+        <PhotoPlaceholder ratio="4/3" label="The mobile espresso cart set up at an event" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Body copy -->
+  <section class="u-container py-[var(--space-3xl)]">
+    <article class="prose" data-reveal>
+      <Content />
+    </article>
+  </section>
+
+  <!-- Inquiry form -->
+  <section id="inquire" class="border-t border-[var(--color-line)] bg-[var(--color-bg-sunk)] scroll-mt-8">
+    <div class="u-container grid gap-[var(--space-2xl)] py-[var(--space-3xl)] lg:grid-cols-[1fr_1.4fr]">
+      <div data-reveal>
+        <p class="u-eyebrow">Let's talk</p>
+        <h2 class="mt-3 text-[var(--step-3)]">Tell us about your event</h2>
+        <p class="mt-4 text-[var(--color-ink-soft)]">
+          The more you can share up front, the faster we can get you a real number.
+          We reply within a couple of business days.
+        </p>
+      </div>
+
+      <!-- Netlify Forms: detected at build via data-netlify + hidden form-name.
+           No backend. Submissions appear in the Netlify dashboard + email. -->
+      <form
+        name="mobile-espresso-inquiry"
+        method="POST"
+        action="/thank-you"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+        class="rounded-[var(--radius-lg)] border border-[var(--color-line)] bg-[var(--color-surface)] p-6 sm:p-8"
+        data-reveal
+        data-reveal-delay="100"
+      >
+        <input type="hidden" name="form-name" value="mobile-espresso-inquiry" />
+        <p class="hidden">
+          <label>Leave blank if human: <input name="bot-field" /></label>
+        </p>
+
+        <div class="grid gap-5 sm:grid-cols-2">
+          <div>
+            <label class={labelBase} for="me-name">Name <span class="text-[var(--color-accent)]">*</span></label>
+            <input class={fieldBase} id="me-name" name="name" type="text" required autocomplete="name" />
+          </div>
+          <div>
+            <label class={labelBase} for="me-email">Email <span class="text-[var(--color-accent)]">*</span></label>
+            <input class={fieldBase} id="me-email" name="email" type="email" required autocomplete="email" />
+          </div>
+          <div>
+            <label class={labelBase} for="me-phone">Phone</label>
+            <input class={fieldBase} id="me-phone" name="phone" type="tel" autocomplete="tel" />
+          </div>
+          <div>
+            <label class={labelBase} for="me-date">Event date</label>
+            <input class={fieldBase} id="me-date" name="event-date" type="date" />
+          </div>
+          <div>
+            <label class={labelBase} for="me-type">Event type</label>
+            <select class={fieldBase} id="me-type" name="event-type">
+              <option value="">Select one…</option>
+              {eventTypes.map((t) => <option value={t}>{t}</option>)}
+            </select>
+          </div>
+          <div>
+            <label class={labelBase} for="me-guests">Guest count</label>
+            <input class={fieldBase} id="me-guests" name="guest-count" type="number" min="1" inputmode="numeric" placeholder="Approximate" />
+          </div>
+          <div class="sm:col-span-2">
+            <label class={labelBase} for="me-location">Location</label>
+            <input class={fieldBase} id="me-location" name="location" type="text" placeholder="Venue or address, city" />
+          </div>
+          <div class="sm:col-span-2">
+            <label class={labelBase} for="me-message">Anything else?</label>
+            <textarea class={fieldBase} id="me-message" name="message" rows="4" placeholder="Timeline, vibe, special requests…"></textarea>
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          class="mt-6 w-full rounded-[var(--radius-sm)] bg-[var(--color-accent)] px-6 py-3.5 font-sans font-semibold text-[var(--color-on-accent)] transition-colors duration-200 hover:bg-[var(--color-accent-hover)] sm:w-auto"
+        >
+          Send inquiry
+        </button>
+        <p class="mt-3 text-[var(--step--1)] text-[var(--color-ink-faint)]">
+          <span class="text-[var(--color-accent)]">*</span> Required. We'll only use your details to reply about your event.
+        </p>
+      </form>
+    </div>
+  </section>
+</BaseLayout>
