@@ -1,0 +1,65 @@
+---
+import { getEntry, render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import RewardsSignupSlot from '../components/RewardsSignupSlot.astro';
+
+const entry = await getEntry('pages', 'rewards');
+if (!entry) throw new Error('Missing content/pages/rewards.md');
+const { Content } = await render(entry);
+
+const steps = [
+  { n: '01', title: 'Sign up once', body: 'Join at the counter or online. No app to download, no card to lose.' },
+  { n: '02', title: 'Check in when you order', body: 'Tell us it’s you. Every drink you buy counts toward the next free one.' },
+  { n: '03', title: 'Every tenth is on us', body: 'Buy ten drinks, the eleventh is free. That simple, forever.' },
+];
+---
+
+<BaseLayout title="Rewards" description={entry.data.intro}>
+  <section class="u-container pt-[var(--space-3xl)]">
+    <p class="u-eyebrow" data-reveal>Rewards</p>
+    <h1 class="mt-4 max-w-3xl text-[var(--step-4)]" data-reveal data-reveal-delay="80">
+      {entry.data.title}
+    </h1>
+    <p class="u-measure mt-6 text-[var(--step-1)] text-[var(--color-ink-soft)]" data-reveal data-reveal-delay="160">
+      {entry.data.intro}
+    </p>
+  </section>
+
+  <!-- How it works: three-step graphic -->
+  <section class="u-container py-[var(--space-3xl)]">
+    <h2 class="u-eyebrow mb-8" data-reveal>How it works</h2>
+    <ol class="grid gap-[var(--space-xl)] md:grid-cols-3">
+      {
+        steps.map((s, i) => (
+          <li
+            class="relative rounded-[var(--radius-lg)] border border-[var(--color-line)] bg-[var(--color-surface)] p-8"
+            data-reveal
+            data-reveal-delay={i * 100}
+          >
+            <span class="font-serif text-[var(--step-4)] text-[var(--color-accent)]">{s.n}</span>
+            <h3 class="mt-3 font-serif text-[var(--step-2)]">{s.title}</h3>
+            <p class="mt-2 text-[var(--color-ink-soft)]">{s.body}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <!-- Explainer body + the swappable signup slot -->
+  <section class="border-t border-[var(--color-line)] bg-[var(--color-bg-sunk)]">
+    <div class="u-container grid gap-[var(--space-2xl)] py-[var(--space-3xl)] lg:grid-cols-2">
+      <article class="prose" data-reveal>
+        <Content />
+      </article>
+      <div class="flex flex-col justify-center" data-reveal data-reveal-delay="100">
+        <h2 class="text-[var(--step-2)]">Ready to start earning?</h2>
+        <p class="mt-3 text-[var(--color-ink-soft)]">
+          Sign up in seconds and your next visit already counts.
+        </p>
+        <div class="mt-6">
+          <RewardsSignupSlot />
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

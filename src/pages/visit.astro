@@ -1,0 +1,140 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HoursBlock from '../components/HoursBlock.astro';
+import { site } from '../lib/site';
+
+const { address } = site;
+const mapSrc = `https://www.google.com/maps?q=${site.mapEmbedQuery}&output=embed`;
+const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+  `${address.street}, ${address.city}, ${address.region} ${address.postalCode}`,
+)}`;
+
+const fieldBase =
+  'w-full rounded-[var(--radius-sm)] border border-[var(--color-line)] bg-[var(--color-surface)] px-4 py-3 text-[var(--color-ink)] placeholder:text-[var(--color-ink-faint)] focus-visible:border-[var(--color-accent)]';
+const labelBase = 'mb-1.5 block font-sans text-[var(--step--1)] font-semibold text-[var(--color-ink)]';
+---
+
+<BaseLayout
+  title="Visit"
+  description={`Find Water Bearer Coffee at ${address.street}, ${address.city}, ${address.region}. Hours, parking, map, and how to reach us.`}
+>
+  <section class="u-container pt-[var(--space-3xl)]">
+    <p class="u-eyebrow" data-reveal>Visit us</p>
+    <h1 class="mt-4 text-[var(--step-4)]" data-reveal data-reveal-delay="80">Come find us</h1>
+  </section>
+
+  <section class="u-container py-[var(--space-2xl)]">
+    <div class="grid gap-[var(--space-2xl)] lg:grid-cols-[1fr_1.2fr]">
+      <!-- Details -->
+      <div class="space-y-[var(--space-xl)]" data-reveal>
+        <div>
+          <h2 class="u-eyebrow mb-3">Address</h2>
+          <address class="not-italic text-[var(--step-1)]">
+            {address.street}<br />
+            {address.city}, {address.region} {address.postalCode}
+          </address>
+          <a
+            href={directionsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="mt-3 inline-block text-[var(--color-accent)] underline underline-offset-4 hover:text-[var(--color-accent-hover)]"
+          >
+            Get directions
+          </a>
+        </div>
+
+        <div>
+          <h2 class="u-eyebrow mb-4">Hours</h2>
+          <HoursBlock />
+        </div>
+
+        <div>
+          <h2 class="u-eyebrow mb-3">Parking</h2>
+          <p class="text-[var(--color-ink-soft)]">{site.parkingNote}</p>
+        </div>
+
+        <div>
+          <h2 class="u-eyebrow mb-3">Contact</h2>
+          <p class="text-[var(--color-ink-soft)]">
+            <a href={`tel:${site.phoneHref}`} class="no-underline hover:text-[var(--color-accent)]">{site.phone}</a><br />
+            <a href={`mailto:${site.email}`} class="no-underline hover:text-[var(--color-accent)]">{site.email}</a>
+          </p>
+        </div>
+      </div>
+
+      <!-- Map -->
+      <div data-reveal data-reveal-delay="120">
+        <div class="overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-line)]">
+          <iframe
+            title={`Map to ${site.name}`}
+            src={mapSrc}
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            class="h-full min-h-[420px] w-full border-0"
+          ></iframe>
+        </div>
+        <p class="mt-2 text-[var(--step--1)] text-[var(--color-ink-faint)]">
+          <!-- DRAFT: map centers on the placeholder address in site.json — updates
+               automatically once the real address is entered there. -->
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact form -->
+  <section class="border-t border-[var(--color-line)] bg-[var(--color-bg-sunk)]">
+    <div class="u-container grid gap-[var(--space-2xl)] py-[var(--space-3xl)] lg:grid-cols-[1fr_1.4fr]">
+      <div data-reveal>
+        <p class="u-eyebrow">Say hello</p>
+        <h2 class="mt-3 text-[var(--step-3)]">Send us a note</h2>
+        <p class="mt-4 text-[var(--color-ink-soft)]">
+          Questions, wholesale, press, or just a hello — we read everything.
+          For event bookings, use the
+          <a href="/mobile-espresso#inquire" class="text-[var(--color-accent)] underline underline-offset-4">mobile espresso form</a>.
+        </p>
+      </div>
+
+      <form
+        name="contact"
+        method="POST"
+        action="/thank-you"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+        class="rounded-[var(--radius-lg)] border border-[var(--color-line)] bg-[var(--color-surface)] p-6 sm:p-8"
+        data-reveal
+        data-reveal-delay="100"
+      >
+        <input type="hidden" name="form-name" value="contact" />
+        <p class="hidden">
+          <label>Leave blank if human: <input name="bot-field" /></label>
+        </p>
+
+        <div class="grid gap-5 sm:grid-cols-2">
+          <div>
+            <label class={labelBase} for="c-name">Name <span class="text-[var(--color-accent)]">*</span></label>
+            <input class={fieldBase} id="c-name" name="name" type="text" required autocomplete="name" />
+          </div>
+          <div>
+            <label class={labelBase} for="c-email">Email <span class="text-[var(--color-accent)]">*</span></label>
+            <input class={fieldBase} id="c-email" name="email" type="email" required autocomplete="email" />
+          </div>
+          <div class="sm:col-span-2">
+            <label class={labelBase} for="c-subject">Subject</label>
+            <input class={fieldBase} id="c-subject" name="subject" type="text" />
+          </div>
+          <div class="sm:col-span-2">
+            <label class={labelBase} for="c-message">Message <span class="text-[var(--color-accent)]">*</span></label>
+            <textarea class={fieldBase} id="c-message" name="message" rows="5" required></textarea>
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          class="mt-6 w-full rounded-[var(--radius-sm)] bg-[var(--color-accent)] px-6 py-3.5 font-sans font-semibold text-[var(--color-on-accent)] transition-colors duration-200 hover:bg-[var(--color-accent-hover)] sm:w-auto"
+        >
+          Send message
+        </button>
+      </form>
+    </div>
+  </section>
+</BaseLayout>
