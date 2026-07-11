@@ -1,0 +1,60 @@
+---
+import { getEntry, render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PhotoPlaceholder from '../components/PhotoPlaceholder.astro';
+import Button from '../components/Button.astro';
+
+const entry = await getEntry('pages', 'about');
+if (!entry) throw new Error('Missing content/pages/about.md');
+const { Content } = await render(entry);
+---
+
+<BaseLayout title="About" description={entry.data.intro}>
+  <!-- Page header -->
+  <section class="u-container pt-[var(--space-3xl)]">
+    <p class="u-eyebrow" data-reveal>Our story</p>
+    <h1 class="mt-4 max-w-4xl text-[var(--step-4)]" data-reveal data-reveal-delay="80">
+      {entry.data.title}
+    </h1>
+    <p class="u-measure mt-6 text-[var(--step-1)] text-[var(--color-ink-soft)]" data-reveal data-reveal-delay="160">
+      {entry.data.intro}
+    </p>
+  </section>
+
+  <!-- Centerpiece: the roaster-who-pulls-shots idea, given real weight -->
+  <section class="u-container py-[var(--space-3xl)]">
+    <div class="grid items-center gap-[var(--space-2xl)] lg:grid-cols-2">
+      <figure data-reveal>
+        <PhotoPlaceholder ratio="4/5" label="The roaster at the drum roaster, early morning" />
+        <figcaption class="mt-3 text-[var(--step--1)] text-[var(--color-ink-faint)]">
+          Same person, a few hours later, on bar.
+        </figcaption>
+      </figure>
+      <blockquote class="border-l-2 border-[var(--color-accent)] pl-6" data-reveal data-reveal-delay="120">
+        <p class="font-serif text-[var(--step-3)] leading-snug">
+          The coffee in your cup was roasted a few feet from where it was poured —
+          by the same person who poured it.
+        </p>
+        <p class="mt-5 text-[var(--color-ink-soft)]">
+          That's not a slogan. It's how the whole shop is built.
+        </p>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- The long-form story body -->
+  <section class="u-container pb-[var(--space-3xl)]">
+    <article class="prose" data-reveal>
+      <Content />
+    </article>
+  </section>
+
+  <section class="border-t border-[var(--color-line)]">
+    <div class="u-container py-[var(--space-2xl)]">
+      <div class="flex flex-wrap gap-4" data-reveal>
+        <Button href="/coffee">See what we're roasting</Button>
+        <Button href="/visit" variant="outline">Come visit</Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

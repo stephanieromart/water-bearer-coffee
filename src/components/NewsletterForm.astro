@@ -1,0 +1,56 @@
+---
+/**
+ * Email capture via Netlify Forms (no backend). Also used as the "notify me"
+ * capture for coming-soon pantry items — pass a distinct `formName` and
+ * `source` so submissions are easy to tell apart in the Netlify dashboard.
+ */
+interface Props {
+  formName?: string;
+  source?: string; // hidden field: which page/item the signup came from
+  label?: string;
+  cta?: string;
+  compact?: boolean;
+}
+const {
+  formName = 'newsletter',
+  source = 'site',
+  label = 'Get the occasional email — new roasts, cart locations, nothing else.',
+  cta = 'Sign up',
+  compact = false,
+} = Astro.props;
+---
+
+<form
+  name={formName}
+  method="POST"
+  data-netlify="true"
+  netlify-honeypot="bot-field"
+  class="w-full"
+>
+  <!-- Netlify plumbing: form name + spam honeypot + submission source -->
+  <input type="hidden" name="form-name" value={formName} />
+  <input type="hidden" name="source" value={source} />
+  <p class="hidden">
+    <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+  </p>
+
+  {label && <label for={`${formName}-email`} class="block text-[var(--color-ink-soft)]">{label}</label>}
+
+  <div class:list={['mt-3 flex gap-2', compact ? 'flex-row' : 'flex-col sm:flex-row']}>
+    <input
+      id={`${formName}-email`}
+      type="email"
+      name="email"
+      required
+      autocomplete="email"
+      placeholder="you@email.com"
+      class="w-full flex-1 rounded-[var(--radius-sm)] border border-[var(--color-line)] bg-[var(--color-surface)] px-4 py-3 text-[var(--color-ink)] placeholder:text-[var(--color-ink-faint)] focus-visible:border-[var(--color-accent)]"
+    />
+    <button
+      type="submit"
+      class="shrink-0 rounded-[var(--radius-sm)] bg-[var(--color-accent)] px-6 py-3 font-sans font-semibold text-[var(--color-on-accent)] transition-colors duration-200 hover:bg-[var(--color-accent-hover)]"
+    >
+      {cta}
+    </button>
+  </div>
+</form>

@@ -1,0 +1,28 @@
+---
+/**
+ * Solid-color placeholder standing in for photography at the correct aspect
+ * ratio. NEVER a stock photo. When real images land, swap this element for
+ * Astro's <Image /> at the same ratio — the label tells the owner what shot goes
+ * here. See README "Adding photos".
+ */
+interface Props {
+  ratio?: string; // e.g. "16/9", "4/5", "1/1"
+  label?: string; // what photograph belongs here
+  class?: string;
+  rounded?: boolean;
+}
+const { ratio = '4/3', label = 'Photo', class: className = '', rounded = true } = Astro.props;
+---
+
+<div
+  class:list={[
+    'u-photo-ph w-full',
+    rounded && 'rounded-[var(--radius-lg)]',
+    className,
+  ]}
+  style={`aspect-ratio: ${ratio};`}
+  role="img"
+  aria-label={`Placeholder for ${label}`}
+>
+  <span class="px-4 text-center">{label}</span>
+</div>

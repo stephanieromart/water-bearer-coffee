@@ -126,6 +126,51 @@ svg {
   text-transform: uppercase;
 }
 
+/* --- Long-form prose (Markdown page bodies) -------------------------------- */
+.prose {
+  max-width: var(--measure);
+  color: var(--color-ink);
+}
+.prose > * + * { margin-top: var(--space-lg); }
+.prose h2 {
+  font-size: var(--step-3);
+  margin-top: var(--space-2xl);
+}
+.prose h3 {
+  font-size: var(--step-2);
+  margin-top: var(--space-xl);
+}
+.prose p,
+.prose li {
+  font-size: var(--step-0);
+  color: var(--color-ink-soft);
+}
+.prose strong { color: var(--color-ink); font-weight: 600; }
+.prose ul {
+  padding-left: 1.25em;
+  list-style: none;
+}
+.prose ul > li {
+  position: relative;
+  padding-left: 1.1em;
+}
+.prose ul > li + li { margin-top: var(--space-sm); }
+.prose ul > li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 0.4em;
+  height: 0.4em;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+.prose a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
 /* --- Scroll reveal: subtle fade-and-rise ----------------------------------- */
 [data-reveal] {
   opacity: 0;

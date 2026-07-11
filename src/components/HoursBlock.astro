@@ -1,0 +1,18 @@
+---
+import { site } from '../lib/site';
+interface Props { class?: string }
+const { class: className = '' } = Astro.props;
+---
+
+<dl class:list={['space-y-2', className]}>
+  {
+    site.hours.map((h) => (
+      <div class="flex items-baseline justify-between gap-4 border-b border-[var(--color-line)] pb-2">
+        <dt class="font-sans text-[var(--color-ink)]">{h.days}</dt>
+        <dd class="font-sans text-[var(--color-ink-soft)]">
+          {h.open} – {h.close}
+        </dd>
+      </div>
+    ))
+  }
+</dl>
