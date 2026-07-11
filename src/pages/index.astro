@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../lib/site';
+---
+
+<BaseLayout>
+  <section class="u-container py-[var(--space-4xl)]">
+    <p class="u-eyebrow" data-reveal>Traverse City, Michigan</p>
+    <h1 class="mt-4 text-[var(--step-5)]" data-reveal data-reveal-delay="80">
+      {site.tagline}
+    </h1>
+    <p
+      class="u-measure mt-6 text-[var(--step-1)] text-[var(--color-ink-soft)]"
+      data-reveal
+      data-reveal-delay="160"
+    >
+      Layout shell is up. The full home page lands in build step 3.
+    </p>
+  </section>
+</BaseLayout>

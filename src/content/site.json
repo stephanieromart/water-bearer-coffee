@@ -1,0 +1,36 @@
+{
+  "name": "Water Bearer Coffee",
+  "shortName": "Water Bearer",
+  "tagline": "Roasted in house. Poured by the person who roasts it.",
+  "description": "An independent café and mobile espresso bar in Traverse City, Michigan. Coffee roasted in house, everything else made from scratch.",
+  "email": "hello@waterbearercoffee.com",
+  "phone": "(231) 555-0142",
+  "phoneHref": "+12315550142",
+  "address": {
+    "street": "123 Front Street",
+    "city": "Traverse City",
+    "region": "MI",
+    "postalCode": "49684",
+    "country": "US"
+  },
+  "geo": {
+    "latitude": 44.7631,
+    "longitude": -85.6206
+  },
+  "mapEmbedQuery": "Front+Street+Traverse+City+MI",
+  "hours": [
+    { "days": "Monday – Friday", "open": "7:00 AM", "close": "6:00 PM", "dayCodes": ["Mo", "Tu", "We", "Th", "Fr"], "opens": "07:00", "closes": "18:00" },
+    { "days": "Saturday", "open": "8:00 AM", "close": "6:00 PM", "dayCodes": ["Sa"], "opens": "08:00", "closes": "18:00" },
+    { "days": "Sunday", "open": "8:00 AM", "close": "3:00 PM", "dayCodes": ["Su"], "opens": "08:00", "closes": "15:00" }
+  ],
+  "parkingNote": "Street parking runs the length of Front Street, with a free public lot one block north on State Street. The mobile cart is often out on weekends — check Instagram for where we're parked.",
+  "social": [
+    { "label": "Instagram", "href": "https://instagram.com/waterbearercoffee" },
+    { "label": "Facebook", "href": "https://facebook.com/waterbearercoffee" }
+  ],
+  "square": {
+    "baseUrl": "https://waterbearercoffee.square.site",
+    "orderUrl": "https://waterbearercoffee.square.site/s/order"
+  },
+  "_note": "DRAFT DATA — NEEDS OWNER REVIEW. Address, phone, hours, geo coordinates, and Square URLs are placeholders. Replace every value in this file with the real business details before launch; these feed the footer, contact page, and LocalBusiness JSON-LD schema."
+}

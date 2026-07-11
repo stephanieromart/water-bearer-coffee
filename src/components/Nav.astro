@@ -1,0 +1,71 @@
+---
+import { site, navLinks } from '../lib/site';
+
+const path = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === '/' ? path === '/' : path === href || path.startsWith(href + '/');
+---
+
+<header class="border-b border-[var(--color-line)] bg-[var(--color-bg)]">
+  <nav class="u-container flex items-center justify-between gap-6 py-4" aria-label="Primary">
+    <a
+      href="/"
+      class="font-serif text-[var(--step-1)] font-medium tracking-[var(--tracking-tight)] no-underline"
+    >
+      {site.shortName}
+    </a>
+
+    <!-- Desktop nav -->
+    <ul class="hidden items-center gap-6 lg:flex">
+      {
+        navLinks.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class:list={[
+                'font-sans text-[var(--step--1)] no-underline transition-colors duration-200 hover:text-[var(--color-accent)]',
+                isActive(link.href)
+                  ? 'text-[var(--color-accent)] font-semibold'
+                  : 'text-[var(--color-ink-soft)]',
+              ]}
+              aria-current={isActive(link.href) ? 'page' : undefined}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <!-- Mobile disclosure (no JS framework — native <details>) -->
+    <details class="relative lg:hidden [&_.chev]:open:rotate-180">
+      <summary
+        class="flex cursor-pointer list-none items-center gap-2 font-sans text-[var(--step--1)] font-semibold [&::-webkit-details-marker]:hidden"
+        aria-label="Open menu"
+      >
+        Menu
+        <span class="chev transition-transform duration-200" aria-hidden="true">▾</span>
+      </summary>
+      <ul
+        class="absolute right-0 top-full z-50 mt-3 w-56 rounded-[var(--radius-md)] border border-[var(--color-line)] bg-[var(--color-surface)] p-2 shadow-lg"
+      >
+        {
+          navLinks.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class:list={[
+                  'block rounded-[var(--radius-sm)] px-3 py-2.5 font-sans text-[var(--step-0)] no-underline hover:bg-[var(--color-bg-sunk)]',
+                  isActive(link.href) ? 'text-[var(--color-accent)] font-semibold' : '',
+                ]}
+                aria-current={isActive(link.href) ? 'page' : undefined}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </details>
+  </nav>
+</header>

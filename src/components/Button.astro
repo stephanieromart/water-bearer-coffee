@@ -1,0 +1,58 @@
+---
+/**
+ * Button / link primitive. Renders an <a> (default) or <button>.
+ * Variants: primary (clay fill), outline (ink hairline), ghost (text + arrow).
+ * External links open in a new tab with safe rel — used for all Square deep-links.
+ */
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'outline' | 'ghost';
+  external?: boolean;
+  type?: 'button' | 'submit';
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  href,
+  variant = 'primary',
+  external = false,
+  type = 'button',
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+const base =
+  'inline-flex items-center justify-center gap-2 font-sans font-semibold ' +
+  'text-[var(--step-0)] leading-none rounded-[var(--radius-sm)] ' +
+  'px-6 py-3.5 transition-colors duration-200 [transition-timing-function:var(--ease)] ' +
+  'no-underline cursor-pointer';
+
+const variants: Record<string, string> = {
+  primary:
+    'bg-[var(--color-accent)] text-[var(--color-on-accent)] ' +
+    'hover:bg-[var(--color-accent-hover)]',
+  outline:
+    'border border-[var(--color-ink)] text-[var(--color-ink)] ' +
+    'hover:bg-[var(--color-ink)] hover:text-[var(--color-bg)]',
+  ghost:
+    'px-0 py-1 text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] ' +
+    'underline underline-offset-4 decoration-1',
+};
+
+const cls = `${base} ${variants[variant]} ${className}`;
+const externalAttrs = external ? { target: '_blank', rel: 'noopener noreferrer' } : {};
+---
+
+{
+  href ? (
+    <a href={href} class={cls} {...externalAttrs} {...rest}>
+      <slot />
+      {variant === 'ghost' && <span aria-hidden="true">&rarr;</span>}
+    </a>
+  ) : (
+    <button type={type} class={cls} {...rest}>
+      <slot />
+    </button>
+  )
+}
