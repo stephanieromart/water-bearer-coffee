@@ -1,16 +1,17 @@
 ---
-import { site } from '../lib/site';
+import { groupedHours } from '../lib/hours';
 interface Props { class?: string }
 const { class: className = '' } = Astro.props;
+const rows = groupedHours();
 ---
 
 <dl class:list={['space-y-2', className]}>
   {
-    site.hours.map((h) => (
+    rows.map((h) => (
       <div class="flex items-baseline justify-between gap-4 border-b border-[var(--color-line)] pb-2">
-        <dt class="font-sans text-[var(--color-ink)]">{h.days}</dt>
-        <dd class="font-sans text-[var(--color-ink-soft)]">
-          {h.open} – {h.close}
+        <dt class="font-body font-semibold">{h.label}</dt>
+        <dd class:list={['font-body', h.closed ? 'text-[var(--color-ink-faint)]' : 'text-[var(--color-ink-soft)]']}>
+          {h.text}
         </dd>
       </div>
     ))

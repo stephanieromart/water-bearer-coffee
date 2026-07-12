@@ -1,34 +1,27 @@
 /* ============================================================================
-   Global stylesheet — imported once in BaseLayout.
+   Global stylesheet (v2) — imported once in BaseLayout.
    ============================================================================ */
 @import 'tailwindcss';
 @import './tokens.css';
 
-/* Self-hosted variable fonts (no network round-trip to Google) */
-@import '@fontsource-variable/fraunces';
+/* Self-hosted variable fonts — heavy characterful display + workhorse body */
+@import '@fontsource-variable/bricolage-grotesque';
 @import '@fontsource-variable/inter';
 
-/* Expose tokens to Tailwind's theme so utilities like text-accent work.
-   (Tailwind v4 reads CSS variables under @theme.) */
+/* Expose a few roles to Tailwind's theme (v4 reads vars under @theme). */
 @theme {
-  --color-bg: var(--color-bg);
   --color-ink: var(--color-ink);
-  --color-accent: var(--color-accent);
-  --font-serif: var(--font-serif);
-  --font-sans: var(--font-sans);
+  --color-cta: var(--color-cta);
+  --color-primary: var(--color-primary);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
 }
 
-/* --- Base ------------------------------------------------------------------
-   Kept inside @layer base so Tailwind utility classes (which live in
-   @layer utilities) always win over these element defaults. Without the layer,
-   `a { color: inherit }` would beat text-* utilities and break, e.g., button
-   text color + its contrast. */
+/* --- Base (in @layer base so Tailwind utilities always win the cascade) ----- */
 @layer base {
   *,
   *::before,
-  *::after {
-    box-sizing: border-box;
-  }
+  *::after { box-sizing: border-box; }
 
   html {
     scroll-behavior: smooth;
@@ -39,7 +32,7 @@
     margin: 0;
     background-color: var(--color-bg);
     color: var(--color-ink);
-    font-family: var(--font-sans);
+    font-family: var(--font-body);
     font-size: var(--step-0);
     line-height: var(--leading-normal);
     font-synthesis: none;
@@ -48,37 +41,35 @@
   }
 
   h1, h2, h3, h4 {
-    font-family: var(--font-serif);
-    font-weight: 500;
+    font-family: var(--font-display);
+    font-weight: 800;
     line-height: var(--leading-tight);
     letter-spacing: var(--tracking-tight);
     margin: 0;
     text-wrap: balance;
   }
 
-  p {
-    text-wrap: pretty;
-  }
+  p { text-wrap: pretty; }
 
   a {
     color: inherit;
     text-underline-offset: 0.2em;
   }
 
-  img,
-  picture,
-  svg {
+  img, picture, svg, video {
     display: block;
     max-width: 100%;
   }
 }
 
-/* --- Accessibility: visible focus everywhere ------------------------------- */
+/* --- Accessibility: visible focus ------------------------------------------ */
 :focus-visible {
   outline: 3px solid var(--color-focus);
   outline-offset: 3px;
   border-radius: 2px;
 }
+/* On deep-blue backgrounds, focus ring flips to white for visibility. */
+.on-deep :focus-visible { outline-color: var(--white); }
 
 .skip-link {
   position: absolute;
@@ -86,93 +77,118 @@
   top: -4rem;
   z-index: 100;
   background: var(--color-ink);
-  color: var(--color-bg);
+  color: var(--white);
   padding: var(--space-xs) var(--space-md);
   border-radius: var(--radius-sm);
   transition: top 0.2s var(--ease);
 }
-.skip-link:focus {
-  top: var(--space-md);
-}
+.skip-link:focus { top: var(--space-md); }
 
-/* --- Reusable primitives --------------------------------------------------- */
+/* --- Layout primitives ----------------------------------------------------- */
 .u-container {
   width: 100%;
   max-width: var(--container);
   margin-inline: auto;
   padding-inline: var(--space-lg);
 }
+.u-container-wide { max-width: var(--container-wide); }
 @media (min-width: 48rem) {
   .u-container { padding-inline: var(--space-xl); }
 }
 
 .u-eyebrow {
-  font-family: var(--font-sans);
+  display: inline-block;
+  font-family: var(--font-body);
   font-size: var(--step--1);
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: var(--tracking-wide);
   text-transform: uppercase;
   color: var(--color-accent-text);
 }
+.on-deep .u-eyebrow { color: var(--color-on-deep-soft); }
 
 .u-measure { max-width: var(--measure); }
 
-/* Solid-color placeholder block: stands in for photography at correct ratio.
-   Never a stock photo. Owner drops a real <Image> in later. */
-.u-photo-ph {
-  background:
-    linear-gradient(135deg, var(--color-accent-soft), var(--color-bg-sunk));
-  border: 1px solid var(--color-line);
-  display: grid;
-  place-content: center;
-  color: var(--color-ink-faint);
-  font-family: var(--font-sans);
-  font-size: var(--step--1);
-  letter-spacing: var(--tracking-wide);
-  text-transform: uppercase;
+/* Oversized display helper — heavy, tight, viewport-filling */
+.u-display {
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tighter);
+  text-wrap: balance;
 }
 
-/* --- Long-form prose (Markdown page bodies) -------------------------------- */
-.prose {
-  max-width: var(--measure);
+/* --- Pattern & texture (the maximalism, done cheaply for perf) -------------- */
+
+/* Halftone dot field — tonal blue-on-blue. Decorative, aria-hidden in markup. */
+.u-dots {
+  background-image: radial-gradient(var(--_dot, var(--blue-200)) 1.6px, transparent 1.7px);
+  background-size: 14px 14px;
+}
+.u-dots--tight { background-size: 9px 9px; }
+.on-deep .u-dots { --_dot: rgba(255, 255, 255, 0.14); }
+
+/* Diagonal tonal stripes for section dividers / accents. */
+.u-stripes {
+  background-image: repeating-linear-gradient(
+    45deg,
+    var(--_stripe, var(--blue-100)) 0,
+    var(--_stripe, var(--blue-100)) 10px,
+    transparent 10px,
+    transparent 20px
+  );
+}
+.on-deep .u-stripes { --_stripe: rgba(255, 255, 255, 0.08); }
+
+/* Patterned zigzag divider between sections. */
+.u-zigzag {
+  height: 14px;
+  background:
+    linear-gradient(135deg, var(--color-bg-deep) 25%, transparent 25%) -14px 0,
+    linear-gradient(225deg, var(--color-bg-deep) 25%, transparent 25%) -14px 0,
+    linear-gradient(315deg, var(--color-bg-deep) 25%, transparent 25%),
+    linear-gradient(45deg, var(--color-bg-deep) 25%, transparent 25%);
+  background-size: 28px 28px;
+  background-repeat: repeat-x;
+}
+
+/* Chunky "sticker" tag used for specials/badges — maximalist bulletin-board feel */
+.u-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--step--1);
+  letter-spacing: 0.02em;
+  padding: 0.35em 0.7em;
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--color-ink);
+  background: var(--white);
   color: var(--color-ink);
 }
+.u-tag--solid { background: var(--color-cta); color: var(--color-on-cta); border-color: var(--color-cta); }
+.u-tag--primary { background: var(--color-primary); color: var(--white); border-color: var(--color-primary); }
+
+/* --- Long-form prose (Markdown page bodies) -------------------------------- */
+.prose { max-width: var(--measure); color: var(--color-ink); }
 .prose > * + * { margin-top: var(--space-lg); }
-.prose h2 {
-  font-size: var(--step-3);
-  margin-top: var(--space-2xl);
-}
-.prose h3 {
-  font-size: var(--step-2);
-  margin-top: var(--space-xl);
-}
-.prose p,
-.prose li {
-  font-size: var(--step-0);
-  color: var(--color-ink-soft);
-}
-.prose strong { color: var(--color-ink); font-weight: 600; }
-.prose ul {
-  padding-left: 1.25em;
-  list-style: none;
-}
-.prose ul > li {
-  position: relative;
-  padding-left: 1.1em;
-}
+.prose h2 { font-size: var(--step-3); margin-top: var(--space-2xl); }
+.prose h3 { font-size: var(--step-2); margin-top: var(--space-xl); }
+.prose p, .prose li { font-size: var(--step-0); color: var(--color-ink-soft); }
+.prose strong { color: var(--color-ink); font-weight: 700; }
+.prose ul { padding-left: 1.25em; list-style: none; }
+.prose ul > li { position: relative; padding-left: 1.1em; }
 .prose ul > li + li { margin-top: var(--space-sm); }
 .prose ul > li::before {
   content: '';
   position: absolute;
-  left: 0;
-  top: 0.72em;
-  width: 0.4em;
-  height: 0.4em;
-  border-radius: 50%;
-  background: var(--color-accent);
+  left: 0; top: 0.72em;
+  width: 0.45em; height: 0.45em;
+  background: var(--color-primary);
 }
 .prose a {
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   text-decoration: underline;
   text-underline-offset: 0.2em;
 }
@@ -181,28 +197,18 @@
 [data-reveal] {
   opacity: 0;
   transform: translateY(1.25rem);
-  transition:
-    opacity var(--dur) var(--ease),
-    transform var(--dur) var(--ease);
+  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
   will-change: opacity, transform;
 }
-[data-reveal].is-visible {
-  opacity: 1;
-  transform: none;
-}
+[data-reveal].is-visible { opacity: 1; transform: none; }
 
 /* --- Respect reduced-motion ------------------------------------------------ */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
-  [data-reveal] {
-    opacity: 1;
-    transform: none;
-  }
+  [data-reveal] { opacity: 1; transform: none; }
 }

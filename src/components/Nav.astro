@@ -6,57 +6,23 @@ const isActive = (href: string) =>
   href === '/' ? path === '/' : path === href || path.startsWith(href + '/');
 ---
 
-<header class="border-b border-[var(--color-line)] bg-[var(--color-bg)]">
-  <nav class="u-container flex items-center justify-between gap-6 py-4" aria-label="Primary">
-    <a
-      href="/"
-      class="font-serif text-[length:var(--step-1)] font-medium tracking-[var(--tracking-tight)] no-underline"
-    >
-      {site.shortName}
+<header class="sticky top-0 z-50 border-b-2 border-[var(--color-ink)] bg-[var(--color-bg)]/95 backdrop-blur">
+  <nav class="u-container u-container-wide flex items-center justify-between gap-4 py-3" aria-label="Primary">
+    <a href="/" class="font-display text-[length:var(--step-2)] font-extrabold leading-none tracking-[var(--tracking-tighter)] no-underline">
+      Water<span class="text-[var(--color-primary)]">Bearer</span>
     </a>
 
     <!-- Desktop nav -->
-    <ul class="hidden items-center gap-6 lg:flex">
-      {
-        navLinks.map((link) => (
-          <li>
-            <a
-              href={link.href}
-              class:list={[
-                'font-sans text-[length:var(--step--1)] no-underline transition-colors duration-200 hover:text-[var(--color-accent-text)]',
-                isActive(link.href)
-                  ? 'text-[var(--color-accent-text)] font-semibold'
-                  : 'text-[var(--color-ink-soft)]',
-              ]}
-              aria-current={isActive(link.href) ? 'page' : undefined}
-            >
-              {link.label}
-            </a>
-          </li>
-        ))
-      }
-    </ul>
-
-    <!-- Mobile disclosure (no JS framework — native <details>) -->
-    <details class="relative lg:hidden [&_.chev]:open:rotate-180">
-      <summary
-        class="flex cursor-pointer list-none items-center gap-2 font-sans text-[length:var(--step--1)] font-semibold [&::-webkit-details-marker]:hidden"
-        aria-label="Open menu"
-      >
-        Menu
-        <span class="chev transition-transform duration-200" aria-hidden="true">▾</span>
-      </summary>
-      <ul
-        class="absolute right-0 top-full z-50 mt-3 w-56 rounded-[var(--radius-md)] border border-[var(--color-line)] bg-[var(--color-surface)] p-2 shadow-lg"
-      >
+    <div class="hidden items-center gap-7 lg:flex">
+      <ul class="flex items-center gap-6">
         {
           navLinks.map((link) => (
             <li>
               <a
                 href={link.href}
                 class:list={[
-                  'block rounded-[var(--radius-sm)] px-3 py-2.5 font-sans text-[length:var(--step-0)] no-underline hover:bg-[var(--color-bg-sunk)]',
-                  isActive(link.href) ? 'text-[var(--color-accent-text)] font-semibold' : '',
+                  'font-body text-[length:var(--step--1)] font-bold uppercase tracking-[0.08em] no-underline transition-colors duration-200 hover:text-[var(--color-primary)]',
+                  isActive(link.href) ? 'text-[var(--color-primary)]' : 'text-[var(--color-ink)]',
                 ]}
                 aria-current={isActive(link.href) ? 'page' : undefined}
               >
@@ -66,6 +32,53 @@ const isActive = (href: string) =>
           ))
         }
       </ul>
-    </details>
+      <a
+        href={site.square.orderUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 rounded-[var(--radius-sm)] bg-[var(--color-cta)] px-5 py-2.5 font-body text-[length:var(--step--1)] font-bold uppercase tracking-[0.06em] text-[var(--color-on-cta)] no-underline transition-[transform,background-color] duration-200 hover:-translate-y-0.5 hover:bg-[var(--color-cta-hover)]"
+      >
+        Order Online
+      </a>
+    </div>
+
+    <!-- Mobile: Order Online stays visible; rest behind a disclosure -->
+    <div class="flex items-center gap-2 lg:hidden">
+      <a
+        href={site.square.orderUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="rounded-[var(--radius-sm)] bg-[var(--color-cta)] px-3.5 py-2 font-body text-[length:var(--step--1)] font-bold uppercase tracking-[0.04em] text-[var(--color-on-cta)] no-underline"
+      >
+        Order
+      </a>
+      <details class="relative [&_.chev]:open:rotate-180">
+        <summary
+          class="flex cursor-pointer list-none items-center gap-1.5 rounded-[var(--radius-sm)] border-2 border-[var(--color-ink)] px-3 py-2 font-body text-[length:var(--step--1)] font-bold uppercase [&::-webkit-details-marker]:hidden"
+          aria-label="Open menu"
+        >
+          Menu
+          <span class="chev transition-transform duration-200" aria-hidden="true">▾</span>
+        </summary>
+        <ul class="absolute right-0 top-full z-50 mt-3 w-60 rounded-[var(--radius-md)] border-2 border-[var(--color-ink)] bg-[var(--color-surface)] p-2 shadow-xl">
+          {
+            navLinks.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class:list={[
+                    'block rounded-[var(--radius-sm)] px-3 py-2.5 font-body text-[length:var(--step-0)] font-semibold no-underline hover:bg-[var(--blue-50)]',
+                    isActive(link.href) ? 'text-[var(--color-primary)]' : '',
+                  ]}
+                  aria-current={isActive(link.href) ? 'page' : undefined}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </details>
+    </div>
   </nav>
 </header>

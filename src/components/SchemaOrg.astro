@@ -1,32 +1,15 @@
 ---
 import { site } from '../lib/site';
+import { openingHoursSpec } from '../lib/hours';
 
 /**
  * LocalBusiness + Cafe JSON-LD, emitted site-wide from BaseLayout.
- * Pulls straight from site.json, so updating the address/hours/phone there
- * updates the structured data automatically. Verify with Google's Rich Results
- * Test after the real details are entered.
+ * Pulls from site.json (address/phone) and settings/hours.json (hours), so
+ * editing those updates the structured data automatically. Verify with Google's
+ * Rich Results Test after the real details are entered.
  */
 const base = Astro.site?.href.replace(/\/$/, '') ?? '';
-
-// Map the human hours in site.json to schema openingHoursSpecification.
-const openingHours = site.hours.map((h) => ({
-  '@type': 'OpeningHoursSpecification',
-  dayOfWeek: h.dayCodes.map(
-    (d) =>
-      ({
-        Mo: 'Monday',
-        Tu: 'Tuesday',
-        We: 'Wednesday',
-        Th: 'Thursday',
-        Fr: 'Friday',
-        Sa: 'Saturday',
-        Su: 'Sunday',
-      })[d],
-  ),
-  opens: h.opens,
-  closes: h.closes,
-}));
+const openingHours = openingHoursSpec();
 
 const schema = {
   '@context': 'https://schema.org',

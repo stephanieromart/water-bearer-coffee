@@ -1,50 +1,92 @@
 /* ============================================================================
-   Water Bearer Coffee — Design Tokens
+   Water Bearer Coffee — Design Tokens (v2: bold maximalist, blue/white/gray)
    ----------------------------------------------------------------------------
-   Single source of truth for color, type, spacing, and motion.
-   Change a value here and it updates everywhere. A non-developer can safely
-   edit the HEX colors below to re-skin the whole site.
+   Single source of truth. Palette is restricted to shades of blue, white, and
+   gray — NO gold, no other hues. A non-developer can re-skin the whole site by
+   swapping the HEX values in the RAMP block below.
+
+   Maximalism here comes from SCALE, DENSITY, PATTERN, and TYPE CONTRAST — never
+   from color. Keep it that way.
    ============================================================================ */
 
 :root {
-  /* --- Color: "Bone & Clay" -------------------------------------------------
-     bg   = page background (warm bone)
-     ink  = primary text (near-black, warm)
-     accent = the one warm accent (clay / terracotta) used for CTAs + marks   */
-  --color-bg:            #f5f0e6; /* bone */
-  --color-bg-sunk:       #efe8d8; /* slightly deeper bone for alternating bands */
-  --color-surface:       #fbf8f1; /* cards / raised surfaces (near-white bone) */
-  --color-ink:           #1a1613; /* near-black, warm */
-  --color-ink-soft:      #4a4038; /* secondary text */
-  --color-ink-faint:     #6f6459; /* captions, meta (WCAG AA on bone/sunk/surface) */
-  --color-line:          #e0d6c3; /* hairline borders on bone */
-  --color-accent:        #b5502f; /* clay / terracotta — for fills + decoration */
-  --color-accent-text:   #9c4223; /* darker clay for accent TEXT on light bg (WCAG AA) */
-  --color-accent-hover:  #9c4223; /* darker clay for hover/active */
-  --color-accent-soft:   #eadfce; /* tint behind chips / highlights */
-  --color-on-accent:     #ffffff; /* text on the accent (AA on the clay fill) */
-  --color-focus:         #1a1613; /* focus ring (high contrast on bone) */
+  /* --- RAMP: warm-leaning blues (hue ~212), harmonizing warm-gray, white ----
+     Swap these to re-skin. Everything else references them. */
+  --blue-50:  #eef5fd;
+  --blue-100: #d9e8fa;
+  --blue-200: #b6d0f1;
+  --blue-300: #88b1e5;
+  --blue-400: #5a8dd6;
+  --blue-500: #3a6fc4; /* vibrant brand blue */
+  --blue-600: #2b569f; /* CTA fill (AA with white) */
+  --blue-700: #1f4079; /* accent text on white */
+  --blue-800: #163057; /* deep panels */
+  --blue-900: #0e2038; /* ink (near-black blue) */
+
+  --gray-50:  #f6f7f9;
+  --gray-100: #ebedf1;
+  --gray-200: #dce0e6;
+  --gray-300: #c2c8d1;
+  --gray-400: #98a0ac;
+  --gray-500: #737b88;
+  --gray-600: #565d69; /* faint text (AA on white) */
+  --gray-700: #3d434d; /* soft body text */
+  --gray-800: #292d34;
+  --gray-900: #1a1d22;
+
+  --white: #ffffff;
+  --paper: #f7fafd; /* barely-blue white for large fields */
+
+  /* --- Semantic color roles ------------------------------------------------- */
+  --color-bg:          var(--white);
+  --color-bg-tint:     var(--blue-50);   /* light blue band */
+  --color-bg-deep:     var(--blue-900);  /* deep blue section */
+  --color-surface:     var(--white);     /* cards */
+  --color-surface-alt: var(--blue-50);
+
+  --color-ink:         var(--blue-900);  /* primary text */
+  --color-ink-soft:    var(--gray-700);  /* secondary text */
+  --color-ink-faint:   var(--gray-600);  /* meta/caption (AA on white) */
+  --color-line:        var(--gray-200);  /* hairlines */
+  --color-line-strong: var(--blue-900);
+
+  --color-primary:      var(--blue-500); /* brand accent (fills, decoration) */
+  --color-primary-soft: var(--blue-100); /* chip/pattern tint */
+  --color-accent-text:  var(--blue-700); /* accent TEXT on white (AA) */
+
+  --color-cta:        var(--blue-600);   /* Order Online + primary buttons */
+  --color-cta-hover:  var(--blue-700);
+  --color-on-cta:     var(--white);
+
+  /* On deep-blue sections */
+  --color-on-deep:        var(--white);
+  --color-on-deep-soft:   var(--blue-100);
+  --color-on-deep-line:   rgba(255, 255, 255, 0.16);
+
+  --color-focus: var(--blue-700);
 
   /* --- Type families -------------------------------------------------------- */
-  --font-serif: 'Fraunces', Georgia, 'Times New Roman', serif;
-  --font-sans:  'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: 'Bricolage Grotesque Variable', 'Bricolage Grotesque', Georgia, serif;
+  --font-body:    'Inter Variable', 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
 
-  /* --- Type scale (fluid, mobile-first). 1.250 major-third-ish, clamped. ---- */
-  --step--1: clamp(0.80rem, 0.77rem + 0.15vw, 0.875rem);  /* fine print       */
-  --step-0:  clamp(1.00rem, 0.96rem + 0.20vw, 1.125rem);  /* body             */
-  --step-1:  clamp(1.20rem, 1.10rem + 0.50vw, 1.50rem);   /* lead / large body */
-  --step-2:  clamp(1.50rem, 1.30rem + 1.00vw, 2.25rem);   /* h3               */
-  --step-3:  clamp(1.90rem, 1.55rem + 1.75vw, 3.25rem);   /* h2               */
-  --step-4:  clamp(2.40rem, 1.80rem + 3.00vw, 4.75rem);   /* h1               */
-  --step-5:  clamp(3.00rem, 2.00rem + 5.00vw, 7.00rem);   /* hero display     */
+  /* --- Type scale (fluid). Maximalist: big top end, tight bottom. ----------- */
+  --step--1: clamp(0.80rem, 0.77rem + 0.15vw, 0.875rem);
+  --step-0:  clamp(1.00rem, 0.96rem + 0.20vw, 1.125rem);
+  --step-1:  clamp(1.20rem, 1.08rem + 0.55vw, 1.50rem);
+  --step-2:  clamp(1.45rem, 1.24rem + 1.05vw, 2.20rem);
+  --step-3:  clamp(1.85rem, 1.45rem + 2.00vw, 3.20rem);
+  --step-4:  clamp(2.35rem, 1.70rem + 3.25vw, 4.75rem);
+  --step-5:  clamp(3.00rem, 1.95rem + 5.20vw, 7.00rem);
+  --step-6:  clamp(3.75rem, 2.10rem + 8.20vw, 10.5rem); /* viewport-filling display */
 
-  --leading-tight:  1.05;
-  --leading-snug:   1.2;
+  --leading-tight:  0.95;
+  --leading-snug:   1.08;
   --leading-normal: 1.6;
   --tracking-tight: -0.02em;
-  --tracking-wide:  0.14em; /* for eyebrow / label caps */
+  --tracking-tighter: -0.035em;
+  --tracking-wide:  0.16em; /* eyebrow / label caps */
 
-  /* --- Spacing scale (8pt-ish rhythm) --------------------------------------- */
+  /* --- Spacing scale -------------------------------------------------------- */
   --space-2xs: 0.25rem;
   --space-xs:  0.5rem;
   --space-sm:  0.75rem;
@@ -53,17 +95,29 @@
   --space-xl:  2.5rem;
   --space-2xl: 4rem;
   --space-3xl: 6rem;
-  --space-4xl: 9rem;
+  --space-4xl: 8.5rem;
 
   /* --- Layout --------------------------------------------------------------- */
-  --measure:        68ch;    /* readable line length */
-  --container:      75rem;   /* 1200px max content width */
-  --container-wide: 90rem;   /* 1440px for full-bleed sections */
+  --measure:        66ch;
+  --container:      78rem;
+  --container-wide: 94rem;
   --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 16px;
+  --radius-md: 10px;
+  --radius-lg: 20px;
+  --radius-xl: 32px;
 
   /* --- Motion (subtle only) ------------------------------------------------- */
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --dur:  0.6s;
+
+  /* --- TEMP compat aliases (v1 → v2) -----------------------------------------
+     Keeps pages not yet rebuilt for v2 rendering coherently. Removed in the
+     step-8 cleanup once every page uses the v2 role tokens above. */
+  --font-serif:        var(--font-display);
+  --font-sans:         var(--font-body);
+  --color-accent:      var(--color-primary);
+  --color-accent-hover: var(--color-cta-hover);
+  --color-accent-soft: var(--blue-100);
+  --color-on-accent:   var(--white);
+  --color-bg-sunk:     var(--blue-50);
 }

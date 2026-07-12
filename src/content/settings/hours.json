@@ -1,0 +1,12 @@
+{
+  "_note": "DRAFT DATA — NEEDS AZURE REVIEW. Editable in the CMS under 'Hours'. Each day has a 24-hour open and close time, or mark it closed. The website groups identical days automatically (e.g. Mon–Fri) and builds the Google/SEO hours from this file.",
+  "week": [
+    { "day": "Monday", "closed": false, "open": "07:00", "close": "18:00" },
+    { "day": "Tuesday", "closed": false, "open": "07:00", "close": "18:00" },
+    { "day": "Wednesday", "closed": false, "open": "07:00", "close": "18:00" },
+    { "day": "Thursday", "closed": false, "open": "07:00", "close": "18:00" },
+    { "day": "Friday", "closed": false, "open": "07:00", "close": "18:00" },
+    { "day": "Saturday", "closed": false, "open": "08:00", "close": "18:00" },
+    { "day": "Sunday", "closed": false, "open": "08:00", "close": "15:00" }
+  ]
+}

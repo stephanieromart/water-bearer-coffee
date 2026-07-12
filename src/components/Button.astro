@@ -1,46 +1,59 @@
 ---
 /**
  * Button / link primitive. Renders an <a> (default) or <button>.
- * Variants: primary (clay fill), outline (ink hairline), ghost (text + arrow).
- * External links open in a new tab with safe rel — used for all Square deep-links.
+ * Variants:
+ *   cta      — loud blue fill, white text (default; the primary action)
+ *   outline  — heavy ink border (use on white)
+ *   deep     — white fill on deep-blue sections
+ *   ghost    — accent text link with arrow
+ * External links open in a new tab with safe rel — used for all Square links.
  */
 interface Props {
   href?: string;
-  variant?: 'primary' | 'outline' | 'ghost';
+  variant?: 'cta' | 'outline' | 'deep' | 'ghost';
   external?: boolean;
   type?: 'button' | 'submit';
+  size?: 'md' | 'lg';
   class?: string;
   [key: string]: unknown;
 }
 
 const {
   href,
-  variant = 'primary',
+  variant = 'cta',
   external = false,
   type = 'button',
+  size = 'md',
   class: className = '',
   ...rest
 } = Astro.props;
 
-const base =
-  'inline-flex items-center justify-center gap-2 font-sans font-semibold ' +
-  'text-[length:var(--step-0)] leading-none rounded-[var(--radius-sm)] ' +
-  'px-6 py-3.5 transition-colors duration-200 [transition-timing-function:var(--ease)] ' +
-  'no-underline cursor-pointer';
-
-const variants: Record<string, string> = {
-  primary:
-    'bg-[var(--color-accent)] text-[var(--color-on-accent)] ' +
-    'hover:bg-[var(--color-accent-hover)]',
-  outline:
-    'border border-[var(--color-ink)] text-[var(--color-ink)] ' +
-    'hover:bg-[var(--color-ink)] hover:text-[var(--color-bg)]',
-  ghost:
-    'px-0 py-1 text-[var(--color-accent-text)] hover:text-[var(--color-accent-hover)] ' +
-    'underline underline-offset-4 decoration-1',
+const sizes: Record<string, string> = {
+  md: 'px-6 py-3.5 text-[length:var(--step-0)]',
+  lg: 'px-8 py-4 text-[length:var(--step-1)]',
 };
 
-const cls = `${base} ${variants[variant]} ${className}`;
+const base =
+  'inline-flex items-center justify-center gap-2 font-body font-bold leading-none ' +
+  'rounded-[var(--radius-sm)] no-underline cursor-pointer ' +
+  'transition-[transform,background-color,color] duration-200 [transition-timing-function:var(--ease)] ' +
+  'hover:-translate-y-0.5';
+
+const variants: Record<string, string> = {
+  cta:
+    'bg-[var(--color-cta)] text-[var(--color-on-cta)] ' +
+    'hover:bg-[var(--color-cta-hover)]',
+  outline:
+    'border-2 border-[var(--color-ink)] text-[var(--color-ink)] ' +
+    'hover:bg-[var(--color-ink)] hover:text-[var(--white)]',
+  deep:
+    'bg-[var(--white)] text-[var(--color-ink)] hover:bg-[var(--blue-100)]',
+  ghost:
+    '!px-0 !py-1 text-[var(--color-accent-text)] hover:text-[var(--color-cta-hover)] ' +
+    'underline underline-offset-4 decoration-2 hover:translate-y-0',
+};
+
+const cls = `${base} ${sizes[size]} ${variants[variant]} ${className}`;
 const externalAttrs = external ? { target: '_blank', rel: 'noopener noreferrer' } : {};
 ---
 
