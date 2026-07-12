@@ -1,0 +1,126 @@
+# =============================================================================
+# Water Bearer Coffee — CMS config (Sveltia CMS, Decap-compatible)
+# -----------------------------------------------------------------------------
+# This intentionally exposes ONLY the things Azure should edit: Specials, Events,
+# Hours, the About page, and the homepage hero photo. Layout, colors, navigation,
+# and every other page are locked in code and NOT editable here.
+# =============================================================================
+
+backend:
+  name: git-gateway
+  branch: main
+
+# Uploaded photos are committed to the repo and served from /images/uploads/.
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+# A friendlier default; keeps edits on a branch + PR is possible later.
+publish_mode: simple
+
+collections:
+  # --- Specials ---------------------------------------------------------------
+  - name: "specials"
+    label: "Specials"
+    label_singular: "Special"
+    description: "Limited-time deals. A special disappears from the site automatically after its End date."
+    folder: "src/content/specials"
+    create: true
+    slug: "{{slug}}"
+    format: "frontmatter"
+    summary: "{{title}}  (ends {{end}})"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Photo", name: "image", widget: "image", required: false, hint: "Optional. A blue placeholder shows if left empty." }
+      - { label: "Photo description (for accessibility)", name: "imageAlt", widget: "string", required: false }
+      - { label: "Start date", name: "start", widget: "datetime", required: false, format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "End date (auto-hides after this)", name: "end", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+
+  # --- Events -----------------------------------------------------------------
+  - name: "events"
+    label: "Events"
+    label_singular: "Event"
+    description: "Dated happenings. An event disappears automatically after its date passes."
+    folder: "src/content/events"
+    create: true
+    slug: "{{slug}}"
+    format: "frontmatter"
+    summary: "{{title}}  ({{date}})"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "Time", name: "time", widget: "string", required: false, hint: "e.g. 6–8 PM" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Photo", name: "image", widget: "image", required: false }
+      - { label: "Photo description (for accessibility)", name: "imageAlt", widget: "string", required: false }
+
+  # --- Hours (single file) ----------------------------------------------------
+  - name: "hours"
+    label: "Hours"
+    files:
+      - name: "hours"
+        label: "Opening Hours"
+        file: "src/content/settings/hours.json"
+        description: "Set open and close times for each day, or mark a day closed."
+        fields:
+          - label: "Week"
+            name: "week"
+            widget: "list"
+            allow_add: false
+            collapsed: false
+            fields:
+              - { label: "Day", name: "day", widget: "string", readonly: true }
+              - { label: "Closed?", name: "closed", widget: "boolean", default: false }
+              - { label: "Opens", name: "open", widget: "string", hint: "24-hour, e.g. 07:00" }
+              - { label: "Closes", name: "close", widget: "string", hint: "24-hour, e.g. 18:00" }
+
+  # --- About page (single file) ----------------------------------------------
+  - name: "about"
+    label: "About Page"
+    files:
+      - name: "about"
+        label: "About Page Content"
+        file: "src/content/settings/about.json"
+        fields:
+          - label: "Owner"
+            name: "owner"
+            widget: "object"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Role", name: "role", widget: "string" }
+              - { label: "Photo", name: "image", widget: "image", required: false }
+              - { label: "Photo description", name: "imageAlt", widget: "string", required: false }
+              - { label: "Bio", name: "bio", widget: "text" }
+          - label: "Roaster"
+            name: "roaster"
+            widget: "object"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Role", name: "role", widget: "string" }
+              - { label: "Photo", name: "image", widget: "image", required: false }
+              - { label: "Photo description", name: "imageAlt", widget: "string", required: false }
+              - { label: "Bio", name: "bio", widget: "text" }
+          - label: "Community"
+            name: "community"
+            widget: "object"
+            fields:
+              - { label: "Heading", name: "heading", widget: "string" }
+              - { label: "Intro", name: "intro", widget: "text" }
+              - label: "Local businesses"
+                name: "businesses"
+                widget: "list"
+                fields:
+                  - { label: "Name", name: "name", widget: "string" }
+                  - { label: "What they do", name: "detail", widget: "string" }
+
+  # --- Homepage hero photo (single file) -------------------------------------
+  - name: "homepage"
+    label: "Homepage"
+    files:
+      - name: "home"
+        label: "Homepage Hero"
+        file: "src/content/settings/home.json"
+        description: "The big photo at the top of the home page."
+        fields:
+          - { label: "Hero photo", name: "heroImage", widget: "image", required: false, hint: "Leave empty to show the blue placeholder." }
+          - { label: "Photo description (for accessibility)", name: "heroImageAlt", widget: "string" }

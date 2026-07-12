@@ -22,6 +22,20 @@ const { title, description, ogImage, noindex } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="theme-color" content="#0e2038" />
     <meta name="generator" content={Astro.generator} />
+    {/* Netlify Identity invite/recovery links land on the site root with a hash
+        token. Bounce them into the CMS. Tiny + inline: no site-wide 3rd-party JS. */}
+    <script is:inline>
+      (function () {
+        var h = window.location.hash;
+        if (
+          h &&
+          /(invite_token|recovery_token|confirmation_token|email_change_token)=/.test(h) &&
+          window.location.pathname.indexOf('/admin') !== 0
+        ) {
+          window.location.replace('/admin/' + h);
+        }
+      })();
+    </script>
     <SEO title={title} description={description} ogImage={ogImage} noindex={noindex} />
     <SchemaOrg />
     <slot name="head" />

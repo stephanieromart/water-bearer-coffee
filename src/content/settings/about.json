@@ -1,0 +1,25 @@
+{
+  "_note": "DRAFT DATA — NEEDS AZURE REVIEW. Editable in the CMS under 'About Page'. The owner, roaster, and community sections below all appear on the About page.",
+  "owner": {
+    "name": "Azure Klug",
+    "role": "Owner",
+    "imageAlt": "Portrait of Azure Klug, owner",
+    "bio": "Azure opened Water Bearer Coffee to build the kind of café she always wanted in her own neighborhood — a warm, busy spot where the coffee is taken seriously but nobody takes themselves too seriously. She runs the shop day to day and keeps it rooted in the community that raised it."
+  },
+  "roaster": {
+    "name": "The Roaster",
+    "role": "Roaster & Barista",
+    "imageAlt": "Portrait of the roaster at work",
+    "bio": "Our roaster does something most cafés don't: roasts the coffee in the morning, then pulls shots of it behind the bar the same afternoon. That short loop — roast it, serve it, taste it across the counter, adjust next week — is why our espresso keeps getting better and why we can tell you exactly what's in your cup."
+  },
+  "community": {
+    "heading": "Rooted in the neighborhood",
+    "intro": "We buy local first and share the counter every chance we get. When you spend a dollar here, a lot of it stays in Traverse City.",
+    "businesses": [
+      { "name": "A Local Bakery", "detail": "Fresh pastries delivered every morning" },
+      { "name": "A Local Dairy", "detail": "Milk and cream from up the road" },
+      { "name": "A Local Farm", "detail": "Seasonal produce for the kitchen" },
+      { "name": "A Local Maker", "detail": "Mugs and goods on our retail shelf" }
+    ]
+  }
+}
