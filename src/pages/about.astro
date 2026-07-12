@@ -1,59 +1,143 @@
 ---
 import { getEntry, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PhotoPlaceholder from '../components/PhotoPlaceholder.astro';
 import Button from '../components/Button.astro';
+import PhotoPlaceholder from '../components/PhotoPlaceholder.astro';
+import about from '../content/settings/about.json';
+import { site } from '../lib/site';
 
+// Long-form narrative body (Markdown) — the roaster/scratch story.
 const entry = await getEntry('pages', 'about');
 if (!entry) throw new Error('Missing content/pages/about.md');
 const { Content } = await render(entry);
+
+// The two profiles the client named as must-haves, rendered in one shared shape.
+const { owner, roaster, community } = about;
+const profiles = [
+  { ...owner, tone: 'mid' as const, tagLabel: 'The owner' },
+  { ...roaster, tone: 'deep' as const, tagLabel: 'The roaster' },
+];
 ---
 
-<BaseLayout title="About" description={entry.data.intro}>
-  <!-- Page header -->
-  <section class="u-container pt-[var(--space-3xl)]">
-    <p class="u-eyebrow" data-reveal>Our story</p>
-    <h1 class="mt-4 max-w-4xl text-[length:var(--step-4)]" data-reveal data-reveal-delay="80">
-      {entry.data.title}
-    </h1>
-    <p class="u-measure mt-6 text-[length:var(--step-1)] text-[var(--color-ink-soft)]" data-reveal data-reveal-delay="160">
-      {entry.data.intro}
-    </p>
-  </section>
-
-  <!-- Centerpiece: the roaster-who-pulls-shots idea, given real weight -->
-  <section class="u-container py-[var(--space-3xl)]">
-    <div class="grid items-center gap-[var(--space-2xl)] lg:grid-cols-2">
-      <figure data-reveal>
-        <PhotoPlaceholder ratio="4/5" label="The roaster at the drum roaster, early morning" />
-        <figcaption class="mt-3 text-[length:var(--step--1)] text-[var(--color-ink-faint)]">
-          Same person, a few hours later, on bar.
-        </figcaption>
-      </figure>
-      <blockquote class="border-l-2 border-[var(--color-accent)] pl-6" data-reveal data-reveal-delay="120">
-        <p class="font-serif text-[length:var(--step-3)] leading-snug">
-          The coffee in your cup was roasted a few feet from where it was poured —
-          by the same person who poured it.
-        </p>
-        <p class="mt-5 text-[var(--color-ink-soft)]">
-          That's not a slogan. It's how the whole shop is built.
-        </p>
-      </blockquote>
+<BaseLayout
+  title="About"
+  description="The people behind Water Bearer Coffee — the owner, the roaster who pulls your shots, and the Traverse City makers we build the shop around."
+>
+  <!-- PAGE HEADER ------------------------------------------------------------- -->
+  <section class="relative overflow-hidden border-b-2 border-[var(--color-ink)]">
+    <div class="u-dots absolute inset-0 -z-10 opacity-50" aria-hidden="true"></div>
+    <div class="u-container u-container-wide py-[var(--space-3xl)] lg:py-[var(--space-4xl)]">
+      <p class="u-eyebrow" data-reveal>Our story</p>
+      <!-- DRAFT COPY - NEEDS AZURE REVIEW -->
+      <h1 class="u-display mt-4 max-w-[16ch] text-[length:var(--step-5)]" data-reveal data-reveal-delay="60">
+        The same hands that <span class="text-[var(--color-primary)]">roast it</span> pour it.
+      </h1>
+      <p class="u-measure mt-6 text-[length:var(--step-1)] text-[var(--color-ink-soft)]" data-reveal data-reveal-delay="140">
+        {entry.data.intro}
+      </p>
     </div>
   </section>
 
-  <!-- The long-form story body -->
-  <section class="u-container pb-[var(--space-3xl)]">
+  <!-- STATEMENT BAND ---------------------------------------------------------- -->
+  <section class="border-b-2 border-[var(--color-ink)] bg-[var(--color-bg-tint)]">
+    <div class="u-container u-container-wide py-[var(--space-2xl)]">
+      <!-- DRAFT COPY - NEEDS AZURE REVIEW -->
+      <p class="u-display max-w-[24ch] text-[length:var(--step-3)] leading-[var(--leading-snug)]" data-reveal>
+        Coffee usually splits into two worlds that never meet.
+        <span class="text-[var(--color-primary)]">We put them in the same apron.</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- THE TWO PROFILES -------------------------------------------------------- -->
+  <section class="u-container u-container-wide py-[var(--space-3xl)]">
+    <ol class="grid gap-[var(--space-3xl)]">
+      {
+        profiles.map((person, i) => (
+          <li
+            class="grid items-center gap-[var(--space-2xl)] lg:grid-cols-2"
+            data-reveal
+          >
+            <div class:list={['relative', i % 2 === 1 && 'lg:order-2']}>
+              {person.image ? (
+                <img
+                  src={person.image}
+                  alt={person.imageAlt}
+                  width="900"
+                  height="1100"
+                  loading="lazy"
+                  decoding="async"
+                  class="aspect-[4/5] w-full rounded-[var(--radius-lg)] border-2 border-[var(--color-ink)] object-cover"
+                />
+              ) : (
+                <PhotoPlaceholder
+                  ratio="4/5"
+                  tone={person.tone}
+                  label={person.imageAlt}
+                  class="border-2 border-[var(--color-ink)]"
+                />
+              )}
+              <span class="u-tag u-tag--solid absolute -top-4 left-6 shadow-lg">{person.tagLabel}</span>
+            </div>
+
+            <div>
+              <h2 class="u-display text-[length:var(--step-4)]">{person.name}</h2>
+              <p class="u-eyebrow mt-3">{person.role}</p>
+              {/* DRAFT COPY - NEEDS AZURE REVIEW */}
+              <p class="u-measure mt-5 text-[length:var(--step-1)] text-[var(--color-ink-soft)]">
+                {person.bio}
+              </p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <!-- COMMUNITY --------------------------------------------------------------- -->
+  <section class="on-deep relative overflow-hidden border-y-2 border-[var(--color-ink)] bg-[var(--color-bg-deep)] text-[var(--color-on-deep)]">
+    <div class="u-dots absolute inset-0 opacity-50" aria-hidden="true"></div>
+    <div class="u-container u-container-wide relative py-[var(--space-3xl)]">
+      <div class="max-w-[52ch]" data-reveal>
+        <p class="u-eyebrow">Local first</p>
+        <h2 class="u-display mt-3 text-[length:var(--step-4)]">{community.heading}</h2>
+        <p class="mt-5 text-[length:var(--step-1)] text-[var(--color-on-deep-soft)]">
+          {community.intro}
+        </p>
+      </div>
+
+      <ul class="mt-[var(--space-2xl)] grid gap-[var(--space-lg)] sm:grid-cols-2 lg:grid-cols-4">
+        {
+          community.businesses.map((b, i) => (
+            <li
+              class="rounded-[var(--radius-lg)] border-2 border-[var(--color-on-deep-line)] bg-white/5 p-6"
+              data-reveal
+              data-reveal-delay={i * 80}
+            >
+              {/* DRAFT COPY - NEEDS AZURE REVIEW */}
+              <h3 class="font-display text-[length:var(--step-2)] font-extrabold">{b.name}</h3>
+              <p class="mt-2 text-[var(--color-on-deep-soft)]">{b.detail}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- LONG-FORM STORY --------------------------------------------------------- -->
+  <section class="u-container py-[var(--space-3xl)]">
     <article class="prose" data-reveal>
       <Content />
     </article>
   </section>
 
-  <section class="border-t border-[var(--color-line)]">
-    <div class="u-container py-[var(--space-2xl)]">
-      <div class="flex flex-wrap gap-4" data-reveal>
-        <Button href="/coffee">See what we're roasting</Button>
-        <Button href="/visit" variant="outline">Come visit</Button>
+  <!-- CTA --------------------------------------------------------------------- -->
+  <section class="border-t-2 border-[var(--color-ink)] bg-[var(--color-bg-tint)]">
+    <div class="u-container u-container-wide py-[var(--space-2xl)]">
+      <div class="flex flex-wrap items-center gap-4" data-reveal>
+        <Button href="/menu" size="lg">See the menu</Button>
+        <Button href="/visit" variant="outline" size="lg">Come visit</Button>
+        <Button href={site.square.orderUrl} variant="ghost" external>Order online</Button>
       </div>
     </div>
   </section>
