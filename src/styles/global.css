@@ -18,53 +18,59 @@
   --font-sans: var(--font-sans);
 }
 
-/* --- Base ------------------------------------------------------------------ */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
+/* --- Base ------------------------------------------------------------------
+   Kept inside @layer base so Tailwind utility classes (which live in
+   @layer utilities) always win over these element defaults. Without the layer,
+   `a { color: inherit }` would beat text-* utilities and break, e.g., button
+   text color + its contrast. */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
 
-html {
-  scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
-}
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
 
-body {
-  margin: 0;
-  background-color: var(--color-bg);
-  color: var(--color-ink);
-  font-family: var(--font-sans);
-  font-size: var(--step-0);
-  line-height: var(--leading-normal);
-  font-synthesis: none;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
+  body {
+    margin: 0;
+    background-color: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--step-0);
+    line-height: var(--leading-normal);
+    font-synthesis: none;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
 
-h1, h2, h3, h4 {
-  font-family: var(--font-serif);
-  font-weight: 500;
-  line-height: var(--leading-tight);
-  letter-spacing: var(--tracking-tight);
-  margin: 0;
-  text-wrap: balance;
-}
+  h1, h2, h3, h4 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-tight);
+    margin: 0;
+    text-wrap: balance;
+  }
 
-p {
-  text-wrap: pretty;
-}
+  p {
+    text-wrap: pretty;
+  }
 
-a {
-  color: inherit;
-  text-underline-offset: 0.2em;
-}
+  a {
+    color: inherit;
+    text-underline-offset: 0.2em;
+  }
 
-img,
-picture,
-svg {
-  display: block;
-  max-width: 100%;
+  img,
+  picture,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
 }
 
 /* --- Accessibility: visible focus everywhere ------------------------------- */
@@ -106,7 +112,7 @@ svg {
   font-weight: 600;
   letter-spacing: var(--tracking-wide);
   text-transform: uppercase;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .u-measure { max-width: var(--measure); }

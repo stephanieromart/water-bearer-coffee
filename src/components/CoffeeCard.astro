@@ -22,12 +22,12 @@ const { slug, name, origin, roastLevel, price, tastingNotes, heroAlt } = Astro.p
   <PhotoPlaceholder ratio="4/5" label={heroAlt ?? name} />
   <div class="mt-4">
     <div class="flex items-baseline justify-between gap-3">
-      <h3 class="font-serif text-[var(--step-2)] transition-colors duration-200 group-hover:text-[var(--color-accent)]">
+      <h2 class="font-serif text-[length:var(--step-2)] transition-colors duration-200 group-hover:text-[var(--color-accent-text)]">
         {name}
-      </h3>
+      </h2>
       <span class="shrink-0 font-sans text-[var(--color-ink-soft)]">{formatPrice(price)}</span>
     </div>
-    <p class="mt-1 font-sans text-[var(--step--1)] uppercase tracking-[0.08em] text-[var(--color-ink-faint)]">
+    <p class="mt-1 font-sans text-[length:var(--step--1)] uppercase tracking-[0.08em] text-[var(--color-ink-faint)]">
       {[origin, roastLevel].filter(Boolean).join(' · ')}
     </p>
     <p class="mt-2 font-sans text-[var(--color-ink-soft)]">{tastingNotes.join(', ')}</p>

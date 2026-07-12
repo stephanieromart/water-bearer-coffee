@@ -24,7 +24,7 @@ const {
 
 const base =
   'inline-flex items-center justify-center gap-2 font-sans font-semibold ' +
-  'text-[var(--step-0)] leading-none rounded-[var(--radius-sm)] ' +
+  'text-[length:var(--step-0)] leading-none rounded-[var(--radius-sm)] ' +
   'px-6 py-3.5 transition-colors duration-200 [transition-timing-function:var(--ease)] ' +
   'no-underline cursor-pointer';
 
@@ -36,7 +36,7 @@ const variants: Record<string, string> = {
     'border border-[var(--color-ink)] text-[var(--color-ink)] ' +
     'hover:bg-[var(--color-ink)] hover:text-[var(--color-bg)]',
   ghost:
-    'px-0 py-1 text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] ' +
+    'px-0 py-1 text-[var(--color-accent-text)] hover:text-[var(--color-accent-hover)] ' +
     'underline underline-offset-4 decoration-1',
 };
 

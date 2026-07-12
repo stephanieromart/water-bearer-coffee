@@ -1,0 +1,61 @@
+---
+import { site } from '../lib/site';
+
+/**
+ * LocalBusiness + Cafe JSON-LD, emitted site-wide from BaseLayout.
+ * Pulls straight from site.json, so updating the address/hours/phone there
+ * updates the structured data automatically. Verify with Google's Rich Results
+ * Test after the real details are entered.
+ */
+const base = Astro.site?.href.replace(/\/$/, '') ?? '';
+
+// Map the human hours in site.json to schema openingHoursSpecification.
+const openingHours = site.hours.map((h) => ({
+  '@type': 'OpeningHoursSpecification',
+  dayOfWeek: h.dayCodes.map(
+    (d) =>
+      ({
+        Mo: 'Monday',
+        Tu: 'Tuesday',
+        We: 'Wednesday',
+        Th: 'Thursday',
+        Fr: 'Friday',
+        Sa: 'Saturday',
+        Su: 'Sunday',
+      })[d],
+  ),
+  opens: h.opens,
+  closes: h.closes,
+}));
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': ['CafeOrCoffeeShop', 'LocalBusiness'],
+  '@id': `${base}/#business`,
+  name: site.name,
+  description: site.description,
+  url: base || undefined,
+  telephone: site.phone,
+  email: site.email,
+  image: `${base}/og-default.png`,
+  priceRange: '$$',
+  servesCuisine: 'Coffee',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: site.address.street,
+    addressLocality: site.address.city,
+    addressRegion: site.address.region,
+    postalCode: site.address.postalCode,
+    addressCountry: site.address.country,
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: site.geo.latitude,
+    longitude: site.geo.longitude,
+  },
+  openingHoursSpecification: openingHours,
+  sameAs: site.social.map((s) => s.href),
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} is:inline />

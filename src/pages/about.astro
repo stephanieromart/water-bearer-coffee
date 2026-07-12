@@ -13,10 +13,10 @@ const { Content } = await render(entry);
   <!-- Page header -->
   <section class="u-container pt-[var(--space-3xl)]">
     <p class="u-eyebrow" data-reveal>Our story</p>
-    <h1 class="mt-4 max-w-4xl text-[var(--step-4)]" data-reveal data-reveal-delay="80">
+    <h1 class="mt-4 max-w-4xl text-[length:var(--step-4)]" data-reveal data-reveal-delay="80">
       {entry.data.title}
     </h1>
-    <p class="u-measure mt-6 text-[var(--step-1)] text-[var(--color-ink-soft)]" data-reveal data-reveal-delay="160">
+    <p class="u-measure mt-6 text-[length:var(--step-1)] text-[var(--color-ink-soft)]" data-reveal data-reveal-delay="160">
       {entry.data.intro}
     </p>
   </section>
@@ -26,12 +26,12 @@ const { Content } = await render(entry);
     <div class="grid items-center gap-[var(--space-2xl)] lg:grid-cols-2">
       <figure data-reveal>
         <PhotoPlaceholder ratio="4/5" label="The roaster at the drum roaster, early morning" />
-        <figcaption class="mt-3 text-[var(--step--1)] text-[var(--color-ink-faint)]">
+        <figcaption class="mt-3 text-[length:var(--step--1)] text-[var(--color-ink-faint)]">
           Same person, a few hours later, on bar.
         </figcaption>
       </figure>
       <blockquote class="border-l-2 border-[var(--color-accent)] pl-6" data-reveal data-reveal-delay="120">
-        <p class="font-serif text-[var(--step-3)] leading-snug">
+        <p class="font-serif text-[length:var(--step-3)] leading-snug">
           The coffee in your cup was roasted a few feet from where it was poured —
           by the same person who poured it.
         </p>

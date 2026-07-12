@@ -27,7 +27,7 @@ const mode: 'link' | 'embed' = 'link';
       href={signupUrl}
       target="_blank"
       rel="noopener noreferrer"
-      class="inline-flex items-center justify-center gap-2 rounded-[var(--radius-sm)] bg-[var(--color-accent)] px-8 py-4 font-sans text-[var(--step-0)] font-semibold text-[var(--color-on-accent)] no-underline transition-colors duration-200 hover:bg-[var(--color-accent-hover)]"
+      class="inline-flex items-center justify-center gap-2 rounded-[var(--radius-sm)] bg-[var(--color-accent)] px-8 py-4 font-sans text-[length:var(--step-0)] font-semibold text-[var(--color-on-accent)] no-underline transition-colors duration-200 hover:bg-[var(--color-accent-hover)]"
     >
       Join the rewards program
     </a>
@@ -48,11 +48,11 @@ const mode: 'link' | 'embed' = 'link';
   !(mode === 'link' && signupUrl) && mode !== 'embed' && (
     <div class="rounded-[var(--radius-md)] border border-dashed border-[var(--color-accent)] bg-[var(--color-accent-soft)] px-6 py-5 text-[var(--color-ink)]">
       <p class="font-semibold">Sign-up is almost ready.</p>
-      <p class="mt-1 text-[var(--step--1)] text-[var(--color-ink-soft)]">
+      <p class="mt-1 text-[length:var(--step--1)] text-[var(--color-ink-soft)]">
         Ask a barista to add you to rewards next time you're in — online sign-up
         is coming soon.
       </p>
-      <p class="mt-2 text-[var(--step--1)] text-[var(--color-ink-faint)]">
+      <p class="mt-2 text-[length:var(--step--1)] text-[var(--color-ink-faint)]">
         <!-- DRAFT: dev note — set signupUrl in RewardsSignupSlot.astro to activate -->
         Setup note for the owner: this button goes live the moment you add your
         rewards vendor link in <code>src/components/RewardsSignupSlot.astro</code>.

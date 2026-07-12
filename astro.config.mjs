@@ -7,7 +7,12 @@ import tailwindcss from '@tailwindcss/vite';
 // It is used for sitemap URLs, canonical tags, and OG image URLs.
 export default defineConfig({
   site: 'https://waterbearercoffee.com',
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      // Keep noindex utility pages out of the sitemap.
+      filter: (page) => !page.includes('/thank-you'),
+    }),
+  ],
   vite: {
     plugins: [tailwindcss()],
   },

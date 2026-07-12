@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Update the domain here and in astro.config.mjs before launch.
+Sitemap: https://waterbearercoffee.com/sitemap-index.xml

@@ -3,6 +3,7 @@ import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import SEO from '../components/SEO.astro';
+import SchemaOrg from '../components/SchemaOrg.astro';
 
 interface Props {
   title?: string;
@@ -22,6 +23,7 @@ const { title, description, ogImage, noindex } = Astro.props;
     <meta name="theme-color" content="#f5f0e6" />
     <meta name="generator" content={Astro.generator} />
     <SEO title={title} description={description} ogImage={ogImage} noindex={noindex} />
+    <SchemaOrg />
     <slot name="head" />
   </head>
   <body>

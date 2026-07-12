@@ -40,11 +40,11 @@ const features = [
     <div class="mx-auto grid max-w-[var(--container-wide)] items-center gap-8 px-[var(--space-lg)] py-[var(--space-3xl)] md:px-[var(--space-xl)] lg:grid-cols-[1.05fr_1fr] lg:py-[var(--space-4xl)]">
       <div>
         <p class="u-eyebrow" data-reveal>{site.address.city}, {site.address.region}</p>
-        <h1 class="mt-5 text-[var(--step-5)]" data-reveal data-reveal-delay="80">
+        <h1 class="mt-5 text-[length:var(--step-5)]" data-reveal data-reveal-delay="80">
           Roasted in house.<br />Poured by the person<br />who roasts it.
         </h1>
         <p
-          class="u-measure mt-6 text-[var(--step-1)] text-[var(--color-ink-soft)]"
+          class="u-measure mt-6 text-[length:var(--step-1)] text-[var(--color-ink-soft)]"
           data-reveal
           data-reveal-delay="160"
         >
@@ -66,7 +66,7 @@ const features = [
   <!-- BRAND STATEMENT -------------------------------------------------------- -->
   <section class="border-y border-[var(--color-line)] bg-[var(--color-bg-sunk)]">
     <div class="u-container py-[var(--space-3xl)]">
-      <p class="u-measure mx-auto text-center font-serif text-[var(--step-3)] leading-snug" data-reveal>
+      <p class="u-measure mx-auto text-center font-serif text-[length:var(--step-3)] leading-snug" data-reveal>
         Most cafés buy their beans from someone else and their syrups from a jug.
         We roast ours in the back and cook the rest from scratch.
       </p>
@@ -80,7 +80,7 @@ const features = [
         features.map((f, i) => (
           <div data-reveal data-reveal-delay={i * 80}>
             <div class="mb-4 h-px w-12 bg-[var(--color-accent)]" />
-            <h2 class="font-serif text-[var(--step-2)]">{f.title}</h2>
+            <h2 class="font-serif text-[length:var(--step-2)]">{f.title}</h2>
             <p class="mt-3 text-[var(--color-ink-soft)]">{f.body}</p>
           </div>
         ))
@@ -96,21 +96,21 @@ const features = [
       </div>
       <div data-reveal data-reveal-delay="120">
         <p class="u-eyebrow">Featured roast</p>
-        <h2 class="mt-4 text-[var(--step-4)]">{featured.data.name}</h2>
+        <h2 class="mt-4 text-[length:var(--step-4)]">{featured.data.name}</h2>
         <p class="mt-2 font-sans uppercase tracking-[0.08em] text-[var(--color-ink-faint)]">
           {[featured.data.origin, featured.data.roastLevel].filter(Boolean).join(' · ')}
         </p>
         <div class="mt-4 flex flex-wrap gap-2">
           {featured.data.tastingNotes.map((n) => (
-            <span class="rounded-full bg-[var(--color-accent-soft)] px-3 py-1 text-[var(--step--1)] text-[var(--color-ink)]">
+            <span class="rounded-full bg-[var(--color-accent-soft)] px-3 py-1 text-[length:var(--step--1)] text-[var(--color-ink)]">
               {n}
             </span>
           ))}
         </div>
         <p class="u-measure mt-5 text-[var(--color-ink-soft)]">{featured.data.story}</p>
         <div class="mt-7 flex flex-wrap items-center gap-5">
-          <Button href={`/coffee/${featured.id}`}>Read more</Button>
-          <span class="font-serif text-[var(--step-2)]">{formatPrice(featured.data.price)}</span>
+          <Button href={`/coffee/${featured.id}`}>Read about {featured.data.name}</Button>
+          <span class="font-serif text-[length:var(--step-2)]">{formatPrice(featured.data.price)}</span>
         </div>
       </div>
     </div>
@@ -122,7 +122,7 @@ const features = [
       <div class="flex flex-wrap items-end justify-between gap-4" data-reveal>
         <div>
           <p class="u-eyebrow">On the bar</p>
-          <h2 class="mt-3 text-[var(--step-3)]">Made-from-scratch favorites</h2>
+          <h2 class="mt-3 text-[length:var(--step-3)]">Made-from-scratch favorites</h2>
         </div>
         <Button href="/menu" variant="ghost">See the full menu</Button>
       </div>
@@ -135,13 +135,13 @@ const features = [
               data-reveal-delay={i * 80}
             >
               <div class="flex items-baseline justify-between gap-3">
-                <h3 class="font-serif text-[var(--step-1)]">{item.name}</h3>
+                <h3 class="font-serif text-[length:var(--step-1)]">{item.name}</h3>
                 {item.price && (
                   <span class="shrink-0 text-[var(--color-ink-soft)]">{formatPrice(item.price)}</span>
                 )}
               </div>
-              <p class="mt-2 text-[var(--step--1)] text-[var(--color-ink-soft)]">{item.description}</p>
-              <p class="mt-3 text-[var(--step--1)] font-semibold text-[var(--color-accent)]">
+              <p class="mt-2 text-[length:var(--step--1)] text-[var(--color-ink-soft)]">{item.description}</p>
+              <p class="mt-3 text-[length:var(--step--1)] font-semibold text-[var(--color-accent-text)]">
                 House-made
               </p>
             </li>
@@ -156,7 +156,7 @@ const features = [
     <div class="grid gap-[var(--space-2xl)] lg:grid-cols-2">
       <div data-reveal>
         <p class="u-eyebrow">Find us</p>
-        <h2 class="mt-3 text-[var(--step-3)]">{site.address.street}</h2>
+        <h2 class="mt-3 text-[length:var(--step-3)]">{site.address.street}</h2>
         <p class="mt-2 text-[var(--color-ink-soft)]">
           {site.address.city}, {site.address.region} {site.address.postalCode}
         </p>
@@ -175,7 +175,7 @@ const features = [
   <section class="border-t border-[var(--color-line)]">
     <div class="u-container py-[var(--space-3xl)]">
       <div class="mx-auto max-w-2xl text-center" data-reveal>
-        <h2 class="text-[var(--step-3)]">Stay in the loop</h2>
+        <h2 class="text-[length:var(--step-3)]">Stay in the loop</h2>
         <p class="mt-3 text-[var(--color-ink-soft)]">
           New roasts, seasonal drinks, and where the cart is parked this weekend.
         </p>

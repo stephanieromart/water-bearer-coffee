@@ -13,12 +13,12 @@ const categories = (await getCollection('menu')).sort((a, b) => a.data.order - b
 >
   <section class="u-container pt-[var(--space-3xl)]">
     <p class="u-eyebrow" data-reveal>Café menu</p>
-    <h1 class="mt-4 text-[var(--step-4)]" data-reveal data-reveal-delay="80">On the bar today</h1>
+    <h1 class="mt-4 text-[length:var(--step-4)]" data-reveal data-reveal-delay="80">On the bar today</h1>
     <p class="u-measure mt-6 text-[var(--color-ink-soft)]" data-reveal data-reveal-delay="160">
       Prices are for our shop on {site.address.street}. Items marked
       <span class="mx-1 inline-flex items-center gap-1 align-middle">
         <span aria-hidden="true" class="inline-block h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]"></span>
-        <span class="text-[var(--color-accent)] font-semibold">house-made</span>
+        <span class="text-[var(--color-accent-text)] font-semibold">house-made</span>
       </span>
       are prepared here from scratch.
     </p>
@@ -29,7 +29,7 @@ const categories = (await getCollection('menu')).sort((a, b) => a.data.order - b
       {
         categories.map((cat) => (
           <div data-reveal>
-            <h2 class="border-b border-[var(--color-ink)] pb-3 text-[var(--step-2)]">
+            <h2 class="border-b border-[var(--color-ink)] pb-3 text-[length:var(--step-2)]">
               {cat.data.category}
             </h2>
             <ul class="mt-5 space-y-5">
@@ -37,12 +37,12 @@ const categories = (await getCollection('menu')).sort((a, b) => a.data.order - b
                 <li class="flex items-baseline gap-3">
                   <div class="flex-1">
                     <div class="flex items-center gap-2">
-                      <h3 class="font-sans text-[var(--step-0)] font-semibold text-[var(--color-ink)]">
+                      <h3 class="font-sans text-[length:var(--step-0)] font-semibold text-[var(--color-ink)]">
                         {item.name}
                       </h3>
                       {item.madeInHouse && (
                         <span
-                          class="inline-flex items-center gap-1 text-[var(--color-accent)]"
+                          class="inline-flex items-center gap-1 text-[var(--color-accent-text)]"
                           title="Made in house from scratch"
                         >
                           <span aria-hidden="true" class="inline-block h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" />
@@ -51,7 +51,7 @@ const categories = (await getCollection('menu')).sort((a, b) => a.data.order - b
                       )}
                     </div>
                     {item.description && (
-                      <p class="mt-0.5 text-[var(--step--1)] text-[var(--color-ink-soft)]">
+                      <p class="mt-0.5 text-[length:var(--step--1)] text-[var(--color-ink-soft)]">
                         {item.description}
                       </p>
                     )}
@@ -76,7 +76,7 @@ const categories = (await getCollection('menu')).sort((a, b) => a.data.order - b
   <section class="border-t border-[var(--color-line)] bg-[var(--color-bg-sunk)]">
     <div class="u-container flex flex-wrap items-center justify-between gap-6 py-[var(--space-2xl)]">
       <div data-reveal>
-        <h2 class="text-[var(--step-2)]">Order ahead</h2>
+        <h2 class="text-[length:var(--step-2)]">Order ahead</h2>
         <p class="mt-2 text-[var(--color-ink-soft)]">Skip the line — order and pay through Square.</p>
       </div>
       <div data-reveal data-reveal-delay="80">

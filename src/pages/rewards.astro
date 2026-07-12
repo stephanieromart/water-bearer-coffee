@@ -17,10 +17,10 @@ const steps = [
 <BaseLayout title="Rewards" description={entry.data.intro}>
   <section class="u-container pt-[var(--space-3xl)]">
     <p class="u-eyebrow" data-reveal>Rewards</p>
-    <h1 class="mt-4 max-w-3xl text-[var(--step-4)]" data-reveal data-reveal-delay="80">
+    <h1 class="mt-4 max-w-3xl text-[length:var(--step-4)]" data-reveal data-reveal-delay="80">
       {entry.data.title}
     </h1>
-    <p class="u-measure mt-6 text-[var(--step-1)] text-[var(--color-ink-soft)]" data-reveal data-reveal-delay="160">
+    <p class="u-measure mt-6 text-[length:var(--step-1)] text-[var(--color-ink-soft)]" data-reveal data-reveal-delay="160">
       {entry.data.intro}
     </p>
   </section>
@@ -36,8 +36,8 @@ const steps = [
             data-reveal
             data-reveal-delay={i * 100}
           >
-            <span class="font-serif text-[var(--step-4)] text-[var(--color-accent)]">{s.n}</span>
-            <h3 class="mt-3 font-serif text-[var(--step-2)]">{s.title}</h3>
+            <span class="font-serif text-[length:var(--step-4)] text-[var(--color-accent-text)]">{s.n}</span>
+            <h3 class="mt-3 font-serif text-[length:var(--step-2)]">{s.title}</h3>
             <p class="mt-2 text-[var(--color-ink-soft)]">{s.body}</p>
           </li>
         ))
@@ -52,7 +52,7 @@ const steps = [
         <Content />
       </article>
       <div class="flex flex-col justify-center" data-reveal data-reveal-delay="100">
-        <h2 class="text-[var(--step-2)]">Ready to start earning?</h2>
+        <h2 class="text-[length:var(--step-2)]">Ready to start earning?</h2>
         <p class="mt-3 text-[var(--color-ink-soft)]">
           Sign up in seconds and your next visit already counts.
         </p>

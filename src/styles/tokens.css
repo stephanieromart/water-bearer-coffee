@@ -16,12 +16,13 @@
   --color-surface:       #fbf8f1; /* cards / raised surfaces (near-white bone) */
   --color-ink:           #1a1613; /* near-black, warm */
   --color-ink-soft:      #4a4038; /* secondary text */
-  --color-ink-faint:     #7a6f63; /* captions, meta, disabled */
+  --color-ink-faint:     #6f6459; /* captions, meta (WCAG AA on bone/sunk/surface) */
   --color-line:          #e0d6c3; /* hairline borders on bone */
-  --color-accent:        #b5502f; /* clay / terracotta */
+  --color-accent:        #b5502f; /* clay / terracotta — for fills + decoration */
+  --color-accent-text:   #9c4223; /* darker clay for accent TEXT on light bg (WCAG AA) */
   --color-accent-hover:  #9c4223; /* darker clay for hover/active */
   --color-accent-soft:   #eadfce; /* tint behind chips / highlights */
-  --color-on-accent:     #fbf8f1; /* text on the accent */
+  --color-on-accent:     #ffffff; /* text on the accent (AA on the clay fill) */
   --color-focus:         #1a1613; /* focus ring (high contrast on bone) */
 
   /* --- Type families -------------------------------------------------------- */

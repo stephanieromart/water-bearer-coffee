@@ -18,7 +18,7 @@ const eventTypes = [
 
 const fieldBase =
   'w-full rounded-[var(--radius-sm)] border border-[var(--color-line)] bg-[var(--color-surface)] px-4 py-3 text-[var(--color-ink)] placeholder:text-[var(--color-ink-faint)] focus-visible:border-[var(--color-accent)]';
-const labelBase = 'mb-1.5 block font-sans text-[var(--step--1)] font-semibold text-[var(--color-ink)]';
+const labelBase = 'mb-1.5 block font-sans text-[length:var(--step--1)] font-semibold text-[var(--color-ink)]';
 ---
 
 <BaseLayout title="Mobile Espresso" description={entry.data.intro}>
@@ -27,10 +27,10 @@ const labelBase = 'mb-1.5 block font-sans text-[var(--step--1)] font-semibold te
     <div class="grid items-center gap-[var(--space-2xl)] lg:grid-cols-[1.1fr_1fr]">
       <div>
         <p class="u-eyebrow" data-reveal>Catering &amp; events</p>
-        <h1 class="mt-4 text-[var(--step-4)]" data-reveal data-reveal-delay="80">
+        <h1 class="mt-4 text-[length:var(--step-4)]" data-reveal data-reveal-delay="80">
           {entry.data.title}
         </h1>
-        <p class="u-measure mt-6 text-[var(--step-1)] text-[var(--color-ink-soft)]" data-reveal data-reveal-delay="160">
+        <p class="u-measure mt-6 text-[length:var(--step-1)] text-[var(--color-ink-soft)]" data-reveal data-reveal-delay="160">
           {entry.data.intro}
         </p>
         <div class="mt-8" data-reveal data-reveal-delay="240">
@@ -60,7 +60,7 @@ const labelBase = 'mb-1.5 block font-sans text-[var(--step--1)] font-semibold te
     <div class="u-container grid gap-[var(--space-2xl)] py-[var(--space-3xl)] lg:grid-cols-[1fr_1.4fr]">
       <div data-reveal>
         <p class="u-eyebrow">Let's talk</p>
-        <h2 class="mt-3 text-[var(--step-3)]">Tell us about your event</h2>
+        <h2 class="mt-3 text-[length:var(--step-3)]">Tell us about your event</h2>
         <p class="mt-4 text-[var(--color-ink-soft)]">
           The more you can share up front, the faster we can get you a real number.
           We reply within a couple of business days.
@@ -86,11 +86,11 @@ const labelBase = 'mb-1.5 block font-sans text-[var(--step--1)] font-semibold te
 
         <div class="grid gap-5 sm:grid-cols-2">
           <div>
-            <label class={labelBase} for="me-name">Name <span class="text-[var(--color-accent)]">*</span></label>
+            <label class={labelBase} for="me-name">Name <span class="text-[var(--color-accent-text)]">*</span></label>
             <input class={fieldBase} id="me-name" name="name" type="text" required autocomplete="name" />
           </div>
           <div>
-            <label class={labelBase} for="me-email">Email <span class="text-[var(--color-accent)]">*</span></label>
+            <label class={labelBase} for="me-email">Email <span class="text-[var(--color-accent-text)]">*</span></label>
             <input class={fieldBase} id="me-email" name="email" type="email" required autocomplete="email" />
           </div>
           <div>
@@ -128,8 +128,8 @@ const labelBase = 'mb-1.5 block font-sans text-[var(--step--1)] font-semibold te
         >
           Send inquiry
         </button>
-        <p class="mt-3 text-[var(--step--1)] text-[var(--color-ink-faint)]">
-          <span class="text-[var(--color-accent)]">*</span> Required. We'll only use your details to reply about your event.
+        <p class="mt-3 text-[length:var(--step--1)] text-[var(--color-ink-faint)]">
+          <span class="text-[var(--color-accent-text)]">*</span> Required. We'll only use your details to reply about your event.
         </p>
       </form>
     </div>

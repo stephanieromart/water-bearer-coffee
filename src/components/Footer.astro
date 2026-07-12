@@ -7,7 +7,7 @@ const { address } = site;
 <footer class="mt-[var(--space-4xl)] border-t border-[var(--color-line)] bg-[var(--color-bg-sunk)]">
   <div class="u-container grid gap-[var(--space-2xl)] py-[var(--space-2xl)] md:grid-cols-[1.4fr_1fr_1fr]">
     <div>
-      <p class="font-serif text-[var(--step-2)] font-medium">{site.name}</p>
+      <p class="font-serif text-[length:var(--step-2)] font-medium">{site.name}</p>
       <p class="u-measure mt-3 text-[var(--color-ink-soft)]">{site.tagline}</p>
       <div class="mt-5 flex gap-4">
         {
@@ -16,7 +16,7 @@ const { address } = site;
               href={s.href}
               target="_blank"
               rel="noopener noreferrer"
-              class="text-[var(--step--1)] font-semibold text-[var(--color-ink-soft)] no-underline hover:text-[var(--color-accent)]"
+              class="text-[length:var(--step--1)] font-semibold text-[var(--color-ink-soft)] no-underline hover:text-[var(--color-accent-text)]"
             >
               {s.label}
             </a>
@@ -33,7 +33,7 @@ const { address } = site;
             <li>
               <a
                 href={link.href}
-                class="text-[var(--color-ink-soft)] no-underline hover:text-[var(--color-accent)]"
+                class="text-[var(--color-ink-soft)] no-underline hover:text-[var(--color-accent-text)]"
               >
                 {link.label}
               </a>
@@ -48,12 +48,12 @@ const { address } = site;
       <address class="space-y-2 not-italic text-[var(--color-ink-soft)]">
         <p>{address.street}<br />{address.city}, {address.region} {address.postalCode}</p>
         <p>
-          <a href={`tel:${site.phoneHref}`} class="no-underline hover:text-[var(--color-accent)]">
+          <a href={`tel:${site.phoneHref}`} class="no-underline hover:text-[var(--color-accent-text)]">
             {site.phone}
           </a>
         </p>
         <p>
-          <a href={`mailto:${site.email}`} class="no-underline hover:text-[var(--color-accent)]">
+          <a href={`mailto:${site.email}`} class="no-underline hover:text-[var(--color-accent-text)]">
             {site.email}
           </a>
         </p>
@@ -63,10 +63,10 @@ const { address } = site;
 
   <div class="border-t border-[var(--color-line)]">
     <div
-      class="u-container flex flex-col gap-2 py-5 text-[var(--step--1)] text-[var(--color-ink-faint)] sm:flex-row sm:items-center sm:justify-between"
+      class="u-container flex flex-col gap-2 py-5 text-[length:var(--step--1)] text-[var(--color-ink-faint)] sm:flex-row sm:items-center sm:justify-between"
     >
       <p>&copy; {year} {site.name}. All rights reserved.</p>
-      <p>Order online through our <a href={site.square.orderUrl} target="_blank" rel="noopener noreferrer" class="underline underline-offset-2 hover:text-[var(--color-accent)]">Square shop</a>.</p>
+      <p>Order online through our <a href={site.square.orderUrl} target="_blank" rel="noopener noreferrer" class="underline underline-offset-2 hover:text-[var(--color-accent-text)]">Square shop</a>.</p>
     </div>
   </div>
 </footer>
