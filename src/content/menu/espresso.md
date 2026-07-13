@@ -1,31 +1,42 @@
 ---
-# <!-- DRAFT COPY - NEEDS OWNER REVIEW -->
+# <!-- DRAFT COPY - NEEDS AZURE REVIEW. Item names + photos are real; descriptions are draft; prices TBD. -->
 category: "Espresso"
 order: 1
 items:
   - name: "Espresso"
-    description: "A double shot of the house blend, pulled to order."
-    price: 3.5
+    description: "A double shot of our house-roasted blend, pulled to order."
+    image: "/images/menu/espresso.jpg"
+    imageAlt: "A double shot of espresso"
   - name: "Macchiato"
     description: "Double shot marked with a dollop of steamed milk."
-    price: 4
+    image: "/images/menu/macchiato.jpg"
+    imageAlt: "An espresso macchiato"
   - name: "Cortado"
-    description: "Equal parts espresso and steamed milk. Five ounces."
-    price: 4.5
+    description: "Equal parts espresso and steamed milk. Small and balanced."
+    image: "/images/menu/cortado.jpg"
+    imageAlt: "A cortado in a small glass"
   - name: "Cappuccino"
     description: "Espresso, steamed milk, and a deep cap of foam."
-    price: 4.75
+    image: "/images/menu/cappuccino.jpg"
+    imageAlt: "A cappuccino with latte art"
   - name: "Latte"
-    description: "Espresso and silky steamed milk. Add a house syrup."
-    price: 5.25
-  - name: "Mocha"
-    description: "Latte with house dark-chocolate sauce."
-    price: 5.75
+    description: "Espresso and silky steamed milk. Add a house-made syrup."
+    image: "/images/menu/latte.jpg"
+    imageAlt: "A latte with poured art"
+  - name: "More Espresso Less Depresso"
+    description: "Our signature blended espresso shake — rich, cold, and topped with banana."
     madeInHouse: true
-  - name: "Vanilla Latte"
-    description: "Latte with house vanilla bean syrup."
-    price: 5.75
+    image: "/images/menu/more-espresso-less-depresso.jpg"
+    imageAlt: "A blended espresso shake topped with a banana slice"
+  - name: "Oat Milk Latte"
+    description: "Espresso and steamed oat milk. Add a house-made syrup."
+    image: "/images/menu/oatmilk-latte.jpg"
+    imageAlt: "An oat milk latte with poured art"
+  - name: "Strawberry Cold Foam Latte"
+    description: "Iced latte crowned with house strawberry cold foam."
     madeInHouse: true
+    image: "/images/menu/strawberry-cold-foam-latte.jpg"
+    imageAlt: "An iced latte topped with pink strawberry cold foam"
 ---
 
-<!-- DRAFT COPY - NEEDS OWNER REVIEW -->
+<!-- DRAFT COPY - NEEDS AZURE REVIEW -->

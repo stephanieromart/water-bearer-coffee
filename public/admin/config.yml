@@ -71,8 +71,9 @@ collections:
             fields:
               - { label: "Day", name: "day", widget: "string", readonly: true }
               - { label: "Closed?", name: "closed", widget: "boolean", default: false }
-              - { label: "Opens", name: "open", widget: "string", hint: "24-hour, e.g. 07:00" }
-              - { label: "Closes", name: "close", widget: "string", hint: "24-hour, e.g. 18:00" }
+              - { label: "Opens", name: "open", widget: "string", hint: "24-hour, e.g. 08:00" }
+              - { label: "Closes", name: "close", widget: "string", hint: "24-hour, e.g. 15:00" }
+          - { label: "Kitchen note", name: "kitchenNote", widget: "string", required: false, hint: "Shown under the hours, e.g. 'Kitchen closes daily at 2 PM.' Leave empty to hide." }
 
   # --- About page (single file) ----------------------------------------------
   - name: "about"

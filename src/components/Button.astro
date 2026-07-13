@@ -34,23 +34,24 @@ const sizes: Record<string, string> = {
 };
 
 const base =
-  'inline-flex items-center justify-center gap-2 font-body font-bold leading-none ' +
+  'inline-flex items-center justify-center font-body font-bold leading-none ' +
   'rounded-[var(--radius-sm)] no-underline cursor-pointer ' +
-  'transition-[transform,background-color,color] duration-200 [transition-timing-function:var(--ease)] ' +
-  'hover:-translate-y-0.5';
+  'transition-colors duration-200 [transition-timing-function:var(--ease)]';
 
+// `.btn` (in global.css) provides the left-wipe fill + text inversion on hover.
+// Each non-ghost variant sets the wipe fill/text colors as CSS vars.
 const variants: Record<string, string> = {
   cta:
-    'bg-[var(--color-cta)] text-[var(--color-on-cta)] ' +
-    'hover:bg-[var(--color-cta-hover)]',
+    'btn bg-[var(--color-cta)] text-[var(--color-on-cta)] ' +
+    '[--btn-wipe:var(--color-on-light)] [--btn-wipe-text:var(--white)]',
   outline:
-    'border-2 border-[var(--color-ink)] text-[var(--color-ink)] ' +
-    'hover:bg-[var(--color-ink)] hover:text-[var(--white)]',
+    'btn border-2 border-[var(--color-line-strong)] text-[var(--color-ink)] ' +
+    '[--btn-wipe:var(--white)] [--btn-wipe-text:var(--color-on-light)]',
   deep:
-    'bg-[var(--white)] text-[var(--color-ink)] hover:bg-[var(--blue-100)]',
+    'btn bg-[var(--white)] text-[var(--color-on-light)] ' +
+    '[--btn-wipe:var(--color-on-light)] [--btn-wipe-text:var(--white)]',
   ghost:
-    '!px-0 !py-1 text-[var(--color-accent-text)] hover:text-[var(--color-cta-hover)] ' +
-    'underline underline-offset-4 decoration-2 hover:translate-y-0',
+    'link-underline !px-0 !py-1 text-[var(--color-accent-text)]',
 };
 
 const cls = `${base} ${sizes[size]} ${variants[variant]} ${className}`;
@@ -60,12 +61,14 @@ const externalAttrs = external ? { target: '_blank', rel: 'noopener noreferrer' 
 {
   href ? (
     <a href={href} class={cls} {...externalAttrs} {...rest}>
-      <slot />
-      {variant === 'ghost' && <span aria-hidden="true">&rarr;</span>}
+      <span class="btn__label">
+        <slot />
+        {variant === 'ghost' && <span aria-hidden="true">&rarr;</span>}
+      </span>
     </a>
   ) : (
     <button type={type} class={cls} {...rest}>
-      <slot />
+      <span class="btn__label"><slot /></span>
     </button>
   )
 }

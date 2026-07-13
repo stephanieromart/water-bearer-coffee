@@ -76,7 +76,7 @@
   left: var(--space-md);
   top: -4rem;
   z-index: 100;
-  background: var(--color-ink);
+  background: var(--color-bg-deep);
   color: var(--white);
   padding: var(--space-xs) var(--space-md);
   border-radius: var(--radius-sm);
@@ -120,13 +120,10 @@
 
 /* --- Pattern & texture (the maximalism, done cheaply for perf) -------------- */
 
-/* Halftone dot field — tonal blue-on-blue. Decorative, aria-hidden in markup. */
-.u-dots {
-  background-image: radial-gradient(var(--_dot, var(--blue-200)) 1.6px, transparent 1.7px);
-  background-size: 14px 14px;
-}
-.u-dots--tight { background-size: 9px 9px; }
-.on-deep .u-dots { --_dot: rgba(255, 255, 255, 0.14); }
+/* Dot texture removed per design direction — kept as a no-op so existing markup
+   (aria-hidden dot layers) renders nothing rather than needing removal everywhere. */
+.u-dots,
+.u-dots--tight { background-image: none; }
 
 /* Diagonal tonal stripes for section dividers / accents. */
 .u-stripes {
@@ -163,12 +160,12 @@
   letter-spacing: 0.02em;
   padding: 0.35em 0.7em;
   border-radius: var(--radius-sm);
-  border: 2px solid var(--color-ink);
+  border: 2px solid var(--color-line-strong);
   background: var(--white);
-  color: var(--color-ink);
+  color: var(--color-on-light);
 }
 .u-tag--solid { background: var(--color-cta); color: var(--color-on-cta); border-color: var(--color-cta); }
-.u-tag--primary { background: var(--color-primary); color: var(--white); border-color: var(--color-primary); }
+.u-tag--primary { background: var(--color-primary); color: var(--color-on-light); border-color: var(--color-primary); }
 
 /* --- Long-form prose (Markdown page bodies) -------------------------------- */
 .prose { max-width: var(--measure); color: var(--color-ink); }
@@ -189,18 +186,109 @@
 }
 .prose a {
   color: var(--color-accent-text);
-  text-decoration: underline;
-  text-underline-offset: 0.2em;
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 2px;
+  transition: background-size 0.55s var(--ease);
+  padding-bottom: 0.05em;
 }
+.prose a:hover, .prose a:focus-visible { background-size: 100% 2px; }
 
-/* --- Scroll reveal: subtle fade-and-rise ----------------------------------- */
-[data-reveal] {
+/* --- Scroll reveal (JS-gated) ----------------------------------------------
+   reveal.ts adds `.reveal-ready` to <html> on init, which switches on the hidden
+   start state below. No JS (or an error) → class never added → nothing hidden,
+   so all content stays visible. */
+.reveal-ready [data-reveal] {
   opacity: 0;
-  transform: translateY(1.25rem);
+  transform: translateY(24px);
   transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
   will-change: opacity, transform;
 }
-[data-reveal].is-visible { opacity: 1; transform: none; }
+.reveal-ready [data-reveal].is-visible { opacity: 1; transform: none; }
+
+/* ============================================================================
+   Marquee — the moving sign (CSS transform loop; see Marquee.astro)
+   ============================================================================ */
+.wb-marquee { position: relative; overflow: hidden; border-block: 2px solid; }
+.wb-marquee__track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: wb-marquee-x var(--marquee-duration, 30s) linear infinite;
+}
+.wb-marquee[data-direction='right'] .wb-marquee__track { animation-direction: reverse; }
+.wb-marquee:hover .wb-marquee__track { animation-play-state: paused; }
+.wb-marquee__group { display: flex; flex: none; }
+.wb-marquee__unit {
+  display: inline-flex; align-items: center; gap: 0.5em; padding-inline: 0.55em;
+  font-family: var(--font-display); font-weight: 800; text-transform: uppercase;
+  letter-spacing: -0.01em; font-size: var(--step-3); line-height: 1; white-space: nowrap;
+}
+.wb-marquee__icon { display: inline-flex; align-items: center; }
+@keyframes wb-marquee-x { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.wb-marquee--solid { background: var(--color-bg-deep); border-color: rgba(255, 255, 255, 0.22); }
+.wb-marquee--solid .wb-marquee__text,
+.wb-marquee--solid .wb-marquee__icon { color: var(--white); }
+.wb-marquee--outline { background: var(--white); border-color: var(--color-on-light); }
+.wb-marquee--outline .wb-marquee__text { color: transparent; -webkit-text-stroke: 2px var(--blue-600); }
+.wb-marquee--outline .wb-marquee__icon { color: var(--blue-600); }
+
+/* ============================================================================
+   Section dividers + grain texture
+   ============================================================================ */
+.wb-divider { display: block; width: 100%; line-height: 0; }
+.wb-divider svg { display: block; }
+
+/* Grain overlay for deep sections — tiny inline feTurbulence, ~0.4KB. */
+.u-grain::after {
+  content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  opacity: 0.45; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 120px 120px;
+}
+.u-grain > * { position: relative; z-index: 1; }
+
+/* ============================================================================
+   Hover + interaction states
+   ============================================================================ */
+/* Cards: lift, deepen shadow, brighten the glass one step. */
+.card-hover {
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), background-color 0.3s var(--ease);
+}
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 34px -12px rgba(3, 12, 28, 0.55);
+  background-color: rgba(255, 255, 255, 0.17);
+}
+
+/* Buttons: a fill wipes in from the left; text inverts. Focus ring is separate. */
+.btn { position: relative; overflow: hidden; isolation: isolate; }
+.btn__label { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 0.5rem; }
+.btn::before {
+  content: ''; position: absolute; inset: 0; z-index: 0;
+  background: var(--btn-wipe, var(--color-on-light));
+  transform: translateX(-101%);
+  transition: transform 0.55s var(--ease);
+}
+.btn:hover::before, .btn:focus-visible::before { transform: translateX(0); }
+.btn:hover, .btn:focus-visible { color: var(--btn-wipe-text, var(--white)); }
+
+/* Body links: underline draws in from the left. */
+.link-underline {
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%; background-repeat: no-repeat; background-size: 0% 2px;
+  transition: background-size 0.55s var(--ease);
+  padding-bottom: 0.05em;
+}
+.link-underline:hover, .link-underline:focus-visible { background-size: 100% 2px; }
+
+/* Grid images: slow zoom on hover; parent clips. */
+.img-zoom { overflow: hidden; }
+.img-zoom img { transition: transform 0.85s var(--ease); }
+.img-zoom:hover img, .img-zoom:focus-visible img { transform: scale(1.03); }
 
 /* --- Respect reduced-motion ------------------------------------------------ */
 @media (prefers-reduced-motion: reduce) {
@@ -210,5 +298,9 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
-  [data-reveal] { opacity: 1; transform: none; }
+  .reveal-ready [data-reveal] { opacity: 1; transform: none; }
+  .wb-marquee__track { animation: none; transform: none; }
+  .card-hover:hover { transform: none; }
+  .img-zoom:hover img, .img-zoom:focus-visible img { transform: none; }
+  .btn::before { display: none; }
 }

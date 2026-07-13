@@ -2,85 +2,120 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Button from '../components/Button.astro';
-import { site, formatPrice } from '../lib/site';
+import PhotoPlaceholder from '../components/PhotoPlaceholder.astro';
+import { site } from '../lib/site';
 
 const categories = (await getCollection('menu')).sort((a, b) => a.data.order - b.data.order);
+const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 ---
 
 <BaseLayout
   title="Menu"
-  description="The Water Bearer café menu — espresso, brewed and cold coffee, house chai and syrups, and food made from scratch."
+  description="The Water Bearer café menu — espresso, house chai and syrups, smoothies, toast, breakfast, sandwiches, and wraps."
 >
-  <section class="u-container pt-[var(--space-3xl)]">
-    <p class="u-eyebrow" data-reveal>Café menu</p>
-    <h1 class="mt-4 text-[length:var(--step-4)]" data-reveal data-reveal-delay="80">On the bar today</h1>
-    <p class="u-measure mt-6 text-[var(--color-ink-soft)]" data-reveal data-reveal-delay="160">
-      Prices are for our shop on {site.address.street}. Items marked
-      <span class="mx-1 inline-flex items-center gap-1 align-middle">
-        <span aria-hidden="true" class="inline-block h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]"></span>
-        <span class="text-[var(--color-accent-text)] font-semibold">house-made</span>
-      </span>
-      are prepared here from scratch.
-    </p>
-  </section>
+  <!-- HEADER ------------------------------------------------------------------ -->
+  <section class="relative overflow-hidden border-b-2 border-[var(--color-ink)]">
+    <div class="u-dots absolute inset-0 -z-10 opacity-50" aria-hidden="true"></div>
+    <div class="u-container u-container-wide py-[var(--space-3xl)]">
+      <p class="u-eyebrow" data-reveal>Café menu</p>
+      <h1 class="u-display mt-4 text-[length:var(--step-5)]" data-reveal data-reveal-delay="60">On the bar today.</h1>
+      <p class="u-measure mt-6 text-[length:var(--step-1)] text-[var(--color-ink-soft)]" data-reveal data-reveal-delay="140">
+        Espresso roasted in house, syrups made from scratch, plus smoothies, toast, breakfast, and
+        sandwiches. Items marked
+        <span class="u-tag u-tag--primary mx-1 !py-0.5 !text-[0.72em] align-middle">House-made</span>
+        are prepared here.
+      </p>
 
-  <section class="u-container py-[var(--space-3xl)]">
-    <div class="grid gap-[var(--space-2xl)] md:grid-cols-2">
-      {
-        categories.map((cat) => (
-          <div data-reveal>
-            <h2 class="border-b border-[var(--color-ink)] pb-3 text-[length:var(--step-2)]">
+      <!-- DRAFT COPY - NEEDS AZURE REVIEW -->
+      <p class="mt-5 inline-flex items-center gap-2 rounded-[var(--radius-sm)] border-2 border-[var(--color-ink)] bg-[var(--color-primary-soft)] px-4 py-2 text-[length:var(--step--1)] font-bold text-[var(--color-ink)]" data-reveal data-reveal-delay="200">
+        Menu items and photos are live — prices are being finalized.
+      </p>
+
+      <!-- Category quick-nav -->
+      <nav class="mt-8 flex flex-wrap gap-2" aria-label="Menu sections" data-reveal data-reveal-delay="240">
+        {
+          categories.map((cat) => (
+            <a
+              href={`#${slug(cat.data.category)}`}
+              class="rounded-[var(--radius-sm)] border-2 border-[var(--color-line-strong)] px-4 py-2 font-body text-[length:var(--step--1)] font-bold uppercase tracking-[0.06em] no-underline transition-colors duration-200 hover:bg-[var(--white)] hover:text-[var(--color-on-light)]"
+            >
               {cat.data.category}
-            </h2>
-            <ul class="mt-5 space-y-5">
-              {cat.data.items.map((item) => (
-                <li class="flex items-baseline gap-3">
-                  <div class="flex-1">
-                    <div class="flex items-center gap-2">
-                      <h3 class="font-sans text-[length:var(--step-0)] font-semibold text-[var(--color-ink)]">
-                        {item.name}
-                      </h3>
-                      {item.madeInHouse && (
-                        <span
-                          class="inline-flex items-center gap-1 text-[var(--color-accent-text)]"
-                          title="Made in house from scratch"
-                        >
-                          <span aria-hidden="true" class="inline-block h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" />
-                          <span class="sr-only">Made in house</span>
-                        </span>
-                      )}
-                    </div>
-                    {item.description && (
-                      <p class="mt-0.5 text-[length:var(--step--1)] text-[var(--color-ink-soft)]">
-                        {item.description}
-                      </p>
-                    )}
-                  </div>
-                  {item.price != null && (
-                    <span
-                      class="shrink-0 font-sans text-[var(--color-ink-soft)] tabular-nums"
-                      aria-label={`Price ${formatPrice(item.price)}`}
-                    >
-                      {formatPrice(item.price)}
-                    </span>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))
-      }
+            </a>
+          ))
+        }
+      </nav>
     </div>
   </section>
 
-  <section class="border-t border-[var(--color-line)] bg-[var(--color-bg-sunk)]">
-    <div class="u-container flex flex-wrap items-center justify-between gap-6 py-[var(--space-2xl)]">
+  <!-- CATEGORIES -------------------------------------------------------------- -->
+  {
+    categories.map((cat, ci) => (
+      <section
+        id={slug(cat.data.category)}
+        class:list={['scroll-mt-24 border-b-2 border-[var(--color-ink)]', ci % 2 === 1 && 'bg-[var(--color-bg-tint)]']}
+      >
+        <div class="u-container u-container-wide py-[var(--space-3xl)]">
+          <div class="flex items-baseline gap-4" data-reveal>
+            <span class="font-display text-[length:var(--step-4)] font-extrabold leading-none text-[var(--blue-200)]">
+              {String(ci + 1).padStart(2, '0')}
+            </span>
+            <h2 class="u-display text-[length:var(--step-3)]">{cat.data.category}</h2>
+          </div>
+
+          <ul class="mt-[var(--space-xl)] grid gap-[var(--space-lg)] sm:grid-cols-2 lg:grid-cols-3">
+            {cat.data.items.map((item, i) => (
+              <li
+                class="group overflow-hidden rounded-[var(--radius-lg)] border-2 border-[var(--color-ink)] bg-[var(--color-surface)]"
+                data-reveal
+                data-reveal-delay={(i % 3) * 80}
+              >
+                <div class="relative">
+                  {item.image ? (
+                    <img
+                      src={item.image}
+                      alt={item.imageAlt ?? item.name}
+                      width="800"
+                      height="600"
+                      loading="lazy"
+                      decoding="async"
+                      class="aspect-[4/3] w-full object-cover"
+                    />
+                  ) : (
+                    <PhotoPlaceholder ratio="4/3" tone="mid" label={item.name} rounded={false} />
+                  )}
+                  {item.madeInHouse && (
+                    <span class="u-tag u-tag--solid absolute left-3 top-3 shadow-md">House-made</span>
+                  )}
+                </div>
+                <div class="p-5">
+                  <h3 class="font-display text-[length:var(--step-1)] font-extrabold">{item.name}</h3>
+                  {item.description && (
+                    <p class="mt-1.5 text-[length:var(--step--1)] text-[var(--color-ink-soft)]">{item.description}</p>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    ))
+  }
+
+  <!-- ORDER + SHOP ------------------------------------------------------------ -->
+  <section class="on-deep u-grain relative overflow-hidden bg-[var(--color-bg-deep)] text-[var(--color-on-deep)]">
+    <div class="u-dots absolute inset-0 opacity-50" aria-hidden="true"></div>
+    <div class="u-container u-container-wide relative grid items-center gap-8 py-[var(--space-3xl)] lg:grid-cols-2">
       <div data-reveal>
-        <h2 class="text-[length:var(--step-2)]">Order ahead</h2>
-        <p class="mt-2 text-[var(--color-ink-soft)]">Skip the line — order and pay through Square.</p>
+        <p class="u-eyebrow">Take some home</p>
+        <h2 class="u-display mt-3 text-[length:var(--step-4)]">Order ahead or shop the shelf.</h2>
+        <p class="u-measure mt-4 text-[length:var(--step-1)] text-[var(--color-on-deep-soft)]">
+          Skip the line and order through Square — or shop merch, prepackaged teas, and bags of
+          coffee to brew at home.
+        </p>
       </div>
-      <div data-reveal data-reveal-delay="80">
-        <Button href={site.square.orderUrl} external>Order online</Button>
+      <div class="flex flex-wrap gap-4 lg:justify-end" data-reveal data-reveal-delay="120">
+        <Button href={site.square.orderUrl} variant="deep" size="lg" external>Order online</Button>
+        <Button href={site.square.shopUrl} variant="deep" size="lg" external>Shop merch, tea &amp; coffee</Button>
       </div>
     </div>
   </section>

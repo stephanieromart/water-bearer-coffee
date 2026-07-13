@@ -8,8 +8,15 @@ const isActive = (href: string) =>
 
 <header class="sticky top-0 z-50 border-b-2 border-[var(--color-ink)] bg-[var(--color-bg)]/95 backdrop-blur">
   <nav class="u-container u-container-wide flex items-center justify-between gap-4 py-3" aria-label="Primary">
-    <a href="/" class="font-display text-[length:var(--step-2)] font-extrabold leading-none tracking-[var(--tracking-tighter)] no-underline">
-      Water<span class="text-[var(--color-primary)]">Bearer</span>
+    <a href="/" class="shrink-0 no-underline" aria-label="Water Bearer Coffee — home">
+      <img
+        src="/images/brand/logo.png"
+        alt="Water Bearer Coffee"
+        width="695"
+        height="900"
+        class="h-12 w-auto lg:h-14"
+        fetchpriority="high"
+      />
     </a>
 
     <!-- Desktop nav -->
@@ -32,6 +39,14 @@ const isActive = (href: string) =>
           ))
         }
       </ul>
+      <a
+        href={site.square.shopUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 rounded-[var(--radius-sm)] border-2 border-[var(--color-line-strong)] px-4 py-2 font-body text-[length:var(--step--1)] font-bold uppercase tracking-[0.06em] text-[var(--color-ink)] no-underline transition-[transform,background-color,color] duration-200 hover:-translate-y-0.5 hover:bg-[var(--white)] hover:text-[var(--color-on-light)]"
+      >
+        Shop
+      </a>
       <a
         href={site.square.orderUrl}
         target="_blank"
@@ -60,14 +75,14 @@ const isActive = (href: string) =>
           Menu
           <span class="chev transition-transform duration-200" aria-hidden="true">▾</span>
         </summary>
-        <ul class="absolute right-0 top-full z-50 mt-3 w-60 rounded-[var(--radius-md)] border-2 border-[var(--color-ink)] bg-[var(--color-surface)] p-2 shadow-xl">
+        <ul class="absolute right-0 top-full z-50 mt-3 w-60 rounded-[var(--radius-md)] border-2 border-[var(--color-line-strong)] bg-[var(--color-bg-deep)] p-2 shadow-xl">
           {
             navLinks.map((link) => (
               <li>
                 <a
                   href={link.href}
                   class:list={[
-                    'block rounded-[var(--radius-sm)] px-3 py-2.5 font-body text-[length:var(--step-0)] font-semibold no-underline hover:bg-[var(--blue-50)]',
+                    'block rounded-[var(--radius-sm)] px-3 py-2.5 font-body text-[length:var(--step-0)] font-semibold no-underline hover:bg-white/10',
                     isActive(link.href) ? 'text-[var(--color-primary)]' : '',
                   ]}
                   aria-current={isActive(link.href) ? 'page' : undefined}
@@ -77,6 +92,16 @@ const isActive = (href: string) =>
               </li>
             ))
           }
+          <li class="mt-2 border-t-2 border-[var(--color-line-strong)] pt-2">
+            <a
+              href={site.square.shopUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="block rounded-[var(--radius-sm)] px-3 py-2.5 font-body text-[length:var(--step-0)] font-bold no-underline hover:bg-white/10"
+            >
+              Shop merch, tea &amp; coffee &rarr;
+            </a>
+          </li>
         </ul>
       </details>
     </div>

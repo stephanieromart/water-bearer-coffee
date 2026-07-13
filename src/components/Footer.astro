@@ -5,7 +5,7 @@ const year = new Date().getFullYear();
 const { address } = site;
 ---
 
-<footer class="on-deep relative mt-[var(--space-4xl)] overflow-hidden bg-[var(--color-bg-deep)] text-[var(--color-on-deep)]">
+<footer class="on-deep u-grain relative mt-[var(--space-4xl)] overflow-hidden bg-[var(--color-bg-deep)] text-[var(--color-on-deep)]">
   <div class="u-dots absolute inset-0 opacity-60" aria-hidden="true"></div>
 
   <div class="u-container u-container-wide relative py-[var(--space-3xl)]">
@@ -16,7 +16,7 @@ const { address } = site;
         href={site.square.orderUrl}
         target="_blank"
         rel="noopener noreferrer"
-        class="inline-flex shrink-0 items-center gap-2 rounded-[var(--radius-sm)] bg-[var(--white)] px-8 py-4 font-body text-[length:var(--step-1)] font-bold uppercase tracking-[0.04em] text-[var(--color-ink)] no-underline transition-transform duration-200 hover:-translate-y-0.5"
+        class="inline-flex shrink-0 items-center gap-2 rounded-[var(--radius-sm)] bg-[var(--white)] px-8 py-4 font-body text-[length:var(--step-1)] font-bold uppercase tracking-[0.04em] text-[var(--color-on-light)] no-underline transition-transform duration-200 hover:-translate-y-0.5"
       >
         Order Online
       </a>
@@ -24,6 +24,14 @@ const { address } = site;
 
     <div class="mt-[var(--space-2xl)] grid gap-[var(--space-2xl)] md:grid-cols-[1.3fr_1fr_1fr]">
       <div>
+        <img
+          src="/images/brand/logo-white.png"
+          alt=""
+          width="600"
+          height="600"
+          loading="lazy"
+          class="mb-4 h-20 w-auto opacity-90"
+        />
         <p class="font-display text-[length:var(--step-2)] font-extrabold">{site.name}</p>
         <p class="u-measure mt-3 text-[var(--color-on-deep-soft)]">{site.tagline}</p>
         <div class="mt-5 flex gap-4">

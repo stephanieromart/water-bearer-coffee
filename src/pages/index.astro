@@ -4,42 +4,40 @@ import Button from '../components/Button.astro';
 import PulseStrip from '../components/PulseStrip.astro';
 import PhotoPlaceholder from '../components/PhotoPlaceholder.astro';
 import HoursBlock from '../components/HoursBlock.astro';
+import Marquee from '../components/Marquee.astro';
+import Divider from '../components/Divider.astro';
+import Icon from '../components/Icon.astro';
+import InstagramGrid from '../components/InstagramGrid.astro';
+import type { IconName } from '../components/Icon.astro';
 import { site } from '../lib/site';
 import home from '../content/settings/home.json';
 
-const differentiators = [
+const differentiators: { n: string; icon: IconName; title: string; body: string }[] = [
   {
     n: '01',
+    icon: 'bean',
     title: 'Roasted in house',
     body: 'Every bean roasted a few feet from the bar — by the same person who pulls your shot.',
   },
   {
     n: '02',
+    icon: 'cup',
     title: 'Made from scratch',
     body: 'Syrups, sauces, chai, cold brew. Cooked here in small batches. Never from a jug.',
   },
   {
     n: '03',
+    icon: 'heart',
     title: 'For the neighborhood',
     body: 'We buy local first and share the counter with the makers and growers around us.',
   },
 ];
-
-const grid = [
-  { label: 'The espresso bar', tone: 'mid' },
-  { label: 'Roasting in back', tone: 'deep' },
-  { label: 'A breakfast burrito', tone: 'light' },
-  { label: 'Latte on the counter', tone: 'deep' },
-  { label: 'The shop, mid-morning', tone: 'light' },
-  { label: 'Cart at an event', tone: 'mid' },
-] as const;
 ---
 
 <BaseLayout>
-  <!-- HERO -------------------------------------------------------------------- -->
-  <section class="relative overflow-hidden border-b-2 border-[var(--color-ink)]">
+  <!-- HERO (sticky — the content below scrolls up and over it) --------------- -->
+  <section class="sticky top-0 z-0 overflow-hidden border-b-2 border-[var(--color-line-strong)]">
     <div class="u-container u-container-wide relative grid items-center gap-8 py-[var(--space-3xl)] lg:grid-cols-[1.05fr_0.95fr] lg:py-[var(--space-4xl)]">
-      <div class="u-dots absolute inset-0 -z-10 opacity-50" aria-hidden="true"></div>
       <div>
         <p class="u-eyebrow" data-reveal>{site.address.city}, {site.address.region} · Est. neighborhood café</p>
         <h1 class="u-display mt-4 text-[length:var(--step-6)]" data-reveal data-reveal-delay="60">
@@ -65,10 +63,10 @@ const grid = [
               width="900"
               height="1100"
               fetchpriority="high"
-              class="aspect-[4/5] w-full rounded-[var(--radius-xl)] border-2 border-[var(--color-ink)] object-cover"
+              class="aspect-[4/5] w-full rounded-[var(--radius-xl)] border-2 border-[var(--color-line-strong)] object-cover"
             />
           ) : (
-            <PhotoPlaceholder ratio="4/5" tone="mid" label={home.heroImageAlt} class="border-2 border-[var(--color-ink)]" />
+            <PhotoPlaceholder ratio="4/5" tone="mid" label={home.heroImageAlt} class="border-2 border-[var(--color-line-strong)]" />
           )
         }
         <span class="u-tag u-tag--solid absolute -bottom-4 left-6 shadow-lg">Open today — {site.address.city}</span>
@@ -76,97 +74,104 @@ const grid = [
     </div>
   </section>
 
-  <!-- BRAND STATEMENT --------------------------------------------------------- -->
-  <section class="border-b-2 border-[var(--color-ink)] bg-[var(--color-bg-tint)]">
-    <div class="u-container u-container-wide py-[var(--space-2xl)]">
-      <p class="u-display max-w-[22ch] text-[length:var(--step-3)] leading-[var(--leading-snug)]" data-reveal>
-        Most cafés buy their beans and their syrups. <span class="text-[var(--color-primary)]">We make ours.</span>
-      </p>
-    </div>
-  </section>
+  <!-- Everything past the hero rides above it (opaque, higher z-index) -------- -->
+  <div class="relative z-10">
+    <!-- MARQUEE 1 — the moving sign (in-house roasting) ---------------------- -->
+    {/* DRAFT COPY - NEEDS AZURE REVIEW */}
+    <Marquee text="Roasted in the back — poured out front" variant="solid" speed={54}>
+      <Icon slot="icon" name="bean" size={30} />
+    </Marquee>
 
-  <!-- SPECIALS & EVENTS PULSE (CMS-driven) ------------------------------------ -->
-  <PulseStrip />
-
-  <!-- THREE DIFFERENTIATORS --------------------------------------------------- -->
-  <section class="u-container u-container-wide py-[var(--space-3xl)]">
-    <ol class="grid gap-[var(--space-lg)] md:grid-cols-3">
-      {
-        differentiators.map((d, i) => (
-          <li
-            class="relative overflow-hidden rounded-[var(--radius-lg)] border-2 border-[var(--color-ink)] bg-[var(--color-surface)] p-8"
-            data-reveal
-            data-reveal-delay={i * 90}
-          >
-            <span class="font-display text-[length:var(--step-5)] font-extrabold leading-none text-[var(--blue-100)]">{d.n}</span>
-            <h3 class="mt-2 font-display text-[length:var(--step-2)] font-extrabold">{d.title}</h3>
-            <p class="mt-3 text-[var(--color-ink-soft)]">{d.body}</p>
-          </li>
-        ))
-      }
-    </ol>
-  </section>
-
-  <!-- MOBILE ESPRESSO TEASER -------------------------------------------------- -->
-  <section class="on-deep relative overflow-hidden border-y-2 border-[var(--color-ink)] bg-[var(--color-bg-deep)] text-[var(--color-on-deep)]">
-    <div class="u-dots absolute inset-0 opacity-50" aria-hidden="true"></div>
-    <div class="u-container u-container-wide relative grid items-center gap-8 py-[var(--space-3xl)] lg:grid-cols-[1.2fr_1fr]">
-      <div data-reveal>
-        <p class="u-eyebrow">Mobile espresso</p>
-        <h2 class="u-display mt-3 text-[length:var(--step-4)]">Bring the bar to your event.</h2>
-        <p class="u-measure mt-4 text-[length:var(--step-1)] text-[var(--color-on-deep-soft)]">
-          Weddings, markets, offices, and parties around Traverse City. A real barista, our
-          house espresso, and everything set up on site. Tell us the date and we'll send a quote.
+    <!-- BRAND STATEMENT ------------------------------------------------------ -->
+    <section class="relative border-b-2 border-[var(--color-line-strong)] bg-[var(--color-bg-tint)]">
+      <div class="u-container u-container-wide py-[var(--space-2xl)]">
+        <p class="u-display max-w-[22ch] text-[length:var(--step-3)] leading-[var(--leading-snug)]" data-reveal>
+          Most cafés buy their beans and their syrups. <span class="text-[var(--color-primary)]">We make ours.</span>
         </p>
-        <div class="mt-7">
-          <Button href="/mobile-espresso" variant="deep" size="lg">Inquire about a booking</Button>
+      </div>
+      <Divider variant="wave" color="var(--color-bg-deep)" height={56} />
+    </section>
+
+    <!-- SPECIALS & EVENTS PULSE (CMS-driven, deep section) ------------------- -->
+    <PulseStrip />
+
+    <!-- THREE DIFFERENTIATORS ------------------------------------------------ -->
+    <section class="relative bg-[var(--color-bg)]">
+      <div class="u-container u-container-wide py-[var(--space-3xl)]">
+        <ol class="grid gap-[var(--space-lg)] md:grid-cols-3">
+          {
+            differentiators.map((d, i) => (
+              <li
+                class="card-hover relative overflow-hidden rounded-[var(--radius-lg)] border-2 border-[var(--color-line-strong)] bg-[var(--color-surface)] p-8"
+                data-reveal
+                data-reveal-delay={i * 90}
+              >
+                <Icon name={d.icon} size={44} class="text-[var(--color-primary)]" />
+                <span class="mt-4 block font-display text-[length:var(--step-4)] font-extrabold leading-none text-[var(--blue-200)]">
+                  {d.n}
+                </span>
+                <h3 class="mt-2 font-display text-[length:var(--step-2)] font-extrabold">{d.title}</h3>
+                <p class="mt-3 text-[var(--color-ink-soft)]">{d.body}</p>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+      <Divider variant="zigzag" color="var(--color-bg-deep)" height={44} />
+    </section>
+
+    <!-- MOBILE ESPRESSO TEASER (deep section, grain) ------------------------- -->
+    <section class="on-deep u-grain relative overflow-hidden bg-[var(--color-bg-deep)] text-[var(--color-on-deep)]">
+      <div class="u-container u-container-wide grid items-center gap-8 py-[var(--space-3xl)] lg:grid-cols-[1.2fr_1fr]">
+        <div data-reveal>
+          <Icon name="cart" size={48} class="text-[var(--color-primary)]" />
+          <p class="u-eyebrow mt-4">Mobile espresso</p>
+          <h2 class="u-display mt-3 text-[length:var(--step-4)]">Bring the bar to your event.</h2>
+          <p class="u-measure mt-4 text-[length:var(--step-1)] text-[var(--color-on-deep-soft)]">
+            Weddings, markets, offices, and parties around Traverse City. A real barista, our
+            house espresso, and everything set up on site. Tell us the date and we'll send a quote.
+          </p>
+          <div class="mt-7">
+            <Button href="/mobile-espresso" variant="deep" size="lg">Inquire about a booking</Button>
+          </div>
+        </div>
+        <div data-reveal data-reveal-delay="120">
+          <PhotoPlaceholder ratio="4/3" tone="light" label="The mobile espresso cart at an event" />
         </div>
       </div>
-      <div data-reveal data-reveal-delay="120">
-        <PhotoPlaceholder ratio="4/3" tone="light" label="The mobile espresso cart at an event" />
-      </div>
-    </div>
-  </section>
+      <Divider variant="wave" color="var(--color-bg)" height={56} flip />
+    </section>
 
-  <!-- LOCATION + HOURS -------------------------------------------------------- -->
-  <section class="u-container u-container-wide py-[var(--space-3xl)]">
-    <div class="grid gap-[var(--space-2xl)] lg:grid-cols-2">
-      <div data-reveal>
-        <p class="u-eyebrow">Find us</p>
-        <h2 class="u-display mt-3 text-[length:var(--step-3)]">{site.address.street}</h2>
-        <p class="mt-2 text-[length:var(--step-1)] text-[var(--color-ink-soft)]">
-          {site.address.city}, {site.address.region} {site.address.postalCode}
-        </p>
-        <div class="mt-6 flex flex-wrap gap-4">
-          <Button href="/visit">Directions &amp; parking</Button>
-          <Button href={site.square.orderUrl} variant="outline" external>Order ahead</Button>
+    <!-- LOCATION + HOURS ----------------------------------------------------- -->
+    <section class="relative bg-[var(--color-bg)]">
+      <div class="u-container u-container-wide py-[var(--space-3xl)]">
+        <div class="grid gap-[var(--space-2xl)] lg:grid-cols-2">
+          <div data-reveal>
+            <p class="u-eyebrow">Find us</p>
+            <h2 class="u-display mt-3 text-[length:var(--step-3)]">{site.address.street}</h2>
+            <p class="mt-2 text-[length:var(--step-1)] text-[var(--color-ink-soft)]">
+              {site.address.city}, {site.address.region} {site.address.postalCode}
+            </p>
+            <div class="mt-6 flex flex-wrap gap-4">
+              <Button href="/visit">Directions &amp; parking</Button>
+              <Button href={site.square.orderUrl} variant="outline" external>Order ahead</Button>
+            </div>
+          </div>
+          <div data-reveal data-reveal-delay="120">
+            <p class="u-eyebrow mb-4">Hours</p>
+            <HoursBlock />
+          </div>
         </div>
       </div>
-      <div data-reveal data-reveal-delay="120">
-        <p class="u-eyebrow mb-4">Hours</p>
-        <HoursBlock />
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- PHOTO GRID (Instagram alternative — fast, no third-party embed) ---------- -->
-  <section class="border-t-2 border-[var(--color-ink)] bg-[var(--color-bg-tint)]">
-    <div class="u-container u-container-wide py-[var(--space-3xl)]">
-      <div class="flex flex-wrap items-end justify-between gap-4" data-reveal>
-        <h2 class="u-display text-[length:var(--step-3)]">From the shop</h2>
-        <a href={site.social[0].href} target="_blank" rel="noopener noreferrer" class="font-body text-[length:var(--step--1)] font-bold uppercase tracking-[0.08em] text-[var(--color-accent-text)] no-underline underline-offset-4 hover:underline">
-          Follow on Instagram &rarr;
-        </a>
-      </div>
-      <ul class="mt-[var(--space-xl)] grid grid-cols-2 gap-[var(--space-md)] md:grid-cols-3">
-        {
-          grid.map((g, i) => (
-            <li data-reveal data-reveal-delay={i * 60}>
-              <PhotoPlaceholder ratio="1/1" tone={g.tone} label={g.label} />
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-  </section>
+    <!-- INSTAGRAM ------------------------------------------------------------ -->
+    <InstagramGrid class="border-t-2 border-[var(--color-line-strong)] bg-[var(--color-bg-tint)] py-[var(--space-3xl)]" />
+
+    <!-- MARQUEE 2 — the moving sign (mobile cart) ---------------------------- -->
+    {/* DRAFT COPY - NEEDS AZURE REVIEW */}
+    <Marquee text="Bring the espresso cart to your event" variant="outline" direction="right" speed={50}>
+      <Icon slot="icon" name="star" size={28} />
+    </Marquee>
+  </div>
 </BaseLayout>

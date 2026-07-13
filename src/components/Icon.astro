@@ -1,0 +1,41 @@
+---
+/**
+ * Inline icon backed by the SVG sprite in src/assets/icons/sprite.svg
+ * (the sprite is injected once, site-wide, by BaseLayout).
+ *
+ * Icons inherit color from `currentColor`, so set `color` on the parent (or pass
+ * a text-color class) to tint them. Chunky single-weight line style on a 48x48
+ * grid — placeholder art, swappable 1:1.
+ */
+export type IconName =
+  | 'bean' | 'cup' | 'cart' | 'plant' | 'sun' | 'moon' | 'star' | 'heart' | 'wave';
+
+interface Props {
+  name: IconName;
+  size?: number | string;
+  class?: string;
+  title?: string; // provide for a meaningful icon; omit for decorative
+}
+
+const { name, size = 32, class: className = '', title } = Astro.props;
+const px = typeof size === 'number' ? `${size}px` : size;
+const decorative = !title;
+---
+
+<svg
+  class:list={['wb-icon', className]}
+  width={px}
+  height={px}
+  viewBox="0 0 48 48"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="3"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  role={decorative ? undefined : 'img'}
+  aria-hidden={decorative ? 'true' : undefined}
+  aria-label={decorative ? undefined : title}
+  focusable="false"
+>
+  <use href={`#i-${name}`} />
+</svg>

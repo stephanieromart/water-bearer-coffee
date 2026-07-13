@@ -3,14 +3,16 @@
   "owner": {
     "name": "Azure Klug",
     "role": "Owner",
-    "imageAlt": "Portrait of Azure Klug, owner",
+    "image": "/images/about/azure.jpg",
+    "imageAlt": "Azure Klug, owner, smiling behind the bar",
     "bio": "Azure opened Water Bearer Coffee to build the kind of café she always wanted in her own neighborhood — a warm, busy spot where the coffee is taken seriously but nobody takes themselves too seriously. She runs the shop day to day and keeps it rooted in the community that raised it."
   },
   "roaster": {
-    "name": "The Roaster",
+    "name": "Jeff",
     "role": "Roaster & Barista",
-    "imageAlt": "Portrait of the roaster at work",
-    "bio": "Our roaster does something most cafés don't: roasts the coffee in the morning, then pulls shots of it behind the bar the same afternoon. That short loop — roast it, serve it, taste it across the counter, adjust next week — is why our espresso keeps getting better and why we can tell you exactly what's in your cup."
+    "image": "/images/about/jeff.jpg",
+    "imageAlt": "Jeff, roaster and barista, pulling a shot under the neon sign",
+    "bio": "Jeff does something most cafés don't: roasts the coffee in the morning, then pulls shots of it behind the bar the same afternoon. That short loop — roast it, serve it, taste it across the counter, adjust next week — is why our espresso keeps getting better and why we can tell you exactly what's in your cup."
   },
   "community": {
     "heading": "Rooted in the neighborhood",

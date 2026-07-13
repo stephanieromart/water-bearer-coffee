@@ -1,0 +1,59 @@
+---
+/**
+ * Marquee — the "moving sign." A seamless CSS transform loop (NOT <marquee>).
+ *
+ * The track holds two identical groups; animating it to translateX(-50%) scrolls
+ * exactly one group width, so the loop is seamless. Each group repeats the unit
+ * enough times to overfill the viewport. Pauses on hover; freezes entirely under
+ * prefers-reduced-motion.
+ *
+ * Accessibility: every visible copy is aria-hidden; a single sr-only node carries
+ * the text for assistive tech.
+ *
+ * Optional `icon` slot repeats between each text instance — pass an <Icon/>.
+ */
+interface Props {
+  text: string;
+  speed?: number; // seconds for one full loop
+  direction?: 'left' | 'right';
+  variant?: 'solid' | 'outline';
+  copies?: number; // unit repeats per group (raise if a short phrase leaves gaps)
+  class?: string;
+}
+
+const {
+  text,
+  speed = 30,
+  direction = 'left',
+  variant = 'solid',
+  copies = 6,
+  class: className = '',
+} = Astro.props;
+
+// Render the icon slot once, then inject its markup between every text instance.
+const iconHtml = Astro.slots.has('icon') ? await Astro.slots.render('icon') : '';
+const units = Array.from({ length: Math.max(2, copies) });
+const groups = [0, 1];
+---
+
+<div
+  class:list={['wb-marquee', `wb-marquee--${variant}`, className]}
+  data-direction={direction}
+  style={`--marquee-duration:${speed}s;`}
+>
+  <div class="wb-marquee__track">
+    {
+      groups.map(() => (
+        <div class="wb-marquee__group" aria-hidden="true">
+          {units.map(() => (
+            <span class="wb-marquee__unit">
+              <span class="wb-marquee__text">{text}</span>
+              {iconHtml && <span class="wb-marquee__icon" set:html={iconHtml} />}
+            </span>
+          ))}
+        </div>
+      ))
+    }
+  </div>
+  <span class="sr-only">{text}</span>
+</div>

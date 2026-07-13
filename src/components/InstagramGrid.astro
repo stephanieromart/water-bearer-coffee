@@ -1,0 +1,66 @@
+---
+/**
+ * Instagram grid — a 6-up grid of recent posts.
+ *
+ * Data source: for now this reads a LOCAL placeholder file (src/data/instagram.json).
+ * It is structured so the source can be swapped for a real feed later without
+ * touching the markup — replace the import below with a fetch/loader that returns
+ * the same `{ handle, profileUrl, posts[] }` shape. See README "Instagram feed";
+ * going live needs a feed service or a Meta Graph API token (Azure's decision).
+ */
+import data from '../data/instagram.json';
+
+interface Props {
+  limit?: number;
+  class?: string;
+}
+const { limit = 6, class: className = '' } = Astro.props;
+const posts = data.posts.slice(0, limit);
+---
+
+<section class:list={['relative', className]} aria-labelledby="ig-heading">
+  <div class="u-container u-container-wide">
+    <div class="flex flex-wrap items-end justify-between gap-4" data-reveal>
+      <div>
+        <p class="u-eyebrow">From the feed</p>
+        <h2 id="ig-heading" class="u-display mt-2 text-[length:var(--step-3)]">On Instagram</h2>
+      </div>
+      <a
+        href={data.profileUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="link-underline font-body text-[length:var(--step--1)] font-bold uppercase tracking-[0.08em] text-[var(--color-accent-text)] no-underline"
+      >
+        Follow {data.handle} &rarr;
+      </a>
+    </div>
+
+    <ul class="mt-[var(--space-xl)] grid grid-cols-2 gap-[var(--space-md)] sm:grid-cols-3">
+      {
+        posts.map((p, i) => (
+          <li data-reveal data-reveal-delay={(i % 3) * 80}>
+            <a
+              href={p.permalink}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="img-zoom group relative block overflow-hidden rounded-[var(--radius-md)] border-2 border-[var(--color-line-strong)]"
+            >
+              <img
+                src={p.image}
+                alt={p.alt}
+                width="600"
+                height="600"
+                loading="lazy"
+                decoding="async"
+                class="aspect-square w-full object-cover"
+              />
+              <span class="pointer-events-none absolute inset-0 flex items-end bg-gradient-to-t from-[var(--blue-900)]/80 via-transparent to-transparent p-4 opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100">
+                <span class="font-body text-[length:var(--step--1)] font-semibold text-[var(--white)]">{p.caption}</span>
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

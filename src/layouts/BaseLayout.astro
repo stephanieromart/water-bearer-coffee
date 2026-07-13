@@ -4,6 +4,7 @@ import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import SEO from '../components/SEO.astro';
 import SchemaOrg from '../components/SchemaOrg.astro';
+import iconSprite from '../assets/icons/sprite.svg?raw';
 
 interface Props {
   title?: string;
@@ -20,7 +21,7 @@ const { title, description, ogImage, noindex } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="theme-color" content="#0e2038" />
+    <meta name="theme-color" content="#206aba" />
     <meta name="generator" content={Astro.generator} />
     {/* Netlify Identity invite/recovery links land on the site root with a hash
         token. Bounce them into the CMS. Tiny + inline: no site-wide 3rd-party JS. */}
@@ -41,6 +42,7 @@ const { title, description, ogImage, noindex } = Astro.props;
     <slot name="head" />
   </head>
   <body>
+    <Fragment set:html={iconSprite} />
     <a href="#main" class="skip-link">Skip to content</a>
     <Nav />
     <main id="main">
@@ -48,30 +50,11 @@ const { title, description, ogImage, noindex } = Astro.props;
     </main>
     <Footer />
 
-    <!-- Scroll reveal: subtle fade-and-rise. Progressive enhancement — if JS
-         is off or reduced-motion is set, content is fully visible (see CSS). -->
+    <!-- Scroll reveal: progressive enhancement. See src/scripts/reveal.ts —
+         if JS is off/fails or reduced-motion is set, all content stays visible. -->
     <script>
-      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const els = document.querySelectorAll<HTMLElement>('[data-reveal]');
-      if (prefersReduced || !('IntersectionObserver' in window)) {
-        els.forEach((el) => el.classList.add('is-visible'));
-      } else {
-        const io = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                const el = entry.target as HTMLElement;
-                const delay = el.dataset.revealDelay;
-                if (delay) el.style.transitionDelay = `${delay}ms`;
-                el.classList.add('is-visible');
-                io.unobserve(el);
-              }
-            });
-          },
-          { rootMargin: '0px 0px -10% 0px', threshold: 0.1 },
-        );
-        els.forEach((el) => io.observe(el));
-      }
+      import { initReveal } from '../scripts/reveal';
+      initReveal();
     </script>
   </body>
 </html>

@@ -1,31 +1,32 @@
 ---
-# <!-- DRAFT COPY - NEEDS OWNER REVIEW -->
-category: "From the Kitchen"
-order: 4
+# <!-- DRAFT COPY - NEEDS AZURE REVIEW. Item names + photos are real; descriptions are draft; prices TBD. -->
+category: "Toast & Breakfast"
+order: 5
 items:
-  - name: "Butter Croissant"
-    description: "Baked fresh each morning."
-    price: 4
-  - name: "Morning Bun"
-    description: "Laminated dough, orange sugar, cinnamon."
-    price: 4.5
-    madeInHouse: true
-  - name: "Seasonal Quiche"
-    description: "Ask about today's. Served with greens."
-    price: 8.5
-    madeInHouse: true
-  - name: "Avocado Toast"
-    description: "House sourdough, smashed avocado, chili, lemon."
-    price: 9
-    madeInHouse: true
-  - name: "Overnight Oats"
-    description: "Rolled oats, chia, seasonal fruit."
-    price: 6
-    madeInHouse: true
-  - name: "Granola & Yogurt"
-    description: "House granola, plain yogurt, honey."
-    price: 6.5
-    madeInHouse: true
+  - name: "Bougie Toast"
+    description: "Our loaded toast, done up right."
+    image: "/images/menu/bougie-toast.jpg"
+    imageAlt: "Bougie toast, loaded with toppings"
+  - name: "Cinnamon Toast"
+    description: "Warm, buttery, and dusted with cinnamon sugar."
+    image: "/images/menu/cinnamon-toast.jpg"
+    imageAlt: "Cinnamon toast"
+  - name: "Toast & Butter"
+    description: "Thick-cut and simple. Just toast and good butter."
+    image: "/images/menu/toast-and-butter.jpg"
+    imageAlt: "Toast with butter"
+  - name: "Bagel & Schmear"
+    description: "A bagel with a generous schmear of cream cheese."
+    image: "/images/menu/bagel-and-schmear.jpg"
+    imageAlt: "A bagel with cream cheese"
+  - name: "Egg & Cheese"
+    description: "Egg and melted cheese on your choice of bread."
+    image: "/images/menu/egg-and-cheese.jpg"
+    imageAlt: "An egg and cheese sandwich"
+  - name: "Yogurt Parfait"
+    description: "Yogurt layered with granola and fruit."
+    image: "/images/menu/yogurt-parfait.jpg"
+    imageAlt: "A yogurt parfait"
 ---
 
-<!-- DRAFT COPY - NEEDS OWNER REVIEW -->
+<!-- DRAFT COPY - NEEDS AZURE REVIEW -->

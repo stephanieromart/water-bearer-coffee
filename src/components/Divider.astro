@@ -1,0 +1,43 @@
+---
+/**
+ * Section divider — a full-bleed inline-SVG shape that makes two sections
+ * interlock instead of butting against a hard edge.
+ *
+ * Placement: drop it as the LAST child of a section, OUTSIDE the inner
+ * `u-container`. The shape is filled with the NEXT section's background color
+ * (`color`); the un-filled area shows the current section's background through,
+ * so the two colors interlock across the seam.
+ */
+interface Props {
+  variant?: 'wave' | 'zigzag' | 'arch';
+  color?: string; // fill = the NEXT section's background color
+  height?: number; // px
+  flip?: boolean; // mirror horizontally
+  class?: string;
+}
+
+const {
+  variant = 'wave',
+  color = 'var(--color-bg-deep)',
+  height = 48,
+  flip = false,
+  class: className = '',
+} = Astro.props;
+
+const paths: Record<string, string> = {
+  wave: 'M0,46 C240,96 480,-4 720,34 C960,72 1200,14 1440,44 L1440,120 L0,120 Z',
+  zigzag:
+    'M0,84 L120,28 L240,84 L360,28 L480,84 L600,28 L720,84 L840,28 L960,84 L1080,28 L1200,84 L1320,28 L1440,84 L1440,120 L0,120 Z',
+  arch: 'M0,120 L0,64 C360,-16 1080,-16 1440,64 L1440,120 Z',
+};
+---
+
+<div
+  class:list={['wb-divider', className]}
+  style={`height:${height}px;${flip ? 'transform:scaleX(-1);' : ''}`}
+  aria-hidden="true"
+>
+  <svg viewBox="0 0 1440 120" preserveAspectRatio="none" width="100%" height="100%">
+    <path d={paths[variant]} fill={color} />
+  </svg>
+</div>

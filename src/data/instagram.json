@@ -1,0 +1,13 @@
+{
+  "_note": "PLACEHOLDER Instagram posts. This local file stands in for a live feed. To go live it needs a feed source (Behold / EmbedSocial-style service, or a Meta Graph API token) — a decision for Azure, see README 'Instagram feed'. Keep the posts[] shape (image, alt, caption, permalink) so the data source can be swapped without touching the component.",
+  "handle": "@waterbearercoffee",
+  "profileUrl": "https://instagram.com/waterbearercoffee",
+  "posts": [
+    { "id": "ph1", "image": "/images/menu/latte.jpg", "alt": "A latte with poured art", "caption": "Rosetta kind of morning.", "permalink": "https://instagram.com/waterbearercoffee" },
+    { "id": "ph2", "image": "/images/vibe-main-wall.jpg", "alt": "The café's mural wall", "caption": "Come sit a while.", "permalink": "https://instagram.com/waterbearercoffee" },
+    { "id": "ph3", "image": "/images/merch-beanies.jpg", "alt": "Water Bearer embroidered beanies", "caption": "New beanies in.", "permalink": "https://instagram.com/waterbearercoffee" },
+    { "id": "ph4", "image": "/images/menu/strawberry-cold-foam-latte.jpg", "alt": "An iced latte with strawberry cold foam", "caption": "Strawberry cold foam season.", "permalink": "https://instagram.com/waterbearercoffee" },
+    { "id": "ph5", "image": "/images/vibe-outdoor.jpg", "alt": "The café patio outside", "caption": "Patio weather.", "permalink": "https://instagram.com/waterbearercoffee" },
+    { "id": "ph6", "image": "/images/menu/smutty-burrito.jpg", "alt": "The Smutty breakfast burrito", "caption": "The Smutty is calling.", "permalink": "https://instagram.com/waterbearercoffee" }
+  ]
+}

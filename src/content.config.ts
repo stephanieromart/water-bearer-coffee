@@ -47,6 +47,8 @@ const menu = defineCollection({
         description: z.string().optional(),
         price: z.number().optional(),
         madeInHouse: z.boolean().default(false),
+        image: z.string().optional(), // "/images/menu/…"
+        imageAlt: z.string().optional(),
       }),
     ),
   }),

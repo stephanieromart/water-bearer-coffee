@@ -48,7 +48,7 @@ const items: PulseItem[] = [
 {
   items.length > 0 && (
     <section
-      class="on-deep relative overflow-hidden bg-[var(--color-bg-deep)] text-[var(--color-on-deep)]"
+      class="on-deep u-grain relative overflow-hidden bg-[var(--color-bg-deep)] text-[var(--color-on-deep)]"
       data-pulse-strip
       aria-labelledby="pulse-heading"
     >
@@ -71,7 +71,7 @@ const items: PulseItem[] = [
             <li
               data-pulse-item
               data-expires={item.expiresIso}
-              class="flex flex-col overflow-hidden rounded-[var(--radius-lg)] border-2 border-[var(--white)]/20 bg-[var(--white)] text-[var(--color-ink)]"
+              class="flex flex-col overflow-hidden rounded-[var(--radius-lg)] border-2 border-white/25 bg-white/10 text-[var(--color-ink)]"
             >
               {item.image ? (
                 <img

@@ -1,8 +1,10 @@
 ---
 import { groupedHours } from '../lib/hours';
+import hoursData from '../content/settings/hours.json';
 interface Props { class?: string }
 const { class: className = '' } = Astro.props;
 const rows = groupedHours();
+const kitchenNote = (hoursData as { kitchenNote?: string }).kitchenNote;
 ---
 
 <dl class:list={['space-y-2', className]}>
@@ -17,3 +19,11 @@ const rows = groupedHours();
     ))
   }
 </dl>
+{
+  kitchenNote && (
+    <p class="mt-3 flex items-center gap-2 text-[length:var(--step--1)] font-semibold text-[var(--color-ink-faint)]">
+      <span class="u-tag u-tag--primary !py-0.5 !text-[0.7em]">Kitchen</span>
+      {kitchenNote}
+    </p>
+  )
+}

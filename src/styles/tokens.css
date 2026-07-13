@@ -10,18 +10,22 @@
    ============================================================================ */
 
 :root {
-  /* --- RAMP: warm-leaning blues (hue ~212), harmonizing warm-gray, white ----
+  /* --- RAMP: anchored on Water Bearer's real brand blues -------------------
+     Pulled from the client's Square site theme (waterbearercoffee.square.site).
+     Three rungs are the EXACT brand hexes; the rest are derived to keep a smooth
+     ramp and hold WCAG AA. The brand's teals/cyans were mapped into this single
+     blue family per the palette decision — no teal, no gold, blue/white/gray only.
      Swap these to re-skin. Everything else references them. */
-  --blue-50:  #eef5fd;
-  --blue-100: #d9e8fa;
-  --blue-200: #b6d0f1;
-  --blue-300: #88b1e5;
-  --blue-400: #5a8dd6;
-  --blue-500: #3a6fc4; /* vibrant brand blue */
-  --blue-600: #2b569f; /* CTA fill (AA with white) */
-  --blue-700: #1f4079; /* accent text on white */
-  --blue-800: #163057; /* deep panels */
-  --blue-900: #0e2038; /* ink (near-black blue) */
+  --blue-50:  #ecf5fd;
+  --blue-100: #d2e7fa;
+  --blue-200: #9fcef1;
+  --blue-300: #3eb5f0; /* brand: sky (exact) */
+  --blue-400: #5580d0; /* brand: periwinkle (exact) */
+  --blue-500: #2f74c6; /* vibrant brand blue (derived) */
+  --blue-600: #206aba; /* brand: deep azure (exact) — CTA fill, 5.5:1 on white */
+  --blue-700: #1a5088; /* accent text on white (8.2:1) */
+  --blue-800: #143a61; /* deep panels */
+  --blue-900: #0d2137; /* ink (near-black blue) */
 
   --gray-50:  #f6f7f9;
   --gray-100: #ebedf1;
@@ -37,33 +41,37 @@
   --white: #ffffff;
   --paper: #f7fafd; /* barely-blue white for large fields */
 
-  /* --- Semantic color roles ------------------------------------------------- */
-  --color-bg:          var(--white);
-  --color-bg-tint:     var(--blue-50);   /* light blue band */
-  --color-bg-deep:     var(--blue-900);  /* deep blue section */
-  --color-surface:     var(--white);     /* cards */
-  --color-surface-alt: var(--blue-50);
+  /* --- Semantic color roles (IMMERSIVE BLUE: azure page, light text) --------
+     The whole page background is the brand azure. Text is white/light, cards are
+     translucent "glass", buttons are white fills. Contrast verified AA on azure.*/
+  --color-bg:          var(--blue-600);  /* azure page background (#206aba) */
+  --color-bg-tint:     var(--blue-700);  /* darker azure band (alternation) */
+  --color-bg-deep:     var(--blue-900);  /* deepest navy sections */
+  --color-surface:     rgba(255, 255, 255, 0.10); /* glass cards */
+  --color-surface-alt: rgba(255, 255, 255, 0.06);
 
-  --color-ink:         var(--blue-900);  /* primary text */
-  --color-ink-soft:    var(--gray-700);  /* secondary text */
-  --color-ink-faint:   var(--gray-600);  /* meta/caption (AA on white) */
-  --color-line:        var(--gray-200);  /* hairlines */
-  --color-line-strong: var(--blue-900);
+  --color-ink:         #ffffff;          /* primary text (5.5:1 on azure) */
+  --color-ink-soft:    #dfeafb;          /* secondary text (4.6:1 on azure) */
+  --color-ink-faint:   #dfeafb;          /* meta/caption */
+  --color-line:        rgba(255, 255, 255, 0.22); /* hairlines */
+  --color-line-strong: #ffffff;
 
-  --color-primary:      var(--blue-500); /* brand accent (fills, decoration) */
-  --color-primary-soft: var(--blue-100); /* chip/pattern tint */
-  --color-accent-text:  var(--blue-700); /* accent TEXT on white (AA) */
+  --color-primary:      var(--blue-300); /* sky accent — pops on azure */
+  --color-primary-soft: rgba(255, 255, 255, 0.12); /* glass chip tint */
+  --color-accent-text:  #dfeafb;         /* accent/eyebrow text (light) */
 
-  --color-cta:        var(--blue-600);   /* Order Online + primary buttons */
-  --color-cta-hover:  var(--blue-700);
-  --color-on-cta:     var(--white);
+  --color-on-light:   var(--blue-900);   /* dark text ON white fills (buttons/tags) */
 
-  /* On deep-blue sections */
-  --color-on-deep:        var(--white);
+  --color-cta:        #ffffff;           /* buttons: white fill on azure */
+  --color-cta-hover:  var(--blue-100);
+  --color-on-cta:     var(--blue-900);
+
+  /* On deep-navy sections */
+  --color-on-deep:        #ffffff;
   --color-on-deep-soft:   var(--blue-100);
   --color-on-deep-line:   rgba(255, 255, 255, 0.16);
 
-  --color-focus: var(--blue-700);
+  --color-focus: var(--blue-300);
 
   /* --- Type families -------------------------------------------------------- */
   --font-display: 'Bricolage Grotesque Variable', 'Bricolage Grotesque', Georgia, serif;
@@ -108,7 +116,7 @@
 
   /* --- Motion (subtle only) ------------------------------------------------- */
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --dur:  0.6s;
+  --dur:  0.9s;  /* scroll-reveal fade/rise — relaxed */
 
   /* --- TEMP compat aliases (v1 → v2) -----------------------------------------
      Keeps pages not yet rebuilt for v2 rendering coherently. Removed in the
@@ -117,7 +125,7 @@
   --font-sans:         var(--font-body);
   --color-accent:      var(--color-primary);
   --color-accent-hover: var(--color-cta-hover);
-  --color-accent-soft: var(--blue-100);
-  --color-on-accent:   var(--white);
-  --color-bg-sunk:     var(--blue-50);
+  --color-accent-soft: rgba(255, 255, 255, 0.12);
+  --color-on-accent:   var(--blue-900);
+  --color-bg-sunk:     var(--blue-700);
 }

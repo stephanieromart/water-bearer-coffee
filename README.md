@@ -103,6 +103,21 @@ photos). When you have real photography, hand it to a developer — swapping a
 placeholder for an optimized image is a small, localized change (the label on
 each placeholder says what shot belongs there).
 
+### Instagram feed
+
+The homepage Instagram grid (`src/components/InstagramGrid.astro`) currently reads
+**placeholder posts** from `src/data/instagram.json`. To show the **live** feed, we
+need a data source — and that's a decision for Azure, not something to guess at:
+
+- **A feed service** (e.g. Behold, EmbedSocial, LightWidget) — easiest; they handle
+  Instagram's auth and give a simple JSON/embed. Usually a small monthly fee.
+- **The Meta Graph API directly** — no monthly fee, but requires a Facebook/Instagram
+  Business account, an app, and a long-lived access token that must be refreshed.
+
+Once a source is chosen, a developer swaps the local-file import in `InstagramGrid.astro`
+for that source (the `{ handle, profileUrl, posts[] }` shape stays the same, so the
+grid markup doesn't change).
+
 ### Rewards signup
 
 The loyalty vendor isn't chosen yet. When it is, a developer sets **one line** in
