@@ -35,41 +35,43 @@ const differentiators: { n: string; icon: IconName; title: string; body: string 
 ---
 
 <BaseLayout>
-  <!-- HERO (sticky — the content below scrolls up and over it) --------------- -->
-  <section class="sticky top-0 z-0 overflow-hidden border-b-2 border-[var(--color-line-strong)]">
-    <div class="u-container u-container-wide relative grid items-center gap-8 py-[var(--space-3xl)] lg:grid-cols-[1.05fr_0.95fr] lg:py-[var(--space-4xl)]">
-      <div>
+  <!-- HERO (sticky — full-bleed photo background; content scrolls up over it) - -->
+  <section class="on-deep sticky top-0 z-0 flex min-h-[82vh] items-center overflow-hidden border-b-2 border-[var(--color-line-strong)] text-[var(--color-on-deep)]">
+    <!-- Full-bleed background photo -->
+    {
+      home.heroImage ? (
+        <img
+          src={home.heroImage}
+          alt={home.heroImageAlt}
+          width="1400"
+          height="1400"
+          fetchpriority="high"
+          class="absolute inset-0 h-full w-full object-cover"
+        />
+      ) : (
+        <div class="absolute inset-0 bg-gradient-to-br from-[var(--blue-500)] to-[var(--blue-900)]" />
+      )
+    }
+    <!-- Scrim for legible white text: darker on the left where the copy sits -->
+    <div class="absolute inset-0 bg-gradient-to-r from-[var(--blue-900)]/90 via-[var(--blue-900)]/60 to-[var(--blue-900)]/25" aria-hidden="true"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-[var(--blue-900)]/70 via-transparent to-[var(--blue-900)]/20" aria-hidden="true"></div>
+
+    <div class="u-container u-container-wide relative z-10 py-[var(--space-3xl)] lg:py-[var(--space-4xl)]">
+      <div class="max-w-[44rem]">
         <p class="u-eyebrow" data-reveal>{site.address.city}, {site.address.region} · Est. neighborhood café</p>
-        <h1 class="u-display mt-4 text-[length:var(--step-6)]" data-reveal data-reveal-delay="60">
+        <h1 class="u-display mt-4 text-[length:var(--step-6)] [text-shadow:0_2px_24px_rgba(13,33,55,0.5)]" data-reveal data-reveal-delay="60">
           Roasted<br />in house.
         </h1>
-        <p class="u-measure mt-6 text-[length:var(--step-1)] text-[var(--color-ink-soft)]" data-reveal data-reveal-delay="140">
+        <p class="u-measure mt-6 text-[length:var(--step-1)] text-[var(--color-on-deep-soft)]" data-reveal data-reveal-delay="140">
           Espresso roasted in the back and poured out front. Syrups made from scratch.
           Tea, smoothies, breakfast burritos, and sandwiches — for families and neighbors,
           in downtown Traverse City.
         </p>
-        <div class="mt-8 flex flex-wrap gap-4" data-reveal data-reveal-delay="220">
+        <div class="mt-8 flex flex-wrap items-center gap-4" data-reveal data-reveal-delay="220">
           <Button href={site.square.orderUrl} external size="lg">Order Online</Button>
           <Button href="/menu" variant="outline" size="lg">See the menu</Button>
+          <span class="u-tag u-tag--solid shadow-lg">Open today — {site.address.city}</span>
         </div>
-      </div>
-
-      <div class="relative" data-reveal data-reveal-delay="140">
-        {
-          home.heroImage ? (
-            <img
-              src={home.heroImage}
-              alt={home.heroImageAlt}
-              width="900"
-              height="1100"
-              fetchpriority="high"
-              class="aspect-[4/5] w-full rounded-[var(--radius-xl)] border-2 border-[var(--color-line-strong)] object-cover"
-            />
-          ) : (
-            <PhotoPlaceholder ratio="4/5" tone="mid" label={home.heroImageAlt} class="border-2 border-[var(--color-line-strong)]" />
-          )
-        }
-        <span class="u-tag u-tag--solid absolute -bottom-4 left-6 shadow-lg">Open today — {site.address.city}</span>
       </div>
     </div>
   </section>
