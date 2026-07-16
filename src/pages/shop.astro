@@ -1,0 +1,68 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProductCard from '../components/ProductCard.astro';
+import Button from '../components/Button.astro';
+import Icon from '../components/Icon.astro';
+import { site } from '../lib/site';
+
+const products = (await getCollection('products')).sort(
+  (a, b) => (a.data.order ?? 999) - (b.data.order ?? 999),
+);
+---
+
+<BaseLayout
+  title="Shop"
+  description="Take Water Bearer home — bags of coffee, gift cards, and more. Checkout is handled securely by Square."
+>
+  <!-- HEADER ------------------------------------------------------------------ -->
+  <section class="border-b-2 border-[var(--color-line-strong)]">
+    <div class="u-container u-container-wide py-[var(--space-3xl)]">
+      <p class="u-eyebrow" data-reveal><Icon name="bean" size={20} class="mb-1 mr-1 inline-block align-middle" />Retail</p>
+      <h1 class="u-display mt-4 text-[length:var(--step-5)]" data-reveal data-reveal-delay="60">Take some home.</h1>
+      <p class="u-measure mt-6 text-[length:var(--step-1)] text-[var(--color-on-deep-soft)]" data-reveal data-reveal-delay="140">
+        Bags of coffee, gift cards, and a few things in the works. Checkout is handled
+        securely by Square — you'll finish on their page, with Apple&nbsp;Pay and Google&nbsp;Pay built in.
+      </p>
+    </div>
+  </section>
+
+  <!-- PRODUCTS ---------------------------------------------------------------- -->
+  <section class="u-container u-container-wide py-[var(--space-3xl)]">
+    <ul class="grid gap-[var(--space-lg)] sm:grid-cols-2 lg:grid-cols-3">
+      {
+        products.map((p, i) => (
+          <li data-reveal data-reveal-delay={(i % 3) * 80}>
+            <ProductCard
+              name={p.data.name}
+              description={p.data.description}
+              price={p.data.price}
+              image={p.data.image}
+              imageAlt={p.data.imageAlt}
+              squareEmbed={p.data.squareEmbed}
+              status={p.data.status}
+            />
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <!-- FULL STORE + FOOD ORDERING ---------------------------------------------- -->
+  <section class="on-deep u-grain relative overflow-hidden border-y-2 border-[var(--color-line-strong)] bg-[var(--color-bg-deep)] text-[var(--color-on-deep)]">
+    <div class="u-container u-container-wide relative grid items-center gap-8 py-[var(--space-3xl)] lg:grid-cols-2">
+      <div data-reveal>
+        <p class="u-eyebrow">More on Square</p>
+        <h2 class="u-display mt-3 text-[length:var(--step-4)]">Looking for merch or a food order?</h2>
+        <p class="u-measure mt-4 text-[length:var(--step-1)] text-[var(--color-on-deep-soft)]">
+          Browse the full shop — including merch — on our Square store, or order coffee and
+          food ahead for pickup.
+        </p>
+      </div>
+      <div class="flex flex-wrap gap-4 lg:justify-end" data-reveal data-reveal-delay="120">
+        <Button href={site.square.shopUrl} variant="deep" size="lg" external>Full shop on Square</Button>
+        <Button href={site.square.orderUrl} variant="outline" size="lg" external>Order food &amp; drinks</Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,83 @@
+---
+/**
+ * SquareBuyButton — drops an owner-supplied Square "Payment Link / buy button"
+ * snippet into an on-brand wrapper. We do NOT build a checkout, a cart, or call
+ * any Square SDK: the snippet (generated in Square Dashboard → Payment Links)
+ * opens Square's own hosted checkout page. See README "Wiring up Square buy buttons".
+ *
+ * States, all resilient — a bad or missing snippet never blanks the card:
+ *   - squareEmbed empty     -> clearly-marked dashed placeholder ("link pending")
+ *   - squareEmbed present   -> injected verbatim via set:html inside an
+ *                              owner-code wrapper (we style the CARD, not the guts)
+ *   - squareEmbed malformed -> graceful "Order at the shop" fallback note
+ */
+interface Props {
+  productName: string;
+  price?: string;
+  squareEmbed?: string;
+  /** Fallback destination (the full Square Online store) if a snippet is bad. */
+  shopUrl?: string;
+}
+const { productName, price, squareEmbed = '', shopUrl } = Astro.props;
+
+const embed = (squareEmbed ?? '').trim();
+const isPending = embed.length === 0;
+// A usable Square snippet contains at least one HTML tag (an <a>, <div>, or <script>).
+const looksValid = !isPending && /<[a-z!][\s\S]*>/i.test(embed);
+const isMalformed = !isPending && !looksValid;
+
+// Real HTML comments (rendered to the page) bracket the owner-pasted code so it's
+// easy to find in the output and swap later. The source-of-truth is the product's
+// `squareEmbed` field — never hand-edit Square's markup in the built HTML.
+const wrappedEmbed = `<!-- OWNER-SUPPLIED SQUARE CODE — swap via the product's squareEmbed field -->\n${embed}\n<!-- END OWNER-SUPPLIED SQUARE CODE -->`;
+---
+
+{
+  isPending && (
+    <span
+      class="flex min-h-[44px] w-full items-center justify-center gap-2 rounded-[var(--radius-sm)] border-2 border-dashed border-[color-mix(in_srgb,var(--color-line-strong)_60%,transparent)] px-5 py-3 text-center font-body text-[length:var(--step--1)] font-bold uppercase tracking-[0.06em] text-[var(--color-ink-soft)]"
+      role="note"
+      aria-label={`Buy ${productName}${price ? ` (${price})` : ''} on Square — checkout link pending`}
+      title="This product's Square checkout link hasn't been added yet"
+    >
+      Buy on Square — link pending
+    </span>
+  )
+}
+
+{
+  looksValid && (
+    <div class="wb-square-embed" data-square-embed data-product={productName}>
+      <Fragment set:html={wrappedEmbed} />
+    </div>
+  )
+}
+
+{
+  isMalformed && (
+    <p class="min-h-[44px] rounded-[var(--radius-sm)] border-2 border-[var(--color-line)] px-4 py-3 text-[length:var(--step--1)] text-[var(--color-ink-soft)]">
+      Available in shop.{' '}
+      {shopUrl && (
+        <a
+          href={shopUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="font-bold text-[var(--color-accent-text)] underline underline-offset-4"
+        >
+          Browse on Square
+        </a>
+      )}
+    </p>
+  )
+}
+
+<style>
+  /* Style the card AROUND Square's button, not its internals. We only ensure a
+     sane tap target + that focus stays visible; Square controls the rest. */
+  .wb-square-embed { display: block; width: 100%; }
+  .wb-square-embed :where(a, button) { min-height: 44px; }
+  .wb-square-embed :where(a, button):focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 3px;
+  }
+</style>

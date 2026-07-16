@@ -63,4 +63,21 @@ const pages = defineCollection({
   }),
 });
 
-export const collections = { specials, events, menu, pages };
+/** Retail products for the Shop page. Checkout is Square-hosted: `squareEmbed`
+    holds the owner-pasted Square Payment Link snippet (empty until she adds it).
+    We never build a cart or call a Square SDK. See README "Wiring up Square buy buttons". */
+const products = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/products' }),
+  schema: z.object({
+    name: z.string(),
+    description: z.string(),
+    price: z.string().optional(), // display only, e.g. "$18" or "from $16"
+    image: z.string().optional(),
+    imageAlt: z.string().optional(),
+    squareEmbed: z.string().default(''), // owner-pasted Square buy-button HTML
+    status: z.enum(['available', 'coming-soon']).default('available'),
+    order: z.number().default(999),
+  }),
+});
+
+export const collections = { specials, events, menu, pages, products };

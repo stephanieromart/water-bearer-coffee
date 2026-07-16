@@ -1,0 +1,79 @@
+---
+/**
+ * ProductCard — a retail product on the Shop page. Matches the site's card
+ * styling (blues/tokens, hover lift, image zoom). Available products show a
+ * SquareBuyButton; coming-soon products show a badge + "notify me" email capture
+ * (reusing NewsletterForm) instead of a buy button.
+ */
+import SquareBuyButton from './SquareBuyButton.astro';
+import NewsletterForm from './NewsletterForm.astro';
+import PhotoPlaceholder from './PhotoPlaceholder.astro';
+import { site } from '../lib/site';
+
+interface Props {
+  name: string;
+  description: string;
+  price?: string;
+  image?: string;
+  imageAlt?: string;
+  squareEmbed?: string;
+  status?: 'available' | 'coming-soon';
+}
+const {
+  name,
+  description,
+  price,
+  image,
+  imageAlt,
+  squareEmbed = '',
+  status = 'available',
+} = Astro.props;
+const comingSoon = status === 'coming-soon';
+---
+
+<article class="card-hover flex flex-col overflow-hidden rounded-[var(--radius-lg)] border-2 border-[var(--color-line-strong)] bg-[var(--color-surface)]">
+  <div class="img-zoom relative">
+    {
+      image ? (
+        <img
+          src={image}
+          alt={imageAlt ?? name}
+          width="800"
+          height="600"
+          loading="lazy"
+          decoding="async"
+          class="aspect-[4/3] w-full object-cover"
+        />
+      ) : (
+        <PhotoPlaceholder ratio="4/3" tone="mid" label={name} rounded={false} />
+      )
+    }
+    {comingSoon && <span class="u-tag u-tag--primary absolute left-3 top-3 shadow-md">Coming soon</span>}
+  </div>
+
+  <div class="flex flex-1 flex-col p-5">
+    <div class="flex items-baseline justify-between gap-3">
+      <h3 class="font-display text-[length:var(--step-1)] font-extrabold">{name}</h3>
+      {price && <span class="shrink-0 font-body font-bold text-[var(--color-primary)]">{price}</span>}
+    </div>
+    <p class="mt-1.5 flex-1 text-[length:var(--step--1)] text-[var(--color-ink-soft)]">{description}</p>
+
+    <div class="mt-4">
+      {
+        comingSoon ? (
+          <div>
+            <p class="mb-2 text-[length:var(--step--1)] font-bold">Not out yet — get the heads-up:</p>
+            <NewsletterForm formName="product-waitlist" source={name} label="" cta="Notify me" compact={true} />
+          </div>
+        ) : (
+          <SquareBuyButton
+            productName={name}
+            price={price}
+            squareEmbed={squareEmbed}
+            shopUrl={site.square.shopUrl}
+          />
+        )
+      }
+    </div>
+  </div>
+</article>

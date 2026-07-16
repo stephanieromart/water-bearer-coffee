@@ -127,6 +127,47 @@ requires the Square POS, not the website.
 
 ---
 
+## 🛒 Wiring up Square buy buttons (Shop page)
+
+The **Shop page** (`/shop`) sells physical products — bags of coffee, gift cards,
+and so on. We do **not** run a checkout on this site: each product's "Buy" button
+is a snippet **you** generate in Square, and clicking it takes the customer to
+**Square's own secure checkout page** (with Apple Pay, Google Pay, Cash App, and
+Afterpay built in). Nothing to install, no keys to manage.
+
+Until you add a snippet, a product shows a clearly-marked **"Buy on Square — link
+pending"** placeholder, so it's obvious which items aren't wired up yet.
+
+### Steps to add a buy button
+
+1. In your **Square Dashboard**, go to **Payment Links** (under *Online* / *Item
+   Library → Payment Links*).
+2. **Create a payment link** → *Add a website button*, choose the item (or make a
+   new one) and set the **price**.
+3. Square shows a small block of **HTML** — click **Copy code**.
+4. Paste that HTML into the product's `squareEmbed` field:
+   - In a file: `src/content/products/<product>.md`, between the `---` lines, e.g.
+     `squareEmbed: "<paste here>"`, and set `status: "available"`.
+   - Or just **hand me the copied code** and tell me which product — I'll paste it.
+5. Save/deploy. The button appears on the Shop page and opens Square's checkout.
+
+For a product that isn't for sale yet, set `status: "coming-soon"` — it shows a
+**Coming soon** badge and a "notify me" email box instead of a buy button.
+
+### Good to know
+
+- **Branding:** set your **logo and button color** on the checkout page under
+  Square → *Account & Settings → Branding* (or the payment link's appearance
+  settings). That styling lives on Square's side, not ours.
+- **Fees:** Square charges **3.3% + 30¢ per online transaction**, with **no
+  monthly fee** for Payment Links.
+- **Get notified of sales:** when creating each link, turn on its **email
+  notification** so you get an email every time something sells online.
+- The food/drink **"Order Online"** button is separate — it stays a link to your
+  Square Online ordering page and has nothing to do with these buy buttons.
+
+---
+
 ## 📁 Project structure
 
 ```
