@@ -1,7 +1,7 @@
 ---
 # <!-- DRAFT COPY - NEEDS AZURE REVIEW. Item names + photos are real; descriptions are draft; prices TBD. -->
-category: "Toast & Breakfast"
-order: 5
+category: "Food"
+order: 4
 items:
   - name: "Bougie Toast"
     description: "Our loaded toast, done up right."
@@ -27,6 +27,30 @@ items:
     description: "Yogurt layered with granola and fruit."
     image: "/images/menu/yogurt-parfait.jpg"
     imageAlt: "A yogurt parfait"
+  - name: "Smutty Burrito"
+    description: "Our breakfast burrito, stuffed and wrapped tight."
+    image: "/images/menu/smutty-burrito.jpg"
+    imageAlt: "The Smutty breakfast burrito"
+  - name: "BLT"
+    description: "Bacon, lettuce, and tomato on toasted bread."
+    image: "/images/menu/blt.jpg"
+    imageAlt: "A BLT sandwich"
+  - name: "Turkey Club"
+    description: "Turkey, bacon, lettuce, and tomato, stacked high."
+    image: "/images/menu/turkey-club.jpg"
+    imageAlt: "A turkey club sandwich"
+  - name: "Virgo Wrap"
+    description: "Our house wrap, packed with fresh fixings."
+    image: "/images/menu/virgo-wrap.jpg"
+    imageAlt: "The Virgo wrap"
+  - name: "Avocado Cucumber"
+    description: "Smashed avocado and crisp cucumber. Light and fresh."
+    image: "/images/menu/avocado-cucumber.jpg"
+    imageAlt: "An avocado and cucumber sandwich"
+  - name: "Quesadilla"
+    description: "Griddled and melty. Add-ons available."
+    image: "/images/menu/quesadilla.jpg"
+    imageAlt: "A quesadilla"
 ---
 
 <!-- DRAFT COPY - NEEDS AZURE REVIEW -->

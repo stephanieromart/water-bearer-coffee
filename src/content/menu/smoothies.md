@@ -1,7 +1,7 @@
 ---
 # <!-- DRAFT COPY - NEEDS AZURE REVIEW. Photos are real; names/descriptions are draft; prices TBD. -->
 category: "Smoothies"
-order: 4
+order: 3
 items:
   - name: "Fruit Smoothie"
     description: "Blended fresh fruit. Ask about today's."

@@ -1,6 +1,6 @@
 ---
 # <!-- DRAFT COPY - NEEDS AZURE REVIEW. Item names + photos are real; descriptions are draft; prices TBD. -->
-category: "Espresso"
+category: "Coffee"
 order: 1
 items:
   - name: "Espresso"
@@ -29,9 +29,12 @@ items:
     imageAlt: "An oat milk latte with poured art"
   - name: "Strawberry Cold Foam Latte"
     description: "Iced latte crowned with house strawberry cold foam."
-    madeInHouse: true
     image: "/images/menu/strawberry-cold-foam-latte.jpg"
     imageAlt: "An iced latte topped with pink strawberry cold foam"
+  - name: "Cold Brew"
+    description: "Steeped low and slow for a smooth, low-acid cup."
+    image: "/images/menu/cold-brew.jpg"
+    imageAlt: "A glass of cold brew coffee"
 ---
 
 <!-- DRAFT COPY - NEEDS AZURE REVIEW -->
