@@ -4,22 +4,22 @@
   "tagline": "Coffee roasted in house. Syrups made from scratch. A café for the neighborhood.",
   "description": "An independent café in Traverse City, Michigan — espresso roasted in house, syrups made from scratch, plus tea, smoothies, breakfast burritos, and sandwiches. Rooted in community and local business.",
   "owner": "Azure Klug",
-  "email": "hello@waterbearercoffee.com",
-  "phone": "(231) 555-0142",
-  "phoneHref": "+12315550142",
+  "email": "azure@waterbearercoffee.com",
+  "phone": "(231) 252-2442",
+  "phoneHref": "+12312522442",
   "address": {
-    "street": "123 Front Street",
+    "street": "144 Hall St, Suite 100",
     "city": "Traverse City",
     "region": "MI",
-    "postalCode": "49684",
+    "postalCode": "49684-2282",
     "country": "US"
   },
   "geo": {
-    "latitude": 44.7631,
-    "longitude": -85.6206
+    "latitude": 44.76535,
+    "longitude": -85.62707
   },
-  "mapEmbedQuery": "Front+Street+Traverse+City+MI",
-  "parkingNote": "Street parking runs the length of Front Street, with a free public lot one block north on State Street. The mobile espresso cart is often out on weekends — check Instagram for where we're parked.",
+  "mapEmbedQuery": "144+Hall+St+Suite+100+Traverse+City+MI+49684",
+  "parkingNote": "Street parking along Hall Street and through the Warehouse District, plus nearby public lots. The mobile espresso cart is often out on weekends — check Instagram for where we're parked.",
   "social": [
     { "label": "Instagram", "href": "https://instagram.com/waterbearercoffee" },
     { "label": "Facebook", "href": "https://facebook.com/waterbearercoffee" }
@@ -28,5 +28,5 @@
     "orderUrl": "https://waterbearercoffee.square.site/s/order",
     "shopUrl": "https://waterbearercoffee.square.site"
   },
-  "_note": "DRAFT DATA — NEEDS AZURE REVIEW. Address, phone, geo, and Square URLs are placeholders. Hours are managed via the CMS (see src/content/settings/hours.json). Replace every value here with the real business details before launch; these feed the footer, contact page, and LocalBusiness JSON-LD."
+  "_note": "Address, phone, email, and geo are the real business details (144 Hall St, Suite 100). STILL TO CONFIRM: Square order/shop URLs, social handles, and the parking note. Hours are managed via the CMS (src/content/settings/hours.json)."
 }
