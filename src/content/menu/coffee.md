@@ -20,7 +20,7 @@ items:
     image: "/images/menu/cappuccino.jpg"
     imageAlt: "A cappuccino with latte art"
   - name: "Latte"
-    description: "Espresso and silky steamed milk. Add a house-made syrup."
+    description: "Espresso, steamed milk, little foam."
     image: "/images/menu/latte.jpg"
     imageAlt: "A latte with poured art"
   - name: "Oat Milk Latte"
