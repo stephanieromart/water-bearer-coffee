@@ -99,28 +99,53 @@ const profiles = [
     <div class="u-dots absolute inset-0 opacity-50" aria-hidden="true"></div>
     <div class="u-container u-container-wide relative py-[var(--space-3xl)]">
       <div class="max-w-[52ch]" data-reveal>
-        <p class="u-eyebrow">Local first</p>
+        <p class="u-eyebrow">Locally sourced</p>
         <h2 class="u-display mt-3 text-[length:var(--step-4)]">{community.heading}</h2>
         <p class="mt-5 text-[length:var(--step-1)] text-[var(--color-on-deep-soft)]">
           {community.intro}
         </p>
       </div>
 
-      <ul class="mt-[var(--space-2xl)] grid gap-[var(--space-lg)] sm:grid-cols-2 lg:grid-cols-4">
+      <ul class="mt-[var(--space-2xl)] grid gap-[var(--space-lg)] sm:grid-cols-2 lg:grid-cols-3">
         {
           community.businesses.map((b, i) => (
             <li
-              class="rounded-[var(--radius-lg)] border-2 border-[var(--color-on-deep-line)] bg-white/5 p-6"
+              class="card-hover rounded-[var(--radius-lg)] border-2 border-[var(--color-on-deep-line)] bg-white/5 p-6"
               data-reveal
-              data-reveal-delay={i * 80}
+              data-reveal-delay={(i % 3) * 80}
             >
-              {/* DRAFT COPY - NEEDS AZURE REVIEW */}
               <h3 class="font-display text-[length:var(--step-2)] font-extrabold">{b.name}</h3>
               <p class="mt-2 text-[var(--color-on-deep-soft)]">{b.detail}</p>
             </li>
           ))
         }
       </ul>
+
+      {
+        community.artists && community.artists.length > 0 && (
+          <div class="mt-[var(--space-3xl)] border-t border-[var(--color-on-deep-line)] pt-[var(--space-2xl)]">
+            <div class="max-w-[52ch]" data-reveal>
+              <p class="u-eyebrow">Made by local hands</p>
+              <h3 class="u-display mt-3 text-[length:var(--step-3)]">{community.artistsHeading}</h3>
+              <p class="mt-4 text-[length:var(--step-1)] text-[var(--color-on-deep-soft)]">
+                {community.artistsIntro}
+              </p>
+            </div>
+            <ul class="mt-[var(--space-xl)] grid gap-[var(--space-lg)] sm:grid-cols-2">
+              {community.artists.map((a, i) => (
+                <li
+                  class="card-hover rounded-[var(--radius-lg)] border-2 border-[var(--color-on-deep-line)] bg-white/5 p-6"
+                  data-reveal
+                  data-reveal-delay={i * 80}
+                >
+                  <h4 class="font-display text-[length:var(--step-2)] font-extrabold">{a.name}</h4>
+                  <p class="mt-2 text-[var(--color-on-deep-soft)]">{a.detail}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
     </div>
   </section>
 

@@ -113,6 +113,15 @@ collections:
                 fields:
                   - { label: "Name", name: "name", widget: "string" }
                   - { label: "What they do", name: "detail", widget: "string" }
+              - { label: "Artists heading", name: "artistsHeading", widget: "string", required: false }
+              - { label: "Artists intro", name: "artistsIntro", widget: "text", required: false }
+              - label: "Local artists"
+                name: "artists"
+                widget: "list"
+                required: false
+                fields:
+                  - { label: "Name", name: "name", widget: "string" }
+                  - { label: "What they made", name: "detail", widget: "string" }
 
   # --- Homepage hero photo (single file) -------------------------------------
   - name: "homepage"

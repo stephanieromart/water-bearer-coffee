@@ -16,12 +16,20 @@
   },
   "community": {
     "heading": "Rooted in the neighborhood",
-    "intro": "We buy local first and share the counter every chance we get. When you spend a dollar here, a lot of it stays in Traverse City.",
+    "intro": "We're proud to source our ingredients from neighbors and makers around Traverse City — when you spend a dollar here, a lot of it stays close to home.",
     "businesses": [
-      { "name": "A Local Bakery", "detail": "Fresh pastries delivered every morning" },
-      { "name": "A Local Dairy", "detail": "Milk and cream from up the road" },
-      { "name": "A Local Farm", "detail": "Seasonal produce for the kitchen" },
-      { "name": "A Local Maker", "detail": "Mugs and goods on our retail shelf" }
+      { "name": "Stockist Coffee Company", "detail": "Our coffee" },
+      { "name": "Lakeview Hill Farm", "detail": "Seasonal produce" },
+      { "name": "Blessed Be Tea & Apothecary", "detail": "Loose-leaf tea" },
+      { "name": "Bubbie's Bagels", "detail": "Fresh bagels" },
+      { "name": "Early Bird Granola", "detail": "Granola" },
+      { "name": "Farida's Delights", "detail": "Hand-made pastries" }
+    ],
+    "artistsHeading": "Designed to spark creativity",
+    "artistsIntro": "Our space was built to spark creativity, so we brought in local artists to execute the vision:",
+    "artists": [
+      { "name": "Heather Spooner", "detail": "Ampersand Lettering Lab — our mural" },
+      { "name": "Carolyn Greenman (Pokey Robinson)", "detail": "All of our logos" }
     ]
   }
 }
