@@ -1,8 +1,8 @@
 ---
 # <!-- DRAFT COPY - NEEDS AZURE REVIEW -->
-title: "Churro Latte"
-description: "Cinnamon-sugar churro in a cup: espresso, steamed milk, and house cinnamon syrup."
-imageAlt: "A churro latte topped with cinnamon sugar"
+title: "Iced Churro Latte"
+description: "House-made cinnamon crunch cereal milk, espresso, topped with cinnamon powder."
+imageAlt: "An iced churro latte topped with cinnamon powder"
 start: 2026-06-01
 end: 2026-09-15
 ---
