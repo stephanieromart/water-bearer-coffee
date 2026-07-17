@@ -23,11 +23,6 @@ items:
     description: "Espresso and silky steamed milk. Add a house-made syrup."
     image: "/images/menu/latte.jpg"
     imageAlt: "A latte with poured art"
-  - name: "More Espresso Less Depresso"
-    description: "Our signature blended espresso shake — rich, cold, and topped with banana."
-    madeInHouse: true
-    image: "/images/menu/more-espresso-less-depresso.jpg"
-    imageAlt: "A blended espresso shake topped with a banana slice"
   - name: "Oat Milk Latte"
     description: "Espresso and steamed oat milk. Add a house-made syrup."
     image: "/images/menu/oatmilk-latte.jpg"
