@@ -1,17 +1,16 @@
 ---
-import { activeSpecials, upcomingEvents, formatDate, isoDate } from '../lib/pulse';
+import { activeSpecials, formatDate, isoDate } from '../lib/pulse';
 
 /**
- * The "pulse" — current specials + upcoming events, CMS-driven.
+ * The "pulse" — current specials, CMS-driven.
  * Build-time filtered by lib/pulse; each card ALSO carries its expiry date so a
  * small client script hides it the moment it lapses, even between deploys. If
  * everything has lapsed, the whole section removes itself.
  */
 const specials = await activeSpecials();
-const events = await upcomingEvents();
 
 type PulseItem = {
-  kind: 'Special' | 'Event';
+  kind: 'Special';
   title: string;
   description: string;
   dateLabel: string;
@@ -21,8 +20,8 @@ type PulseItem = {
   sortKey: number;
 };
 
-const items: PulseItem[] = [
-  ...specials.map((s) => ({
+const items: PulseItem[] = specials
+  .map((s) => ({
     kind: 'Special' as const,
     title: s.data.title,
     description: s.data.description,
@@ -31,18 +30,8 @@ const items: PulseItem[] = [
     image: s.data.image,
     imageAlt: s.data.imageAlt,
     sortKey: s.data.end.getTime(),
-  })),
-  ...events.map((e) => ({
-    kind: 'Event' as const,
-    title: e.data.title,
-    description: e.data.description,
-    dateLabel: e.data.time ? `${formatDate(e.data.date)} · ${e.data.time}` : formatDate(e.data.date),
-    expiresIso: isoDate(e.data.date),
-    image: e.data.image,
-    imageAlt: e.data.imageAlt,
-    sortKey: e.data.date.getTime(),
-  })),
-].sort((a, b) => a.sortKey - b.sortKey);
+  }))
+  .sort((a, b) => a.sortKey - b.sortKey);
 ---
 
 {
@@ -58,7 +47,7 @@ const items: PulseItem[] = [
           <div>
             <p class="u-eyebrow">Happening now</p>
             <h2 id="pulse-heading" class="u-display mt-2 text-[length:var(--step-4)]">
-              Specials &amp; Events
+              Specials
             </h2>
           </div>
           <a href="/mobile-espresso" class="hidden font-body text-[length:var(--step--1)] font-bold uppercase tracking-[0.08em] text-[var(--color-on-deep-soft)] no-underline underline-offset-4 hover:text-[var(--white)] hover:underline sm:inline">
