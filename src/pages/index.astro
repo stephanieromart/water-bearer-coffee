@@ -12,6 +12,8 @@ import type { IconName } from '../components/Icon.astro';
 import { site } from '../lib/site';
 import home from '../content/settings/home.json';
 
+const mapSrc = `https://www.google.com/maps?q=${site.mapEmbedQuery}&output=embed`;
+
 const differentiators: { n: string; icon: IconName; title: string; body: string }[] = [
   {
     n: '01',
@@ -147,7 +149,7 @@ const differentiators: { n: string; icon: IconName; title: string; body: string 
     <!-- LOCATION + HOURS ----------------------------------------------------- -->
     <section class="relative bg-[var(--color-bg)]">
       <div class="u-container u-container-wide py-[var(--space-3xl)]">
-        <div class="grid gap-[var(--space-2xl)] lg:grid-cols-2">
+        <div class="grid gap-[var(--space-2xl)] lg:grid-cols-2 lg:items-stretch">
           <div data-reveal>
             <p class="u-eyebrow">Find us</p>
             <h2 class="u-display mt-3 text-[length:var(--step-3)]">{site.address.street}</h2>
@@ -158,10 +160,19 @@ const differentiators: { n: string; icon: IconName; title: string; body: string 
               <Button href="/visit">Directions &amp; parking</Button>
               <Button href={site.square.orderUrl} variant="outline" external>Order ahead</Button>
             </div>
+            <div class="mt-[var(--space-xl)]">
+              <p class="u-eyebrow mb-4">Hours</p>
+              <HoursBlock />
+            </div>
           </div>
-          <div data-reveal data-reveal-delay="120">
-            <p class="u-eyebrow mb-4">Hours</p>
-            <HoursBlock />
+          <div class="min-h-[360px]" data-reveal data-reveal-delay="120">
+            <iframe
+              title={`Map to ${site.name}, ${site.address.street}`}
+              src={mapSrc}
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              class="h-full min-h-[360px] w-full rounded-[var(--radius-lg)] border-2 border-[var(--color-line-strong)]"
+            ></iframe>
           </div>
         </div>
       </div>
