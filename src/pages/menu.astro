@@ -21,9 +21,7 @@ const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(
       <h1 class="u-display mt-4 text-[length:var(--step-5)]" data-reveal data-reveal-delay="60">On the bar today.</h1>
       <p class="u-measure mt-6 text-[length:var(--step-1)] text-[var(--color-ink-soft)]" data-reveal data-reveal-delay="140">
         Espresso roasted in house, syrups made from scratch, plus smoothies, toast, breakfast, and
-        sandwiches. Items marked
-        <span class="u-tag u-tag--primary mx-1 !py-0.5 !text-[0.72em] align-middle">House-made</span>
-        are prepared here.
+        sandwiches.
       </p>
 
       <!-- DRAFT COPY - NEEDS AZURE REVIEW -->
@@ -82,9 +80,6 @@ const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(
                     />
                   ) : (
                     <PhotoPlaceholder ratio="4/3" tone="mid" label={item.name} rounded={false} />
-                  )}
-                  {item.madeInHouse && (
-                    <span class="u-tag u-tag--solid absolute left-3 top-3 shadow-md">House-made</span>
                   )}
                 </div>
                 <div class="p-5">
