@@ -50,80 +50,105 @@ Turn on email notifications there: *Site settings → Forms → Form notificatio
 
 ---
 
-## ✏️ Editing content (no coding required)
+## ☕ How to edit your website
 
-**All text, prices, and hours live in plain files under `src/content/`.**
-Edit a file, save, and the site updates on the next deploy. You don't touch any
-of the design or page code.
+This is for **Azure**. You can update your own site from any web browser — no coding,
+nothing to install. You can edit the **Menu**, **Summer Specials**, **Hours**, the
+**About page**, and the **homepage hero photo**. Everything else (the design, colors,
+and layout) is locked so it can't accidentally break.
 
-> Anywhere you see `<!-- DRAFT COPY - NEEDS OWNER REVIEW -->`, that's placeholder
-> text I wrote for you to replace. Search the project for `DRAFT` to find them all.
+**Changes go live about a minute after you click Publish.**
 
-### Where to change common things
+### Logging in
 
-| I want to change…                    | Edit this file |
-| ------------------------------------ | -------------- |
-| Address, phone, email, **hours**, social links, Square links | `src/content/site.json` |
-| A coffee (name, price, notes, story) | `src/content/coffee/<name>.md` |
-| Add a new coffee                     | Copy an existing file in `src/content/coffee/` and rename it |
-| The café menu + prices               | `src/content/menu/*.md` |
-| Pantry items (syrups, chai, cold brew) | `src/content/pantry/<name>.md` |
-| About / Mobile Espresso / Rewards copy | `src/content/pages/*.md` |
+1. Go to **yourwebsite.com/admin** (bookmark it).
+2. Click **Login** and enter your email and password.
+   - First time? Check your email for an invite and click the link to set your password.
+3. You'll see the editor with a list on the left: **Menu, Summer Specials, Hours,
+   About Page, Homepage**.
 
-### How a content file looks
+Every time you make a change, click the **Publish** button (top of the screen) to save it.
+Your site updates on its own about a minute later.
 
-The part between the `---` lines is structured data (keep the labels, change the
-values). Everything below the second `---` is free-form text.
+### Add a menu item
 
-```markdown
+1. Click **Menu** → **New Menu item**.
+2. Fill in the **Item name**, pick a **Section** (Coffee, Teas, Smoothies, or Food),
+   and write a short **Description**.
+3. Optionally add a **Photo** (any size is fine — it's shrunk automatically).
+4. Click **Publish**. It appears on the menu in its section.
+
+### Remove or hide a seasonal item
+
+- To **hide** an item for the season without losing it: open it, turn on
+  **"Hide this item (seasonal)"**, and Publish. It disappears from the menu but stays
+  saved. Turn the switch back off later to bring it back.
+- To **delete** it for good: open the item and choose **Delete** (bottom of the page).
+
+### Reorder menu items
+
+Each item has an **Order** number. Lower numbers show first within a section. Change the
+numbers (10, 20, 30…) and Publish to reorder.
+
+### Post a special
+
+1. Click **Summer Specials** → **New Special**.
+2. Add a **Name**, **Description**, optional **Photo**, and an **End date**.
+3. Publish. It shows in the "Summer Specials" strip on the homepage and **disappears on
+   its own after the end date** — no need to come back and delete it.
+
+### Change your hours
+
+1. Click **Hours**.
+2. For each day, set **Opens** and **Closes** (24-hour time, like `08:00` and `15:00`),
+   or turn on **Closed?** for a day you're shut.
+3. There's also a **Kitchen note** line (e.g. "Kitchen closes daily at 2 PM").
+4. Publish.
+
+### Swap the homepage hero photo
+
+1. Click **Homepage** → **Homepage Hero**.
+2. Click the **Hero photo**, upload a new one, and update the **Photo description**.
+3. Publish.
+
+### A few tips
+
+- **Photos:** upload straight from your phone — big photos are automatically resized so
+  your site stays fast. Always fill in the "Photo description" (it helps accessibility
+  and Google).
+- **Prices** have a spot in each menu item, but they are **not shown on the site** right
+  now (ordering and prices live on Square). You can still record them there.
+- If something looks wrong, you can't break the design — just fix the text and Publish
+  again, or ask your developer.
+
 ---
-name: "Ethiopia Guji"
-price: 22            # dollars, numbers only — no "$"
-roastLevel: "Light"  # Light, Medium-Light, Medium, Medium-Dark, or Dark
-tastingNotes: ["Blueberry", "Jasmine", "Stone fruit"]
-squareUrl: "https://waterbearercoffee.square.site/product/ethiopia-guji"
----
 
-The long story paragraph goes here.
-```
+## 🔑 Inviting Azure (developer — one-time)
 
-If you mistype a field (e.g. put text where a number goes), the build will stop
-with a clear message instead of publishing something broken — that's on purpose.
+Auth is **Netlify Identity + Git Gateway**, so Azure logs in with email + password and
+never needs a GitHub account.
 
-### Coming-soon pantry items
+1. In Netlify → **Site configuration → Identity**: click **Enable Identity**.
+2. Under **Identity → Registration**, set it to **Invite only**.
+3. Under **Identity → Services → Git Gateway**: click **Enable Git Gateway**.
+4. Under **Identity → Emails**, you can customize the invite/confirmation emails (optional).
+5. Go to the **Identity** tab → **Invite users** → enter Azure's email.
+   She gets an email, clicks the link, sets a password, and lands in `/admin`.
 
-In a pantry file, set `status: "coming-soon"` and it automatically shows a
-**Coming Soon** badge with an email-capture instead of a Buy button. Change it to
-`status: "available"` and add a `squareUrl:` to launch it.
+That's the whole handoff. (Transferring the GitHub repo / Netlify site / domain to her own
+accounts, if you ever do, is separate and manual — the site itself is identical either way.)
 
-### Adding real photos
+### Developer notes
 
-The site currently uses tasteful solid-color placeholder blocks (never stock
-photos). When you have real photography, hand it to a developer — swapping a
-placeholder for an optimized image is a small, localized change (the label on
-each placeholder says what shot belongs there).
-
-### Instagram feed
-
-The homepage Instagram grid (`src/components/InstagramGrid.astro`) currently reads
-**placeholder posts** from `src/data/instagram.json`. To show the **live** feed, we
-need a data source — and that's a decision for Azure, not something to guess at:
-
-- **A feed service** (e.g. Behold, EmbedSocial, LightWidget) — easiest; they handle
-  Instagram's auth and give a simple JSON/embed. Usually a small monthly fee.
-- **The Meta Graph API directly** — no monthly fee, but requires a Facebook/Instagram
-  Business account, an app, and a long-lived access token that must be refreshed.
-
-Once a source is chosen, a developer swaps the local-file import in `InstagramGrid.astro`
-for that source (the `{ handle, profileUrl, posts[] }` shape stays the same, so the
-grid markup doesn't change).
-
-### Rewards signup
-
-The loyalty vendor isn't chosen yet. When it is, a developer sets **one line** in
-`src/components/RewardsSignupSlot.astro` (a link or an embed) and the sign-up
-button goes live. No custom punch-card system is built into the site — that
-requires the Square POS, not the website.
+- **Content lives in `src/content/`** — `menu/` (one file per item), `specials/`,
+  `settings/hours.json`, `settings/about.json`, `settings/home.json`. Plain and portable.
+- **Image optimization** runs two ways: Sveltia resizes/*WebP*s on upload, and
+  `scripts/optimize-images.mjs` runs on every build (`npm run build`) as a backstop so no
+  oversized image can ship. Idempotent — already-small images are skipped.
+- **Instagram** grid reads placeholder posts from `src/data/instagram.json`. To go live it
+  needs a feed source (a Behold/EmbedSocial-style service, or a Meta Graph API token) — a
+  decision for the owner, not a guess. Keep the `{ handle, profileUrl, posts[] }` shape and
+  the grid markup doesn't change.
 
 ---
 

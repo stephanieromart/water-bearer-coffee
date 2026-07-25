@@ -23,34 +23,21 @@ const specials = defineCollection({
   }),
 });
 
-/** Events — dated happenings shown in the pulse strip and (later) an events list. */
-const events = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/events' }),
-  schema: z.object({
-    title: z.string(),
-    date: z.coerce.date(),
-    time: z.string().optional(), // "6–8 PM"
-    description: z.string(),
-    image: z.string().optional(),
-    imageAlt: z.string().optional(),
-  }),
-});
-
+/** Menu — ONE FILE PER ITEM (CMS-friendly: add/edit/remove/reorder in the CMS).
+    Grouped into sections on the page by `category`, ordered within a section by
+    `order`. `hidden` pulls a (seasonal) item off the page without deleting it. */
 const menu = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/menu' }),
+  loader: glob({ pattern: '*.md', base: './src/content/menu' }),
   schema: z.object({
-    category: z.string(),
+    name: z.string(),
+    category: z.enum(['Coffee', 'Teas', 'Smoothies', 'Food']),
+    description: z.string().optional(),
+    price: z.string().optional(), // editable in CMS; not shown on the site
+    image: z.string().optional(), // "/images/menu/…"
+    imageAlt: z.string().optional(),
+    madeInHouse: z.boolean().default(false), // stored; badge display is off
+    hidden: z.boolean().default(false), // true = pulled from the page (seasonal)
     order: z.number().default(999),
-    items: z.array(
-      z.object({
-        name: z.string(),
-        description: z.string().optional(),
-        price: z.number().optional(),
-        madeInHouse: z.boolean().default(false),
-        image: z.string().optional(), // "/images/menu/…"
-        imageAlt: z.string().optional(),
-      }),
-    ),
   }),
 });
 
@@ -80,4 +67,4 @@ const products = defineCollection({
   }),
 });
 
-export const collections = { specials, events, menu, pages, products };
+export const collections = { specials, menu, pages, products };

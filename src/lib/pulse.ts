@@ -1,10 +1,9 @@
 import { getCollection } from 'astro:content';
 
 /* ----------------------------------------------------------------------------
-   The "pulse": current specials + upcoming events. Filtered at build time; the
-   homepage strip ALSO hides items client-side by date, so a special vanishes the
-   day it expires even between deploys. (Enable a daily Netlify build for tidy
-   long-term behavior — see README.)
+   The "pulse": current specials. Filtered at build time; the homepage strip ALSO
+   hides items client-side by date, so a special vanishes the day it expires even
+   between deploys. (Enable a daily Netlify build for tidy long-term behavior.)
    ---------------------------------------------------------------------------- */
 
 function startOfToday(): Date {
@@ -19,14 +18,6 @@ export async function activeSpecials() {
   return (await getCollection('specials'))
     .filter((s) => s.data.end >= today)
     .sort((a, b) => a.data.end.getTime() - b.data.end.getTime());
-}
-
-/** Events today or later, soonest first. */
-export async function upcomingEvents() {
-  const today = startOfToday();
-  return (await getCollection('events'))
-    .filter((e) => e.data.date >= today)
-    .sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
 }
 
 const FMT = new Intl.DateTimeFormat('en-US', { weekday: 'short', month: 'short', day: 'numeric' });

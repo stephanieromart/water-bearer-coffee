@@ -1,9 +1,10 @@
 # =============================================================================
 # Water Bearer Coffee — CMS config (Sveltia CMS, Decap-compatible)
 # -----------------------------------------------------------------------------
-# This intentionally exposes ONLY the things Azure should edit: Specials, Events,
-# Hours, the About page, and the homepage hero photo. Layout, colors, navigation,
-# and every other page are locked in code and NOT editable here.
+# Azure can edit ONLY: Menu, Summer Specials, Hours, the About page, and the
+# homepage hero photo. Layout, colors, fonts, navigation, page structure, SEO,
+# the Shop/Square buy-buttons, and every other page are locked in code and are
+# NOT editable here. (Square embed snippets never go through the CMS.)
 # =============================================================================
 
 backend:
@@ -17,42 +18,61 @@ public_folder: "/images/uploads"
 # A friendlier default; keeps edits on a branch + PR is possible later.
 publish_mode: simple
 
+# --- Image optimization on upload -------------------------------------------
+# Resize large photos and convert to WebP right in the browser, so a 5 MB phone
+# photo can't tank page performance. A build-time pass (scripts/optimize-images.mjs)
+# is the backstop that runs on every deploy regardless.
+media_libraries:
+  default:
+    config:
+      transformations:
+        raster_image:
+          format: webp
+          quality: 82
+          width: 1600
+          height: 1600
+
 collections:
-  # --- Specials ---------------------------------------------------------------
+  # --- Menu (one file per item) ----------------------------------------------
+  - name: "menu"
+    label: "Menu"
+    label_singular: "Menu item"
+    description: "Your café menu. Add, edit, remove, hide, or reorder items. Each item shows under a section (Coffee, Teas, Smoothies, Food)."
+    folder: "src/content/menu"
+    create: true
+    slug: "{{fields.name}}"
+    identifier_field: "name"
+    format: "frontmatter"
+    summary: "{{name}}  ·  {{category}}"
+    sortable_fields: ["order", "name", "category"]
+    fields:
+      - { label: "Item name", name: "name", widget: "string" }
+      - { label: "Section", name: "category", widget: "select", options: ["Coffee", "Teas", "Smoothies", "Food"], default: "Coffee", hint: "Which part of the menu this item shows under." }
+      - { label: "Description", name: "description", widget: "text", required: false }
+      - { label: "Price", name: "price", widget: "string", required: false, hint: "Optional, for your own records. Prices are not shown on the website right now." }
+      - { label: "Photo", name: "image", widget: "image", required: false, hint: "Optional. A blue placeholder shows if you leave it empty." }
+      - { label: "Photo description (for accessibility)", name: "imageAlt", widget: "string", required: false }
+      - { label: "Made in house", name: "madeInHouse", widget: "boolean", default: false, hint: "For your records. (No badge is shown on the site right now.)" }
+      - { label: "Hide this item (seasonal)", name: "hidden", widget: "boolean", default: false, hint: "Turn ON to pull this item off the menu without deleting it. Turn OFF to bring it back." }
+      - { label: "Order (lower shows first)", name: "order", widget: "number", default: 100, value_type: "int", hint: "Sets the order within its section. Lower numbers appear first." }
+
+  # --- Summer Specials --------------------------------------------------------
   - name: "specials"
-    label: "Specials"
+    label: "Summer Specials"
     label_singular: "Special"
-    description: "Limited-time deals. A special disappears from the site automatically after its End date."
+    description: "The specials shown on the homepage. A special disappears from the site automatically after its end date."
     folder: "src/content/specials"
     create: true
     slug: "{{slug}}"
     format: "frontmatter"
-    summary: "{{title}}  (ends {{end}})"
+    summary: "{{title}}"
     fields:
-      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Name", name: "title", widget: "string" }
       - { label: "Description", name: "description", widget: "text" }
       - { label: "Photo", name: "image", widget: "image", required: false, hint: "Optional. A blue placeholder shows if left empty." }
       - { label: "Photo description (for accessibility)", name: "imageAlt", widget: "string", required: false }
-      - { label: "Start date", name: "start", widget: "datetime", required: false, format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
-      - { label: "End date (auto-hides after this)", name: "end", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
-
-  # --- Events -----------------------------------------------------------------
-  - name: "events"
-    label: "Events"
-    label_singular: "Event"
-    description: "Dated happenings. An event disappears automatically after its date passes."
-    folder: "src/content/events"
-    create: true
-    slug: "{{slug}}"
-    format: "frontmatter"
-    summary: "{{title}}  ({{date}})"
-    fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
-      - { label: "Time", name: "time", widget: "string", required: false, hint: "e.g. 6–8 PM" }
-      - { label: "Description", name: "description", widget: "text" }
-      - { label: "Photo", name: "image", widget: "image", required: false }
-      - { label: "Photo description (for accessibility)", name: "imageAlt", widget: "string", required: false }
+      - { label: "Start date", name: "start", widget: "datetime", required: false, format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false, hint: "Optional." }
+      - { label: "End date (disappears after this day)", name: "end", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
 
   # --- Hours (single file) ----------------------------------------------------
   - name: "hours"
