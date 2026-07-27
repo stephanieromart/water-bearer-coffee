@@ -30,7 +30,7 @@ const menu = defineCollection({
   loader: glob({ pattern: '*.md', base: './src/content/menu' }),
   schema: z.object({
     name: z.string(),
-    category: z.enum(['Coffee', 'Teas', 'Smoothies', 'Food']),
+    category: z.enum(['Coffee', 'Teas', 'Smoothies', 'Food', 'Sides']),
     description: z.string().optional(),
     price: z.string().optional(), // editable in CMS; not shown on the site
     image: z.string().optional(), // "/images/menu/…"

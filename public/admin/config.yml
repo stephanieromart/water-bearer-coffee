@@ -43,7 +43,7 @@ collections:
     sortable_fields: ["order", "name", "category"]
     fields:
       - { label: "Item name", name: "name", widget: "string" }
-      - { label: "Section", name: "category", widget: "select", options: ["Coffee", "Teas", "Smoothies", "Food"], default: "Coffee", hint: "Which part of the menu this item shows under." }
+      - { label: "Section", name: "category", widget: "select", options: ["Coffee", "Teas", "Smoothies", "Food", "Sides"], default: "Coffee", hint: "Which part of the menu this item shows under." }
       - { label: "Description", name: "description", widget: "text", required: false }
       - { label: "Price", name: "price", widget: "string", required: false, hint: "Optional, for your own records. Prices are not shown on the website right now." }
       - { label: "Photo", name: "image", widget: "image", required: false, hint: "Optional. A blue placeholder shows if you leave it empty." }

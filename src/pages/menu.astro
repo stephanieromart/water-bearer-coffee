@@ -6,7 +6,7 @@ import PhotoPlaceholder from '../components/PhotoPlaceholder.astro';
 import { site } from '../lib/site';
 
 // Section order on the page. Items are grouped under these, hidden items dropped.
-const CATEGORY_ORDER = ['Coffee', 'Teas', 'Smoothies', 'Food'] as const;
+const CATEGORY_ORDER = ['Coffee', 'Teas', 'Smoothies', 'Food', 'Sides'] as const;
 const items = (await getCollection('menu')).filter((i) => !i.data.hidden);
 const categories = CATEGORY_ORDER.map((name) => ({
   data: {
