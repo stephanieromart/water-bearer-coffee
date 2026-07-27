@@ -1,5 +1,5 @@
 # =============================================================================
-# Water Bearer Coffee — CMS config (Sveltia CMS, Decap-compatible)
+# Water Bearer Coffee — CMS config (Decap CMS + Netlify Identity / Git Gateway)
 # -----------------------------------------------------------------------------
 # Azure can edit ONLY: Menu, Summer Specials, Hours, the About page, and the
 # homepage hero photo. Layout, colors, fonts, navigation, page structure, SEO,
@@ -18,19 +18,10 @@ public_folder: "/images/uploads"
 # A friendlier default; keeps edits on a branch + PR is possible later.
 publish_mode: simple
 
-# --- Image optimization on upload -------------------------------------------
-# Resize large photos and convert to WebP right in the browser, so a 5 MB phone
-# photo can't tank page performance. A build-time pass (scripts/optimize-images.mjs)
-# is the backstop that runs on every deploy regardless.
-media_libraries:
-  default:
-    config:
-      transformations:
-        raster_image:
-          format: webp
-          quality: 82
-          width: 1600
-          height: 1600
+# --- Image optimization -----------------------------------------------------
+# Uploaded photos are optimized at BUILD time by scripts/optimize-images.mjs
+# (wired into `npm run build`): any oversized image is resized to <=1600px wide
+# and recompressed before deploy, so a 5 MB phone photo never ships full-size.
 
 collections:
   # --- Menu (one file per item) ----------------------------------------------

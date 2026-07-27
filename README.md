@@ -142,9 +142,13 @@ accounts, if you ever do, is separate and manual — the site itself is identica
 
 - **Content lives in `src/content/`** — `menu/` (one file per item), `specials/`,
   `settings/hours.json`, `settings/about.json`, `settings/home.json`. Plain and portable.
-- **Image optimization** runs two ways: Sveltia resizes/*WebP*s on upload, and
-  `scripts/optimize-images.mjs` runs on every build (`npm run build`) as a backstop so no
-  oversized image can ship. Idempotent — already-small images are skipped.
+- **CMS is Decap CMS** (`public/admin/`) with the **Git Gateway** backend + Netlify Identity,
+  so Azure logs in with email/password and needs no GitHub account. (Sveltia was the first
+  choice but dropped Git Gateway support, so we use Decap per the brief's fallback.)
+- **Image optimization** is enforced at build time by `scripts/optimize-images.mjs` (wired
+  into `npm run build`): any image wider than 1600px or over ~800KB is resized/recompressed
+  before deploy, so an oversized upload never ships full-size. Idempotent — already-small
+  images are skipped.
 - **Instagram** grid reads placeholder posts from `src/data/instagram.json`. To go live it
   needs a feed source (a Behold/EmbedSocial-style service, or a Meta Graph API token) — a
   decision for the owner, not a guess. Keep the `{ handle, profileUrl, posts[] }` shape and
