@@ -6,5 +6,5 @@ image: /images/menu/more-espresso-less-depresso.jpg
 imageAlt: A blended espresso shake topped with a banana slice
 madeInHouse: true
 hidden: false
-order: 30
+order: 70
 ---
