@@ -18,6 +18,11 @@ public_folder: "/images/uploads"
 # A friendlier default; keeps edits on a branch + PR is possible later.
 publish_mode: simple
 
+# Branding: logo on the login screen + a link back to the live site in the header.
+logo_url: "/images/brand/logo.png"
+site_url: "https://water-bearer-coffee.netlify.app"
+display_url: "https://water-bearer-coffee.netlify.app"
+
 # --- Image optimization -----------------------------------------------------
 # Uploaded photos are optimized at BUILD time by scripts/optimize-images.mjs
 # (wired into `npm run build`): any oversized image is resized to <=1600px wide
