@@ -1,7 +1,7 @@
 ---
 name: Hot Tea
 category: Teas
-description: Rotating loose-leaf selection.
+description: Loose-leaf tea, locally sourced from Blessed Be Tea.
 image: /images/menu/tea.jpg
 imageAlt: A cup of hot tea
 madeInHouse: false
