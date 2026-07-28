@@ -1,7 +1,6 @@
 ---
 import { getEntry, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PhotoPlaceholder from '../components/PhotoPlaceholder.astro';
 
 const entry = await getEntry('pages', 'mobile-espresso');
 if (!entry) throw new Error('Missing content/pages/mobile-espresso.md');
@@ -43,7 +42,15 @@ const labelBase = 'mb-1.5 block font-sans text-[length:var(--step--1)] font-semi
         </div>
       </div>
       <div data-reveal data-reveal-delay="160">
-        <PhotoPlaceholder ratio="4/3" label="The mobile espresso cart set up at an event" />
+        <img
+          src="/images/espresso-cart.jpg"
+          alt="The Water Bearer mobile espresso cart set up and ready to serve"
+          width="900"
+          height="1200"
+          loading="lazy"
+          decoding="async"
+          class="aspect-[4/5] w-full rounded-[var(--radius-lg)] border-2 border-[var(--color-line-strong)] object-cover"
+        />
       </div>
     </div>
   </section>
@@ -54,6 +61,87 @@ const labelBase = 'mb-1.5 block font-sans text-[length:var(--step--1)] font-semi
       <Content />
     </article>
   </section>
+
+  <!-- Rough estimate calculator ------------------------------------------- -->
+  <section class="u-container pb-[var(--space-3xl)]">
+    <div
+      class="rounded-[var(--radius-lg)] border-2 border-[var(--color-line-strong)] bg-[var(--color-surface)] p-6 sm:p-8"
+      data-reveal
+    >
+      <p class="u-eyebrow">Ballpark it</p>
+      <h2 class="u-display mt-2 text-[length:var(--step-3)]">Rough estimate</h2>
+      <p class="u-measure mt-3 text-[var(--color-ink-soft)]">
+        Enter your guest count and how long you'd like us there for a rough range. Every event
+        is different — send an inquiry for a real quote.
+      </p>
+
+      <div class="mt-6 grid gap-5 sm:grid-cols-2">
+        <div>
+          <label class="mb-1.5 block font-body text-[length:var(--step--1)] font-semibold" for="calc-guests">Guests</label>
+          <input
+            id="calc-guests"
+            type="number"
+            min="1"
+            value="50"
+            inputmode="numeric"
+            class="w-full rounded-[var(--radius-sm)] border-2 border-[var(--color-line-strong)] bg-[var(--white)] px-4 py-3 text-[var(--color-on-light)]"
+          />
+        </div>
+        <div>
+          <label class="mb-1.5 block font-body text-[length:var(--step--1)] font-semibold" for="calc-hours">Hours of service</label>
+          <input
+            id="calc-hours"
+            type="number"
+            min="1"
+            max="12"
+            value="2"
+            inputmode="numeric"
+            class="w-full rounded-[var(--radius-sm)] border-2 border-[var(--color-line-strong)] bg-[var(--white)] px-4 py-3 text-[var(--color-on-light)]"
+          />
+        </div>
+      </div>
+
+      <div class="mt-6 flex flex-wrap items-baseline gap-3 border-t-2 border-[var(--color-line-strong)] pt-6">
+        <span class="u-eyebrow">Rough estimate</span>
+        <span id="calc-result" class="font-display text-[length:var(--step-3)] font-extrabold text-[var(--color-primary)]">—</span>
+      </div>
+      <p class="mt-2 text-[length:var(--step--1)] text-[var(--color-ink-faint)]">
+        A ballpark only, not a quote. Travel outside Traverse City and specialty menus can change it.
+      </p>
+
+      <div class="mt-6">
+        <a
+          href="#inquire"
+          class="inline-flex items-center justify-center gap-2 rounded-[var(--radius-sm)] bg-[var(--color-accent)] px-6 py-3.5 font-sans font-semibold text-[var(--color-on-accent)] no-underline transition-colors duration-200 hover:bg-[var(--color-accent-hover)]"
+        >
+          Get an exact quote
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline>
+    (function () {
+      // PLACEHOLDER RATES — replace with Water Bearer's real mobile-cart pricing.
+      var BASE = 150, PER_GUEST = 6, HOURS_INCLUDED = 2, PER_EXTRA_HOUR = 75, MINIMUM = 400;
+      var g = document.getElementById('calc-guests');
+      var h = document.getElementById('calc-hours');
+      var out = document.getElementById('calc-result');
+      if (!g || !h || !out) return;
+      var money = function (n) { return '$' + Math.round(n).toLocaleString('en-US'); };
+      var round25 = function (n) { return Math.round(n / 25) * 25; };
+      function update() {
+        var guests = Math.max(1, parseInt(g.value, 10) || 0);
+        var hours = Math.max(1, parseFloat(h.value) || 0);
+        var est = BASE + guests * PER_GUEST + Math.max(0, hours - HOURS_INCLUDED) * PER_EXTRA_HOUR;
+        est = Math.max(MINIMUM, est);
+        out.textContent = money(round25(est)) + ' – ' + money(round25(est * 1.3));
+      }
+      g.addEventListener('input', update);
+      h.addEventListener('input', update);
+      update();
+    })();
+  </script>
 
   <!-- Inquiry form -->
   <section id="inquire" class="border-t border-[var(--color-line)] bg-[var(--color-bg-sunk)] scroll-mt-8">

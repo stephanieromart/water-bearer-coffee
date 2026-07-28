@@ -1,5 +1,5 @@
 ---
-name: "Horchata Latte"
+name: "Iced Horchata Latte"
 category: Coffee
 madeInHouse: false
 hidden: false
