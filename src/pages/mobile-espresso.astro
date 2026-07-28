@@ -1,6 +1,9 @@
 ---
 import { getEntry, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import Icon from '../components/Icon.astro';
+import Divider from '../components/Divider.astro';
 
 const entry = await getEntry('pages', 'mobile-espresso');
 if (!entry) throw new Error('Missing content/pages/mobile-espresso.md');
@@ -15,33 +18,32 @@ const eventTypes = [
   'Other',
 ];
 
-const fieldBase =
-  'w-full rounded-[var(--radius-sm)] border border-[var(--color-line)] bg-[var(--color-surface)] px-4 py-3 text-[var(--color-ink)] placeholder:text-[var(--color-ink-faint)] focus-visible:border-[var(--color-accent)]';
-const labelBase = 'mb-1.5 block font-sans text-[length:var(--step--1)] font-semibold text-[var(--color-ink)]';
+const field =
+  'w-full rounded-[var(--radius-sm)] border-2 border-[var(--color-line-strong)] bg-[var(--white)] px-4 py-3 font-body text-[var(--color-on-light)] placeholder:text-[var(--gray-500)] focus-visible:border-[var(--color-primary)] focus-visible:outline-none';
+const label = 'mb-1.5 block font-body text-[length:var(--step--1)] font-bold';
 ---
 
 <BaseLayout title="Mobile Espresso" description={entry.data.intro}>
-  <!-- Hero -->
-  <section class="u-container pt-[var(--space-3xl)]">
-    <div class="grid items-center gap-[var(--space-2xl)] lg:grid-cols-[1.1fr_1fr]">
+  <!-- HERO -------------------------------------------------------------------- -->
+  <section class="relative overflow-hidden border-b-2 border-[var(--color-line-strong)]">
+    <div class="u-container u-container-wide grid items-center gap-[var(--space-2xl)] py-[var(--space-3xl)] lg:grid-cols-[1.1fr_0.9fr] lg:py-[var(--space-4xl)]">
       <div>
-        <p class="u-eyebrow" data-reveal>Catering &amp; events</p>
-        <h1 class="mt-4 text-[length:var(--step-4)]" data-reveal data-reveal-delay="80">
+        <p class="u-eyebrow" data-reveal>
+          <Icon name="cart" size={20} class="mb-1 mr-1 inline-block align-middle text-[var(--color-primary)]" />Catering &amp; events
+        </p>
+        <h1 class="u-display mt-4 text-[length:var(--step-5)]" data-reveal data-reveal-delay="60">
           {entry.data.title}
         </h1>
-        <p class="u-measure mt-6 text-[length:var(--step-1)] text-[var(--color-ink-soft)]" data-reveal data-reveal-delay="160">
+        <p class="u-measure mt-6 text-[length:var(--step-1)] text-[var(--color-ink-soft)]" data-reveal data-reveal-delay="140">
           {entry.data.intro}
         </p>
-        <div class="mt-8" data-reveal data-reveal-delay="240">
-          <a
-            href="#inquire"
-            class="inline-flex items-center justify-center gap-2 rounded-[var(--radius-sm)] bg-[var(--color-accent)] px-6 py-3.5 font-sans font-semibold text-[var(--color-on-accent)] no-underline transition-colors duration-200 hover:bg-[var(--color-accent-hover)]"
-          >
-            Request a quote
-          </a>
+        <div class="mt-8 flex flex-wrap gap-4" data-reveal data-reveal-delay="220">
+          <Button href="#inquire" size="lg">Request a quote</Button>
+          <Button href="/menu" variant="outline" size="lg">See the menu</Button>
         </div>
       </div>
-      <div data-reveal data-reveal-delay="160">
+
+      <div class="relative" data-reveal data-reveal-delay="140">
         <img
           src="/images/espresso-cart.jpg"
           alt="The Water Bearer mobile espresso cart set up and ready to serve"
@@ -51,72 +53,135 @@ const labelBase = 'mb-1.5 block font-sans text-[length:var(--step--1)] font-semi
           decoding="async"
           class="aspect-[4/5] w-full rounded-[var(--radius-lg)] border-2 border-[var(--color-line-strong)] object-cover"
         />
+        <span class="u-tag u-tag--solid absolute -bottom-4 left-6 shadow-lg">Traverse City &amp; beyond</span>
       </div>
     </div>
   </section>
 
-  <!-- Body copy -->
-  <section class="u-container py-[var(--space-3xl)]">
-    <article class="prose" data-reveal>
-      <Content />
-    </article>
+  <!-- HOW IT WORKS (deep section) --------------------------------------------- -->
+  <section class="on-deep u-grain relative overflow-hidden bg-[var(--color-bg-deep)] text-[var(--color-on-deep)]">
+    <div class="u-container u-container-wide py-[var(--space-3xl)]">
+      <article class="prose" data-reveal>
+        <Content />
+      </article>
+    </div>
+    <Divider variant="wave" color="var(--color-bg)" height={56} flip />
   </section>
 
-  <!-- Rough estimate calculator ------------------------------------------- -->
-  <section class="u-container pb-[var(--space-3xl)]">
-    <div
-      class="rounded-[var(--radius-lg)] border-2 border-[var(--color-line-strong)] bg-[var(--color-surface)] p-6 sm:p-8"
-      data-reveal
-    >
-      <p class="u-eyebrow">Ballpark it</p>
-      <h2 class="u-display mt-2 text-[length:var(--step-3)]">Rough estimate</h2>
-      <p class="u-measure mt-3 text-[var(--color-ink-soft)]">
-        Enter your guest count and how long you'd like us there for a rough range. Every event
-        is different — send an inquiry for a real quote.
-      </p>
+  <!-- ROUGH ESTIMATE CALCULATOR ------------------------------------------------ -->
+  <section class="relative bg-[var(--color-bg)]">
+    <div class="u-container u-container-wide py-[var(--space-3xl)]">
+      <div
+        class="card-hover rounded-[var(--radius-lg)] border-2 border-[var(--color-line-strong)] bg-[var(--color-surface)] p-6 sm:p-8"
+        data-reveal
+      >
+        <p class="u-eyebrow">Ballpark it</p>
+        <h2 class="u-display mt-2 text-[length:var(--step-3)]">Rough estimate</h2>
+        <p class="u-measure mt-3 text-[var(--color-ink-soft)]">
+          Enter your guest count and how long you'd like us there for a rough range. Every event
+          is different — send an inquiry for a real quote.
+        </p>
 
-      <div class="mt-6 grid gap-5 sm:grid-cols-2">
-        <div>
-          <label class="mb-1.5 block font-body text-[length:var(--step--1)] font-semibold" for="calc-guests">Guests</label>
-          <input
-            id="calc-guests"
-            type="number"
-            min="1"
-            value="50"
-            inputmode="numeric"
-            class="w-full rounded-[var(--radius-sm)] border-2 border-[var(--color-line-strong)] bg-[var(--white)] px-4 py-3 text-[var(--color-on-light)]"
-          />
+        <div class="mt-6 grid gap-5 sm:grid-cols-2">
+          <div>
+            <label class={label} for="calc-guests">Guests</label>
+            <input id="calc-guests" type="number" min="1" value="50" inputmode="numeric" class={field} />
+          </div>
+          <div>
+            <label class={label} for="calc-hours">Hours of service</label>
+            <input id="calc-hours" type="number" min="1" max="12" value="2" inputmode="numeric" class={field} />
+          </div>
         </div>
-        <div>
-          <label class="mb-1.5 block font-body text-[length:var(--step--1)] font-semibold" for="calc-hours">Hours of service</label>
-          <input
-            id="calc-hours"
-            type="number"
-            min="1"
-            max="12"
-            value="2"
-            inputmode="numeric"
-            class="w-full rounded-[var(--radius-sm)] border-2 border-[var(--color-line-strong)] bg-[var(--white)] px-4 py-3 text-[var(--color-on-light)]"
-          />
+
+        <div class="mt-6 flex flex-wrap items-baseline gap-3 border-t-2 border-[var(--color-line-strong)] pt-6">
+          <span class="u-eyebrow">Rough estimate</span>
+          <span id="calc-result" class="font-display text-[length:var(--step-3)] font-extrabold text-[var(--color-primary)]">—</span>
+        </div>
+        <p class="mt-2 text-[length:var(--step--1)] text-[var(--color-ink-faint)]">
+          A ballpark only, not a quote. Travel outside Traverse City and specialty menus can change it.
+        </p>
+
+        <div class="mt-6">
+          <Button href="#inquire" size="lg">Get an exact quote</Button>
         </div>
       </div>
+    </div>
+  </section>
 
-      <div class="mt-6 flex flex-wrap items-baseline gap-3 border-t-2 border-[var(--color-line-strong)] pt-6">
-        <span class="u-eyebrow">Rough estimate</span>
-        <span id="calc-result" class="font-display text-[length:var(--step-3)] font-extrabold text-[var(--color-primary)]">—</span>
+  <!-- INQUIRY FORM (deep-tint section) ---------------------------------------- -->
+  <section id="inquire" class="scroll-mt-8 border-t-2 border-[var(--color-line-strong)] bg-[var(--color-bg-tint)]">
+    <div class="u-container u-container-wide grid gap-[var(--space-2xl)] py-[var(--space-3xl)] lg:grid-cols-[1fr_1.4fr]">
+      <div data-reveal>
+        <p class="u-eyebrow">Let's talk</p>
+        <h2 class="u-display mt-3 text-[length:var(--step-3)]">Tell us about your event</h2>
+        <p class="u-measure mt-4 text-[var(--color-ink-soft)]">
+          The more you can share up front, the faster we can get you a real number.
+          We reply within a couple of business days.
+        </p>
       </div>
-      <p class="mt-2 text-[length:var(--step--1)] text-[var(--color-ink-faint)]">
-        A ballpark only, not a quote. Travel outside Traverse City and specialty menus can change it.
-      </p>
 
-      <div class="mt-6">
-        <a
-          href="#inquire"
-          class="inline-flex items-center justify-center gap-2 rounded-[var(--radius-sm)] bg-[var(--color-accent)] px-6 py-3.5 font-sans font-semibold text-[var(--color-on-accent)] no-underline transition-colors duration-200 hover:bg-[var(--color-accent-hover)]"
-        >
-          Get an exact quote
-        </a>
-      </div>
+      <!-- Netlify Forms: detected at build via data-netlify + hidden form-name.
+           No backend. Submissions appear in the Netlify dashboard + email. -->
+      <form
+        name="mobile-espresso-inquiry"
+        method="POST"
+        action="/thank-you"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+        class="rounded-[var(--radius-lg)] border-2 border-[var(--color-line-strong)] bg-[var(--color-surface)] p-6 sm:p-8"
+        data-reveal
+        data-reveal-delay="100"
+      >
+        <input type="hidden" name="form-name" value="mobile-espresso-inquiry" />
+        <p class="hidden">
+          <label>Leave blank if human: <input name="bot-field" /></label>
+        </p>
+
+        <div class="grid gap-5 sm:grid-cols-2">
+          <div>
+            <label class={label} for="me-name">Name <span class="text-[var(--color-primary)]">*</span></label>
+            <input class={field} id="me-name" name="name" type="text" required autocomplete="name" />
+          </div>
+          <div>
+            <label class={label} for="me-email">Email <span class="text-[var(--color-primary)]">*</span></label>
+            <input class={field} id="me-email" name="email" type="email" required autocomplete="email" />
+          </div>
+          <div>
+            <label class={label} for="me-phone">Phone</label>
+            <input class={field} id="me-phone" name="phone" type="tel" autocomplete="tel" />
+          </div>
+          <div>
+            <label class={label} for="me-date">Event date</label>
+            <input class={field} id="me-date" name="event-date" type="date" />
+          </div>
+          <div>
+            <label class={label} for="me-type">Event type</label>
+            <select class={field} id="me-type" name="event-type">
+              <option value="">Select one…</option>
+              {eventTypes.map((t) => <option value={t}>{t}</option>)}
+            </select>
+          </div>
+          <div>
+            <label class={label} for="me-guests">Guest count</label>
+            <input class={field} id="me-guests" name="guest-count" type="number" min="1" inputmode="numeric" placeholder="Approximate" />
+          </div>
+          <div class="sm:col-span-2">
+            <label class={label} for="me-location">Location</label>
+            <input class={field} id="me-location" name="location" type="text" placeholder="Venue or address, city" />
+          </div>
+          <div class="sm:col-span-2">
+            <label class={label} for="me-message">Anything else?</label>
+            <textarea class={field} id="me-message" name="message" rows="4" placeholder="Timeline, vibe, special requests…"></textarea>
+          </div>
+        </div>
+
+        <div class="mt-6">
+          <Button type="submit" size="lg">Send inquiry</Button>
+        </div>
+        <p class="mt-3 text-[length:var(--step--1)] text-[var(--color-ink-faint)]">
+          <span class="text-[var(--color-primary)]">*</span> Required. We'll only use your details to reply about your event.
+        </p>
+      </form>
     </div>
   </section>
 
@@ -142,84 +207,4 @@ const labelBase = 'mb-1.5 block font-sans text-[length:var(--step--1)] font-semi
       update();
     })();
   </script>
-
-  <!-- Inquiry form -->
-  <section id="inquire" class="border-t border-[var(--color-line)] bg-[var(--color-bg-sunk)] scroll-mt-8">
-    <div class="u-container grid gap-[var(--space-2xl)] py-[var(--space-3xl)] lg:grid-cols-[1fr_1.4fr]">
-      <div data-reveal>
-        <p class="u-eyebrow">Let's talk</p>
-        <h2 class="mt-3 text-[length:var(--step-3)]">Tell us about your event</h2>
-        <p class="mt-4 text-[var(--color-ink-soft)]">
-          The more you can share up front, the faster we can get you a real number.
-          We reply within a couple of business days.
-        </p>
-      </div>
-
-      <!-- Netlify Forms: detected at build via data-netlify + hidden form-name.
-           No backend. Submissions appear in the Netlify dashboard + email. -->
-      <form
-        name="mobile-espresso-inquiry"
-        method="POST"
-        action="/thank-you"
-        data-netlify="true"
-        netlify-honeypot="bot-field"
-        class="rounded-[var(--radius-lg)] border border-[var(--color-line)] bg-[var(--color-surface)] p-6 sm:p-8"
-        data-reveal
-        data-reveal-delay="100"
-      >
-        <input type="hidden" name="form-name" value="mobile-espresso-inquiry" />
-        <p class="hidden">
-          <label>Leave blank if human: <input name="bot-field" /></label>
-        </p>
-
-        <div class="grid gap-5 sm:grid-cols-2">
-          <div>
-            <label class={labelBase} for="me-name">Name <span class="text-[var(--color-accent-text)]">*</span></label>
-            <input class={fieldBase} id="me-name" name="name" type="text" required autocomplete="name" />
-          </div>
-          <div>
-            <label class={labelBase} for="me-email">Email <span class="text-[var(--color-accent-text)]">*</span></label>
-            <input class={fieldBase} id="me-email" name="email" type="email" required autocomplete="email" />
-          </div>
-          <div>
-            <label class={labelBase} for="me-phone">Phone</label>
-            <input class={fieldBase} id="me-phone" name="phone" type="tel" autocomplete="tel" />
-          </div>
-          <div>
-            <label class={labelBase} for="me-date">Event date</label>
-            <input class={fieldBase} id="me-date" name="event-date" type="date" />
-          </div>
-          <div>
-            <label class={labelBase} for="me-type">Event type</label>
-            <select class={fieldBase} id="me-type" name="event-type">
-              <option value="">Select one…</option>
-              {eventTypes.map((t) => <option value={t}>{t}</option>)}
-            </select>
-          </div>
-          <div>
-            <label class={labelBase} for="me-guests">Guest count</label>
-            <input class={fieldBase} id="me-guests" name="guest-count" type="number" min="1" inputmode="numeric" placeholder="Approximate" />
-          </div>
-          <div class="sm:col-span-2">
-            <label class={labelBase} for="me-location">Location</label>
-            <input class={fieldBase} id="me-location" name="location" type="text" placeholder="Venue or address, city" />
-          </div>
-          <div class="sm:col-span-2">
-            <label class={labelBase} for="me-message">Anything else?</label>
-            <textarea class={fieldBase} id="me-message" name="message" rows="4" placeholder="Timeline, vibe, special requests…"></textarea>
-          </div>
-        </div>
-
-        <button
-          type="submit"
-          class="mt-6 w-full rounded-[var(--radius-sm)] bg-[var(--color-accent)] px-6 py-3.5 font-sans font-semibold text-[var(--color-on-accent)] transition-colors duration-200 hover:bg-[var(--color-accent-hover)] sm:w-auto"
-        >
-          Send inquiry
-        </button>
-        <p class="mt-3 text-[length:var(--step--1)] text-[var(--color-ink-faint)]">
-          <span class="text-[var(--color-accent-text)]">*</span> Required. We'll only use your details to reply about your event.
-        </p>
-      </form>
-    </div>
-  </section>
 </BaseLayout>
